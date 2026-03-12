@@ -1,5 +1,7 @@
 import { BookingFlow } from "@/components/BookingFlow";
 
+const CALENDLY_URL = "https://calendly.com/finlay-temporaryutopia/30min";
+
 type UseCase = {
   name: string;
   context: string;
@@ -95,8 +97,8 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className={`relative py-20 sm:py-24 ${className}`}>
-      <div className="mx-auto w-full max-w-6xl px-5 sm:px-6 lg:px-10">{children}</div>
+    <section id={id} className={`relative py-16 md:py-24 ${className}`}>
+      <div className="mx-auto w-full max-w-[1200px] px-6">{children}</div>
     </section>
   );
 }
@@ -132,26 +134,26 @@ function SecondaryButton({ href, children }: { href: string; children: React.Rea
 function HeroDiagram() {
   return (
     <div className="workflow-board reveal-up">
-      <p className="workflow-kicker">How The Engagement Works</p>
+      <p className="workflow-kicker">What The Audit Examines</p>
       <div className="workflow-track">
         <div className="workflow-node">
-          <p>Business Operations</p>
-          <span>Workflows, admin load, handoffs, bottlenecks</span>
+          <p>Daily Operations</p>
+          <span>How work flows through your team today</span>
         </div>
         <div className="workflow-arrow" aria-hidden="true" />
         <div className="workflow-node workflow-node-highlight">
-          <p>AI Operations Audit</p>
-          <span>Structured analysis of where AI can genuinely help</span>
+          <p>Workflow Analysis</p>
+          <span>Where time is lost, duplicated, or delayed</span>
         </div>
         <div className="workflow-arrow" aria-hidden="true" />
         <div className="workflow-node">
-          <p>Implementation Guidance</p>
-          <span>Clear priorities, recommendations, and next steps</span>
+          <p>Practical Recommendations</p>
+          <span>Where AI can help without adding complexity</span>
         </div>
       </div>
       <div className="workflow-foot">
-        <span>Understand first</span>
-        <span>Implement deliberately</span>
+        <span>Analysis first</span>
+        <span>Implementation second</span>
       </div>
     </div>
   );
@@ -177,7 +179,7 @@ export function LandingPage() {
       </div>
 
       <header className="sticky top-0 z-40 border-b border-line bg-[#0E1116]/88 backdrop-blur-xl">
-        <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-3.5 sm:px-6 lg:px-10">
+        <div className="mx-auto flex w-full max-w-[1200px] items-center gap-3 px-6 py-3.5">
           <a href="#top" className="min-w-0 flex-1 truncate font-display text-lg tracking-tight text-ink sm:text-xl">
             Temporary Utopia
           </a>
@@ -202,7 +204,7 @@ export function LandingPage() {
         </div>
       </header>
 
-      <Section id="top" className="pb-14 pt-16 sm:pt-20">
+      <Section id="top">
         <div className="grid items-start gap-12 lg:grid-cols-[1.02fr_0.98fr]">
           <div className="reveal-up">
             <Eyebrow>Founder-Led AI Advisory</Eyebrow>
@@ -213,7 +215,7 @@ export function LandingPage() {
               Temporary Utopia provides an AI Operations Audit for business owners who want practical guidance. We start by understanding how your business actually runs, then recommend what is worth implementing.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
-              <PrimaryButton href="#booking">Book Your Audit</PrimaryButton>
+              <PrimaryButton href={CALENDLY_URL}>Book Your Audit</PrimaryButton>
               <SecondaryButton href="#fit">See If You Are A Fit</SecondaryButton>
             </div>
             <p className="mt-5 text-sm text-mute">
@@ -225,27 +227,33 @@ export function LandingPage() {
         </div>
       </Section>
 
-      <Section id="problem" className="pt-8">
+      <Section id="problem" className="section-contrast">
         <div className="problem-panel reveal-up">
           <Eyebrow>The Core Problem</Eyebrow>
           <SectionTitle>
-            AI is moving fast. Most businesses are unsure where to begin and end up experimenting without a clear plan.
+            Most business owners are trying to run a company and keep up with AI at the same time, which is a difficult combination.
           </SectionTitle>
           <div className="mt-8 grid gap-6 md:grid-cols-2">
             <p className="leading-relaxed text-mute">
-              Owners are already balancing client work, staffing, delivery, and growth. Keeping up with every new AI tool is unrealistic.
+              Day to day, owners are already managing delivery, client communication, staffing, and planning. On top of that, AI tools and workflows are evolving quickly enough that it is hard to separate what is genuinely useful from what is simply new.
             </p>
             <p className="leading-relaxed text-mute">
-              Random experimentation often creates more noise, extra spend, and fragmented workflows. A thoughtful diagnostic approach avoids this.
+              A common pattern is to trial a handful of tools without a clear operational strategy. That experimentation usually consumes time and budget, but rarely creates lasting improvement because the tools are not aligned with how the business actually works.
             </p>
           </div>
+          <p className="mt-6 max-w-4xl leading-relaxed text-mute">
+            When AI initiatives fail, it is usually not because the technology is weak. It is because implementation starts before the underlying workflow has been understood. The audit exists to solve that exact problem.
+          </p>
         </div>
       </Section>
 
       <Section id="approach">
         <div className="mx-auto max-w-3xl text-center">
-          <Eyebrow>Approach Comparison</Eyebrow>
-          <SectionTitle>Why an operations-first audit model is more useful than tool-first advice.</SectionTitle>
+          <Eyebrow>Approach</Eyebrow>
+          <SectionTitle>The difference is not the tools. The difference is the order of decisions.</SectionTitle>
+          <p className="mx-auto mt-6 max-w-3xl leading-relaxed text-mute">
+            We do not begin by prescribing software. We begin by understanding how your operations run, where friction appears, and which changes are likely to produce meaningful improvements.
+          </p>
         </div>
 
         <div className="mt-12 grid gap-5 lg:grid-cols-2">
@@ -255,8 +263,8 @@ export function LandingPage() {
             <ul className="comparison-list">
               <li>Starts with product demos before understanding workflows</li>
               <li>Encourages scattered adoption across disconnected tools</li>
-              <li>Makes ROI harder to evaluate and sustain</li>
-              <li>Leaves teams with added complexity</li>
+              <li>Makes ROI harder to evaluate and sustain over time</li>
+              <li>Often adds complexity without fixing the root process issue</li>
             </ul>
           </article>
 
@@ -265,9 +273,9 @@ export function LandingPage() {
             <h3 className="comparison-heading">Business understanding first, then selective implementation.</h3>
             <ul className="comparison-list">
               <li>Maps operations before any recommendations are made</li>
-              <li>Finds process friction and repetitive work first</li>
-              <li>Prioritizes high-fit opportunities only</li>
-              <li>Produces practical guidance your team can act on</li>
+              <li>Finds workflow friction and repetitive work first</li>
+              <li>Prioritizes high-fit opportunities based on real constraints</li>
+              <li>Produces practical guidance your team can actually execute</li>
             </ul>
           </article>
         </div>
@@ -289,33 +297,16 @@ export function LandingPage() {
         </div>
       </Section>
 
-      <Section id="offer" className="pt-12">
-        <div className="grid gap-8 lg:grid-cols-[1.02fr_0.98fr]">
-          <div className="reveal-up">
-            <Eyebrow>Service Overview</Eyebrow>
-            <SectionTitle>AI Efficiency Audit / AI Operations Audit</SectionTitle>
-            <p className="mt-6 max-w-2xl leading-relaxed text-mute">
-              This is a paid advisory engagement focused on operational clarity. You receive a structured analysis of your workflows, a set of tailored recommendations, and a practical roadmap for implementation.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <PrimaryButton href="#booking">Request Availability</PrimaryButton>
-              <SecondaryButton href="#report-depth">See Report Depth</SecondaryButton>
-            </div>
-          </div>
-
-          <div className="timeline-panel reveal-up">
-            <h3 className="text-lg font-semibold text-ink">Engagement Timeline</h3>
-            <div className="timeline-track">
-              {timeline.map((item) => (
-                <div key={item.label} className="timeline-item">
-                  <span className="timeline-dot" />
-                  <div>
-                    <p className="timeline-label">{item.label}</p>
-                    <p className="timeline-text">{item.text}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+      <Section id="offer">
+        <div className="reveal-up">
+          <Eyebrow>Service Overview</Eyebrow>
+          <SectionTitle>AI Efficiency Audit / AI Operations Audit</SectionTitle>
+          <p className="mt-6 max-w-3xl leading-relaxed text-mute">
+            This is a paid advisory engagement focused on operational clarity. You receive a structured analysis of your workflows, a set of tailored recommendations, and a practical roadmap for implementation.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <PrimaryButton href="#booking">Request Availability</PrimaryButton>
+            <SecondaryButton href="#report-depth">See Report Depth</SecondaryButton>
           </div>
         </div>
       </Section>
@@ -459,9 +450,12 @@ export function LandingPage() {
 
           <div className="reveal-up rounded-3xl border border-line bg-card p-7 sm:p-9">
             <Eyebrow>Founder Perspective</Eyebrow>
-            <SectionTitle>I study AI daily, but I advise through the lens of operations, not software trends.</SectionTitle>
+            <SectionTitle>I spend time with new AI tools every day, but my job is to keep your decisions grounded.</SectionTitle>
             <p className="mt-6 leading-relaxed text-mute">
-              The objective is simple: make your business easier to run through clearer systems and better decisions.
+              Most owners do not need another list of apps. They need someone who can translate a fast-moving space into practical decisions that improve operations without creating unnecessary disruption.
+            </p>
+            <p className="mt-4 leading-relaxed text-mute">
+              That is the focus here: understand the business clearly, recommend selectively, and make sure every suggestion has a practical reason behind it.
             </p>
             <ul className="founder-points">
               {founderPoints.map((point) => (
@@ -475,7 +469,28 @@ export function LandingPage() {
         </div>
       </Section>
 
-      <Section id="trust">
+      <Section id="process">
+        <div className="mx-auto max-w-3xl text-center">
+          <Eyebrow>How The Engagement Works</Eyebrow>
+          <SectionTitle>A straightforward process designed for busy operators.</SectionTitle>
+        </div>
+
+        <div className="mt-10 timeline-panel reveal-up">
+          <div className="timeline-track">
+            {timeline.map((item) => (
+              <div key={item.label} className="timeline-item">
+                <span className="timeline-dot" />
+                <div>
+                  <p className="timeline-label">{item.label}</p>
+                  <p className="timeline-text">{item.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      <Section id="trust" className="section-contrast">
         <div className="mx-auto max-w-3xl text-center">
           <Eyebrow>Trust And Process</Eyebrow>
           <SectionTitle>A deliberate advisory process designed to reduce implementation risk.</SectionTitle>
@@ -497,7 +512,7 @@ export function LandingPage() {
         </div>
       </Section>
 
-      <Section id="fit" className="section-contrast">
+      <Section id="fit">
         <div className="grid gap-6 rounded-3xl border border-line bg-card p-7 sm:p-9 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="reveal-up">
             <Eyebrow>Who This Is For</Eyebrow>
@@ -525,7 +540,7 @@ export function LandingPage() {
         </div>
       </Section>
 
-      <Section id="pricing">
+      <Section id="pricing" className="section-contrast">
         <div className="pricing-panel reveal-up">
           <Eyebrow>Pricing</Eyebrow>
           <h2 className="mt-5 font-display text-3xl text-ink sm:text-5xl">AI Efficiency Audit</h2>
@@ -540,7 +555,7 @@ export function LandingPage() {
         </div>
       </Section>
 
-      <Section id="booking" className="section-contrast">
+      <Section id="booking">
         <div className="mx-auto max-w-3xl text-center">
           <Eyebrow>Booking</Eyebrow>
           <SectionTitle>Book a strategy call or send a short booking request.</SectionTitle>
@@ -554,7 +569,7 @@ export function LandingPage() {
         </div>
       </Section>
 
-      <Section id="final-cta" className="pt-8">
+      <Section id="final-cta" className="section-contrast">
         <div className="final-cta reveal-up">
           <p className="final-kicker">Next Step</p>
           <h2 className="mx-auto mt-6 max-w-3xl font-display text-3xl text-ink sm:text-5xl">
@@ -564,11 +579,11 @@ export function LandingPage() {
             If you want thoughtful guidance before making implementation decisions, start with a strategy call.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-            <a href="#booking" className="btn-primary">
+            <a href={CALENDLY_URL} className="btn-primary">
               Request Availability
             </a>
             <a href="#offer" className="btn-secondary">
-              Review The Process
+              Review The Service
             </a>
           </div>
         </div>

@@ -11,7 +11,7 @@ type BookingFormState = {
 
 const schedulerUrl =
   process.env.NEXT_PUBLIC_BOOKING_URL ??
-  "https://calendly.com/calendly/30min";
+  "https://calendly.com/finlay-temporaryutopia/30min";
 
 function getEmbedUrl(url: string): string {
   if (url.includes("calendly.com")) {
