@@ -87,6 +87,8 @@ const founderPoints = [
   "I advise based on fit and usefulness, not software hype.",
 ];
 
+const CALENDLY_URL = "https://calendly.com/finlay-temporaryutopia/30min";
+
 function Section({
   id,
   className = "",
@@ -107,7 +109,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   return <p className="eyebrow">{children}</p>;
 }
 
-function SectionTitle({ children }: { children: React.ReactNode }) {
+function SectionTitle({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
     <h2 className="mt-5 max-w-4xl font-display text-3xl leading-tight text-ink sm:text-4xl lg:text-[2.75rem]">
       {children}
