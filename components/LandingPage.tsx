@@ -63,6 +63,8 @@ const proofPlaceholders = [
   },
 ];
 
+const CALENDLY_URL = "https://calendly.com/finlay-temporaryutopia/30min";
+
 function Section({
   id,
   className = "",
@@ -73,8 +75,8 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className={`relative py-20 sm:py-24 ${className}`}>
-      <div className="mx-auto w-full max-w-6xl px-6 lg:px-10">{children}</div>
+    <section id={id} className={`relative py-16 md:py-24 ${className}`}>
+      <div className="mx-auto w-full max-w-[1200px] px-6">{children}</div>
     </section>
   );
 }
@@ -87,9 +89,9 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
-function SectionTitle({ children }: { children: React.ReactNode }) {
+function SectionTitle({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <h2 className="mt-5 max-w-4xl font-display text-3xl leading-tight text-ink sm:text-4xl lg:text-5xl">
+    <h2 className={`mt-5 max-w-4xl font-display text-3xl leading-tight text-ink sm:text-4xl lg:text-5xl ${className}`}>
       {children}
     </h2>
   );
@@ -122,7 +124,7 @@ export function LandingPage() {
       </div>
 
       <header className="sticky top-0 z-40 border-b border-[#2a3f66] bg-[#070c18]/80 backdrop-blur-xl">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 lg:px-10">
+        <div className="mx-auto flex w-full max-w-[1200px] items-center justify-between gap-4 px-6 py-4">
           <a href="#top" className="font-display text-xl tracking-tight text-[#dbe7ff]">
             Temporary Utopia
           </a>
@@ -137,13 +139,13 @@ export function LandingPage() {
               Pricing
             </a>
           </nav>
-          <a href="#pricing" className="btn-secondary text-xs sm:text-sm">
+          <a href="#booking" className="btn-secondary whitespace-nowrap px-3 py-2 text-xs sm:px-5 sm:py-3 sm:text-sm">
             Request Availability
           </a>
         </div>
       </header>
 
-      <Section id="top" className="pb-14 pt-16 sm:pt-20">
+      <Section id="top" className="pb-16 pt-16 md:pb-24 md:pt-24">
         <div className="grid items-start gap-12 lg:grid-cols-[1.06fr_0.94fr]">
           <div className="reveal-up">
             <Eyebrow>Founder-Led AI Operations Advisory</Eyebrow>
@@ -154,7 +156,7 @@ export function LandingPage() {
               I help business owners cut operational drag with a practical AI Efficiency Audit. We start with how your business actually runs, then build a clear strategy for where AI can save time, reduce friction, and improve profitability.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
-              <PrimaryButton href="#pricing">Book Your Audit</PrimaryButton>
+              <PrimaryButton href={CALENDLY_URL}>Book Your Audit</PrimaryButton>
               <SecondaryButton href="#fit">See If Your Business Is A Fit</SecondaryButton>
             </div>
             <p className="mt-5 text-sm text-[#91a4cd]">
@@ -184,7 +186,7 @@ export function LandingPage() {
         </div>
       </Section>
 
-      <Section id="problem" className="pt-8">
+      <Section id="problem">
         <div className="reveal-up rounded-3xl border border-[#2a3f66] bg-[#0b1428]/85 p-7 sm:p-10">
           <Eyebrow>The Real Problem</Eyebrow>
           <SectionTitle>
@@ -204,7 +206,7 @@ export function LandingPage() {
       <Section id="approach">
         <div className="text-center">
           <Eyebrow>Approach</Eyebrow>
-          <SectionTitle>Most AI advice starts with tools. I start with your business.</SectionTitle>
+          <SectionTitle className="mx-auto">Most AI advice starts with tools. I start with your business.</SectionTitle>
           <p className="mx-auto mt-6 max-w-3xl text-mute">
             Temporary Utopia is deliberately strategy-first: diagnose your operating reality, then recommend AI systems where they create clear, practical value.
           </p>
@@ -213,8 +215,8 @@ export function LandingPage() {
         <div className="mt-12 grid gap-5 lg:grid-cols-2">
           <article className="reveal-up rounded-3xl border border-[#4a2c5f] bg-[#170f24]/80 p-7">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#cf9eff]">Typical AI Consulting</p>
-            <h3 className="mt-3 text-2xl font-semibold text-[#f2e7ff]">Tool-first, context-later</h3>
             <ul className="mt-6 space-y-3 text-sm leading-relaxed text-[#c3abd8] sm:text-base">
+              <li>Tool-first, context-later</li>
               <li>Starts with software demos before workflow diagnosis</li>
               <li>Automates isolated tasks without systems thinking</li>
               <li>Adds stack complexity and team resistance</li>
@@ -224,8 +226,8 @@ export function LandingPage() {
 
           <article className="reveal-up rounded-3xl border border-[#2a3f66] bg-[#101b34] p-7 shadow-[0_0_0_1px_rgba(116,164,255,0.13),0_20px_70px_rgba(0,0,0,0.35)]">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#9cc2ff]">Temporary Utopia</p>
-            <h3 className="mt-3 text-2xl font-semibold text-[#ecf3ff]">Diagnosis-first, implementation-ready</h3>
             <ul className="mt-6 space-y-3 text-sm leading-relaxed text-[#b7c7eb] sm:text-base">
+              <li>Diagnosis-first, implementation-ready</li>
               <li>Understand how your business works before selecting tools</li>
               <li>Prioritize high-leverage opportunities with low adoption friction</li>
               <li>Recommend systems around outcomes, not hype cycles</li>
@@ -235,7 +237,7 @@ export function LandingPage() {
         </div>
       </Section>
 
-      <Section id="offer" className="pt-12">
+      <Section id="offer">
         <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
           <div className="reveal-up">
             <Eyebrow>Service Overview</Eyebrow>
@@ -244,13 +246,13 @@ export function LandingPage() {
               This is a focused consulting engagement for business owners who want practical guidance, not AI noise. You get a strategic operating view: where AI creates real value, where it adds risk, and how to roll improvements out with control.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <PrimaryButton href="#pricing">Request Audit Availability</PrimaryButton>
+              <PrimaryButton href="#booking">Request Audit Availability</PrimaryButton>
               <SecondaryButton href="#included">View Deliverables</SecondaryButton>
             </div>
           </div>
 
           <div className="reveal-up rounded-3xl border border-[#2a3f66] bg-[#0c1630]/85 p-7">
-            <h3 className="text-lg font-semibold text-[#e5eeff]">Engagement flow</h3>
+            <h3 className="text-lg font-semibold text-[#e5eeff]">How the engagement works</h3>
             <ol className="mt-6 space-y-4 text-sm leading-relaxed text-[#b7c8eb] sm:text-base">
               <li>
                 <span className="font-semibold text-[#f1f6ff]">1. Discovery:</span> understand workflows, constraints, and bottlenecks.
@@ -272,7 +274,7 @@ export function LandingPage() {
       <Section id="included" className="section-contrast">
         <div className="text-center">
           <Eyebrow>What Is Included</Eyebrow>
-          <SectionTitle>Everything required to move from confusion to clear execution.</SectionTitle>
+          <SectionTitle className="mx-auto">Everything required to move from confusion to clear execution.</SectionTitle>
         </div>
         <div className="mt-11 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {deliverables.map((item, index) => (
@@ -358,7 +360,7 @@ export function LandingPage() {
       <Section id="trust">
         <div className="text-center">
           <Eyebrow>Trust And Proof</Eyebrow>
-          <SectionTitle>Structured to lower uncertainty and build confidence.</SectionTitle>
+          <SectionTitle className="mx-auto">Structured to lower uncertainty and build confidence.</SectionTitle>
           <p className="mx-auto mt-6 max-w-3xl text-mute">
             The modules below are intentional placeholders for approved proof assets. They are designed to be swapped quickly with real testimonials, case studies, and logos.
           </p>
@@ -419,14 +421,34 @@ export function LandingPage() {
             Scope is adjusted to business complexity, team size, and workflow depth. Every engagement includes the audit report, recommendation framework, and strategic review call.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <PrimaryButton href="#final-cta">Request Audit Availability</PrimaryButton>
+            <PrimaryButton href="#booking">Request Audit Availability</PrimaryButton>
             <SecondaryButton href="mailto:hello@temporaryutopia.com">Email Temporary Utopia</SecondaryButton>
           </div>
           <p className="mt-4 text-xs text-[#8197c6]">Pricing block is intentionally easy to update as your offer evolves.</p>
         </div>
       </Section>
 
-      <Section id="final-cta" className="pt-8">
+      <Section id="booking">
+        <div className="text-center">
+          <Eyebrow>Book Your Audit</Eyebrow>
+          <SectionTitle className="mx-auto">Choose a time that works and start with a focused strategy call.</SectionTitle>
+          <p className="mx-auto mt-6 max-w-3xl text-mute">
+            Use the scheduler below to request your 30-minute audit conversation. We will discuss your current operations, constraints, and where an audit can create immediate clarity.
+          </p>
+        </div>
+        <div className="mt-10 overflow-hidden rounded-3xl border border-[#2a3f66] bg-[#0b152d]/85 p-2 sm:p-3">
+          <iframe
+            src={CALENDLY_URL}
+            title="Book an AI Efficiency Audit call"
+            width="100%"
+            height="700"
+            frameBorder="0"
+            className="w-full rounded-2xl bg-[#0b152d]"
+          />
+        </div>
+      </Section>
+
+      <Section id="final-cta">
         <div className="reveal-up rounded-3xl border border-[#2a3f66] bg-[#060b18] px-7 py-12 text-center shadow-[0_30px_120px_rgba(0,0,0,0.7)] sm:px-10 sm:py-16">
           <p className="mx-auto w-fit rounded-full border border-[#5872c9]/60 bg-[#0f1a38]/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-[#9db6ef]">
             Next Step
@@ -439,7 +461,7 @@ export function LandingPage() {
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
             <a
-              href="mailto:hello@temporaryutopia.com?subject=AI%20Efficiency%20Audit%20Inquiry"
+              href={CALENDLY_URL}
               className="btn-primary"
             >
               Start With A Strategy Call
