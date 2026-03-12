@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #0f172a;
+  --mute: #475569;
+  --surface: #f7f8fb;
+  --panel: #eef2f8;
+  --line: #d5deea;
+  --accent: #184fc4;
+  --accent-soft: #dbe6ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Avenir Next", "Manrope", "Segoe UI", "Helvetica Neue", sans-serif;
+  background: var(--surface);
+  color: var(--ink);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", serif;
+}
+
+::selection {
+  background: rgba(24, 79, 196, 0.18);
+}
+
+.fade-in {
+  animation: fadeUp 0.65s ease both;
+}
+
+.stagger-1 {
+  animation: fadeUp 0.8s ease both;
+  animation-delay: 140ms;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .stagger-1 {
+    animation: none;
+  }
+}
