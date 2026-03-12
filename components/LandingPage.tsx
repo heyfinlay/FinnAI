@@ -87,8 +87,6 @@ const founderPoints = [
   "I advise based on fit and usefulness, not software hype.",
 ];
 
-const CALENDLY_URL = "https://calendly.com/finlay-temporaryutopia/30min";
-
 function Section({
   id,
   className = "",
