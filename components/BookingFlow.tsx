@@ -134,7 +134,7 @@ export function BookingFlow() {
           </label>
         </div>
 
-        {error ? <p className="mt-3 text-sm text-[#ff8fd3]">{error}</p> : null}
+        {error ? <p className="mt-3 text-sm text-[#ff88c8]">{error}</p> : null}
 
         <button type="submit" className="btn-primary mt-5 w-full sm:w-auto">
           Generate Booking Draft
@@ -142,7 +142,7 @@ export function BookingFlow() {
 
         {ready ? (
           <div className="draft-panel mt-5">
-            <p className="text-sm text-[#e7ddff]">
+            <p className="text-sm text-[#d7e4f1]">
               Draft ready for <strong>{selectedSlot}</strong>. Send the booking request and I will confirm the final time.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
