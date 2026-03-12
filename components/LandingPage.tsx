@@ -1,6 +1,5 @@
 import { BookingFlow } from "@/components/BookingFlow";
-
-const CALENDLY_URL = "https://calendly.com/finlay-temporaryutopia/30min";
+import { schedulerUrl } from "@/lib/scheduler";
 
 type UseCase = {
   name: string;
@@ -215,7 +214,7 @@ export function LandingPage() {
               Temporary Utopia provides an AI Operations Audit for business owners who want practical guidance. We start by understanding how your business actually runs, then recommend what is worth implementing.
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
-              <PrimaryButton href={CALENDLY_URL}>Book Your Audit</PrimaryButton>
+              <PrimaryButton href={schedulerUrl}>Book Your Audit</PrimaryButton>
               <SecondaryButton href="#fit">See If You Are A Fit</SecondaryButton>
             </div>
             <p className="mt-5 text-sm text-mute">
@@ -579,7 +578,7 @@ export function LandingPage() {
             If you want thoughtful guidance before making implementation decisions, start with a strategy call.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-            <a href={CALENDLY_URL} className="btn-primary">
+            <a href={schedulerUrl} className="btn-primary">
               Request Availability
             </a>
             <a href="#offer" className="btn-secondary">
