@@ -9,21 +9,20 @@ type BookingFormState = {
   notes: string;
 };
 
-const slots = [
-  "Tue 10:00 AM",
-  "Tue 2:00 PM",
-  "Wed 9:30 AM",
-  "Wed 4:00 PM",
-  "Thu 11:00 AM",
-  "Thu 3:30 PM",
-];
-
 const schedulerUrl =
   process.env.NEXT_PUBLIC_BOOKING_URL ??
-  "https://calendly.com/temporaryutopia/strategy-call";
+  "https://calendly.com/calendly/30min";
+
+function getEmbedUrl(url: string): string {
+  if (url.includes("calendly.com")) {
+    const joiner = url.includes("?") ? "&" : "?";
+    return `${url}${joiner}hide_gdpr_banner=1&hide_event_type_details=1`;
+  }
+
+  return url;
+}
 
 export function BookingFlow() {
-  const [selectedSlot, setSelectedSlot] = useState<string>(slots[0]);
   const [form, setForm] = useState<BookingFormState>({
     name: "",
     email: "",
@@ -33,25 +32,26 @@ export function BookingFlow() {
   const [error, setError] = useState<string>("");
   const [ready, setReady] = useState<boolean>(false);
 
+  const embedUrl = useMemo(() => getEmbedUrl(schedulerUrl), []);
+
   const draftLink = useMemo(() => {
     const subject = `Strategy Call Request - ${form.business || "Temporary Utopia"}`;
     const body = [
       "Hi Finlay,",
       "",
-      "I would like to book a strategy call for the AI Efficiency Audit.",
+      "I would like to request a strategy call for the AI Efficiency Audit.",
       "",
-      `Preferred slot: ${selectedSlot}`,
       `Name: ${form.name}`,
       `Email: ${form.email}`,
       `Business: ${form.business}`,
-      `Notes: ${form.notes || "N/A"}`,
+      `Focus area: ${form.notes || "N/A"}`,
       "",
       "Thanks,",
       form.name,
     ].join("\n");
 
     return `mailto:hello@temporaryutopia.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  }, [form.business, form.email, form.name, form.notes, selectedSlot]);
+  }, [form.business, form.email, form.name, form.notes]);
 
   function handleGenerateDraft(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -59,7 +59,7 @@ export function BookingFlow() {
 
     if (!form.name.trim() || !form.email.trim() || !form.business.trim()) {
       setReady(false);
-      setError("Please complete name, email, and business to generate your booking draft.");
+      setError("Please complete name, email, and business before generating your request.");
       return;
     }
 
@@ -76,27 +76,20 @@ export function BookingFlow() {
   return (
     <div className="booking-shell">
       <div className="booking-column">
-        <p className="booking-kicker">Step 1 · Choose A Preferred Slot</p>
-        <div className="slot-grid">
-          {slots.map((slot) => (
-            <button
-              key={slot}
-              type="button"
-              className={`slot-btn ${selectedSlot === slot ? "slot-btn-active" : ""}`}
-              onClick={() => setSelectedSlot(slot)}
-            >
-              {slot}
-            </button>
-          ))}
+        <p className="booking-kicker">Instant Booking</p>
+        <div className="schedule-embed">
+          <iframe src={embedUrl} title="Book a strategy call" loading="lazy" />
         </div>
-
-        <a href={schedulerUrl} target="_blank" rel="noreferrer" className="btn-secondary mt-5 w-full sm:w-auto">
-          Open Live Scheduler
-        </a>
+        <p className="booking-note">
+          If the embed does not load, use the direct link:
+          <a href={schedulerUrl} target="_blank" rel="noreferrer">
+            Open Scheduler
+          </a>
+        </p>
       </div>
 
       <form className="booking-column" onSubmit={handleGenerateDraft}>
-        <p className="booking-kicker">Step 2 · Add Your Details</p>
+        <p className="booking-kicker">Request By Email</p>
         <div className="form-grid">
           <label className="form-field">
             <span>Name</span>
@@ -115,7 +108,7 @@ export function BookingFlow() {
               placeholder="alex@business.com"
             />
           </label>
-          <label className="form-field">
+          <label className="form-field sm:col-span-2">
             <span>Business</span>
             <input
               value={form.business}
@@ -124,33 +117,33 @@ export function BookingFlow() {
             />
           </label>
           <label className="form-field sm:col-span-2">
-            <span>What do you want to improve first?</span>
+            <span>Main Focus</span>
             <textarea
               value={form.notes}
               onChange={(event) => setForm((prev) => ({ ...prev, notes: event.target.value }))}
-              placeholder="Admin load, lead follow-up speed, reporting, internal handoffs..."
-              rows={3}
+              placeholder="Where do you want more clarity or efficiency?"
+              rows={4}
             />
           </label>
         </div>
 
-        {error ? <p className="mt-3 text-sm text-[#ff88c8]">{error}</p> : null}
+        {error ? <p className="mt-3 text-sm text-[#9fc8ff]">{error}</p> : null}
 
         <button type="submit" className="btn-primary mt-5 w-full sm:w-auto">
-          Generate Booking Draft
+          Generate Request
         </button>
 
         {ready ? (
           <div className="draft-panel mt-5">
-            <p className="text-sm text-[#d7e4f1]">
-              Draft ready for <strong>{selectedSlot}</strong>. Send the booking request and I will confirm the final time.
+            <p className="text-sm text-[#d4dbe7]">
+              Your booking request is ready. Send the email and I will reply with next available times.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <a href={draftLink} className="btn-primary">
                 Send Booking Request
               </a>
               <a href={schedulerUrl} target="_blank" rel="noreferrer" className="btn-secondary">
-                Book Instantly Instead
+                Use Live Scheduler
               </a>
             </div>
           </div>
