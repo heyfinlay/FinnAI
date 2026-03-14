@@ -2,6 +2,8 @@
 
 import { FormEvent, useMemo, useState } from "react";
 
+import { schedulerUrl } from "@/lib/scheduler";
+
 type BookingFormState = {
   name: string;
   email: string;
@@ -9,9 +11,6 @@ type BookingFormState = {
   notes: string;
 };
 
-const schedulerUrl =
-  process.env.NEXT_PUBLIC_BOOKING_URL ??
-  "https://calendly.com/finlay-temporaryutopia/30min";
 
 function getEmbedUrl(url: string): string {
   if (url.includes("calendly.com")) {
