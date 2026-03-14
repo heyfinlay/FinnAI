@@ -109,7 +109,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 
 function SectionTitle({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <h2 className="mt-5 max-w-4xl font-display text-3xl leading-tight text-ink sm:text-4xl lg:text-[2.75rem]">
+    <h2 className={`mt-5 max-w-4xl font-display text-3xl leading-tight text-ink sm:text-4xl lg:text-[2.75rem] ${className}`}>
       {children}
     </h2>
   );
