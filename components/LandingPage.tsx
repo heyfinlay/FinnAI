@@ -1,25 +1,18 @@
 import { BookingFlow } from "@/components/BookingFlow";
 import {
-  AuditDiagram,
   BeforeAfterWorkflow,
   DeliverablePreview,
   Eyebrow,
   FitChecklist,
   ProblemComparison,
-  ProofStrip,
   SectionLead,
   SectionShell,
   SectionTitle,
 } from "@/components/landing/AdvisoryBlocks";
+import { HeroSection } from "@/components/landing/HeroSection";
 import { OperationsDiagnostic } from "@/components/landing/OperationsDiagnostic";
 
 const CALENDLY_URL = "https://calendly.com/finlay-temporaryutopia/30min";
-
-const heroProof = [
-  { label: "Founder-led", detail: "Independent advice without software bias" },
-  { label: "Practical scope", detail: "Workflow clarity before technical change" },
-  { label: "Decision-ready", detail: "Report, priorities, and readout session" },
-];
 
 const problemColumns = [
   {
@@ -190,29 +183,7 @@ export function LandingPage() {
       </header>
 
       <main id="main-content" className="site-main">
-        <SectionShell id="top">
-          <div className="hero-layout">
-            <div className="reveal-up">
-              <Eyebrow>Founder-led AI operations advisory</Eyebrow>
-              <h1 className="hero-title">
-                Understand where AI fits in your business before you commit to the wrong systems.
-              </h1>
-              <p className="hero-copy">
-                Temporary Utopia runs an AI Operations Audit for business owners who want practical clarity. The work starts
-                with how your operations actually function, then turns that diagnosis into a focused implementation path.
-              </p>
-
-              <div className="hero-cta-group">
-                <PrimaryButton href={CALENDLY_URL}>Book a strategy call</PrimaryButton>
-                <SecondaryButton href="#how-it-works">See how the audit works</SecondaryButton>
-              </div>
-
-              <ProofStrip items={heroProof} />
-            </div>
-
-            <AuditDiagram />
-          </div>
-        </SectionShell>
+        <HeroSection primaryHref={CALENDLY_URL} secondaryHref="#how-it-works" />
 
         <SectionShell id="problem" tone="contrast">
           <div className="editorial-grid">
