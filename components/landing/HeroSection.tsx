@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
 
 const trustItems = ["Founder-led", "Practical scope", "Decision-ready recommendations"];
 
@@ -14,6 +13,215 @@ type RotationState = {
   lastX: number;
   lastY: number;
 };
+
+type LatLon = {
+  lat: number;
+  lon: number;
+};
+
+type ProjectedPoint = {
+  x: number;
+  y: number;
+  visible: boolean;
+};
+
+const MARKER_COORDINATES: LatLon[] = [
+  { lat: 40.7, lon: -74.0 },
+  { lat: 51.5, lon: -0.12 },
+  { lat: 1.35, lon: 103.8 },
+  { lat: -33.86, lon: 151.2 },
+  { lat: 35.68, lon: 139.7 },
+];
+
+const CONNECTIONS: Array<[LatLon, LatLon, string, number]> = [
+  [MARKER_COORDINATES[0], MARKER_COORDINATES[1], "#8ad8ff", 0.44],
+  [MARKER_COORDINATES[1], MARKER_COORDINATES[2], "#6fd7ff", 0.32],
+  [MARKER_COORDINATES[0], MARKER_COORDINATES[3], "#8ad8ff", 0.24],
+];
+
+const CONTINENT_PATHS: LatLon[][] = [
+  [
+    { lat: 73, lon: -168 },
+    { lat: 70, lon: -156 },
+    { lat: 66, lon: -146 },
+    { lat: 61, lon: -136 },
+    { lat: 56, lon: -128 },
+    { lat: 51, lon: -124 },
+    { lat: 48, lon: -124 },
+    { lat: 46, lon: -126 },
+    { lat: 43, lon: -124 },
+    { lat: 39, lon: -121 },
+    { lat: 35, lon: -118 },
+    { lat: 31, lon: -114 },
+    { lat: 28, lon: -109 },
+    { lat: 25, lon: -104 },
+    { lat: 22, lon: -98 },
+    { lat: 19, lon: -92 },
+    { lat: 21, lon: -86 },
+    { lat: 26, lon: -82 },
+    { lat: 31, lon: -81 },
+    { lat: 37, lon: -76 },
+    { lat: 44, lon: -67 },
+    { lat: 49, lon: -61 },
+    { lat: 54, lon: -60 },
+    { lat: 58, lon: -67 },
+    { lat: 62, lon: -79 },
+    { lat: 66, lon: -96 },
+    { lat: 69, lon: -116 },
+    { lat: 72, lon: -144 },
+  ],
+  [
+    { lat: 82, lon: -72 },
+    { lat: 79, lon: -60 },
+    { lat: 74, lon: -46 },
+    { lat: 69, lon: -34 },
+    { lat: 62, lon: -38 },
+    { lat: 60, lon: -50 },
+    { lat: 66, lon: -62 },
+    { lat: 74, lon: -70 },
+  ],
+  [
+    { lat: 24, lon: -97 },
+    { lat: 18, lon: -91 },
+    { lat: 14, lon: -88 },
+    { lat: 11, lon: -85 },
+    { lat: 9, lon: -81 },
+    { lat: 11, lon: -78 },
+    { lat: 15, lon: -80 },
+    { lat: 19, lon: -84 },
+    { lat: 22, lon: -89 },
+  ],
+  [
+    { lat: 12, lon: -81 },
+    { lat: 6, lon: -77 },
+    { lat: -2, lon: -75 },
+    { lat: -12, lon: -72 },
+    { lat: -22, lon: -66 },
+    { lat: -32, lon: -62 },
+    { lat: -42, lon: -60 },
+    { lat: -52, lon: -63 },
+    { lat: -56, lon: -71 },
+    { lat: -50, lon: -77 },
+    { lat: -38, lon: -76 },
+    { lat: -26, lon: -74 },
+    { lat: -14, lon: -75 },
+    { lat: -4, lon: -78 },
+  ],
+  [
+    { lat: 71, lon: -12 },
+    { lat: 68, lon: -2 },
+    { lat: 64, lon: 12 },
+    { lat: 60, lon: 24 },
+    { lat: 57, lon: 34 },
+    { lat: 56, lon: 48 },
+    { lat: 58, lon: 64 },
+    { lat: 60, lon: 82 },
+    { lat: 60, lon: 100 },
+    { lat: 58, lon: 118 },
+    { lat: 56, lon: 136 },
+    { lat: 52, lon: 150 },
+    { lat: 46, lon: 146 },
+    { lat: 40, lon: 136 },
+    { lat: 34, lon: 126 },
+    { lat: 28, lon: 116 },
+    { lat: 22, lon: 108 },
+    { lat: 16, lon: 98 },
+    { lat: 12, lon: 88 },
+    { lat: 14, lon: 74 },
+    { lat: 18, lon: 62 },
+    { lat: 24, lon: 52 },
+    { lat: 30, lon: 44 },
+    { lat: 36, lon: 38 },
+    { lat: 42, lon: 32 },
+    { lat: 50, lon: 24 },
+    { lat: 58, lon: 12 },
+    { lat: 64, lon: 2 },
+  ],
+  [
+    { lat: 36, lon: -17 },
+    { lat: 32, lon: -6 },
+    { lat: 29, lon: 6 },
+    { lat: 24, lon: 16 },
+    { lat: 18, lon: 24 },
+    { lat: 10, lon: 32 },
+    { lat: 0, lon: 36 },
+    { lat: -10, lon: 34 },
+    { lat: -20, lon: 30 },
+    { lat: -30, lon: 22 },
+    { lat: -35, lon: 14 },
+    { lat: -33, lon: 6 },
+    { lat: -26, lon: -2 },
+    { lat: -14, lon: -8 },
+    { lat: 0, lon: -10 },
+    { lat: 14, lon: -12 },
+    { lat: 26, lon: -14 },
+  ],
+  [
+    { lat: 59, lon: -8 },
+    { lat: 57, lon: -5 },
+    { lat: 54, lon: -2 },
+    { lat: 52, lon: -4 },
+    { lat: 54, lon: -7 },
+  ],
+  [
+    { lat: 31, lon: 34 },
+    { lat: 28, lon: 40 },
+    { lat: 24, lon: 46 },
+    { lat: 20, lon: 51 },
+    { lat: 16, lon: 50 },
+    { lat: 14, lon: 44 },
+    { lat: 18, lon: 38 },
+    { lat: 24, lon: 34 },
+  ],
+  [
+    { lat: 24, lon: 68 },
+    { lat: 20, lon: 76 },
+    { lat: 18, lon: 84 },
+    { lat: 14, lon: 92 },
+    { lat: 8, lon: 100 },
+    { lat: 4, lon: 104 },
+    { lat: 0, lon: 107 },
+    { lat: -4, lon: 112 },
+    { lat: -6, lon: 120 },
+    { lat: -5, lon: 128 },
+    { lat: -2, lon: 134 },
+    { lat: 0, lon: 130 },
+    { lat: 1, lon: 120 },
+    { lat: 0, lon: 110 },
+    { lat: 2, lon: 98 },
+    { lat: 10, lon: 84 },
+    { lat: 18, lon: 72 },
+  ],
+  [
+    { lat: 46, lon: 143 },
+    { lat: 42, lon: 146 },
+    { lat: 38, lon: 142 },
+    { lat: 35, lon: 138 },
+    { lat: 38, lon: 136 },
+    { lat: 42, lon: 139 },
+  ],
+  [
+    { lat: -10, lon: 112 },
+    { lat: -18, lon: 124 },
+    { lat: -26, lon: 138 },
+    { lat: -34, lon: 148 },
+    { lat: -40, lon: 146 },
+    { lat: -42, lon: 132 },
+    { lat: -36, lon: 118 },
+    { lat: -26, lon: 112 },
+  ],
+  [
+    { lat: -13, lon: 49 },
+    { lat: -18, lon: 50 },
+    { lat: -22, lon: 48 },
+    { lat: -24, lon: 45 },
+    { lat: -19, lon: 44 },
+    { lat: -14, lon: 46 },
+  ],
+];
+
+const DENSIFIED_PATHS = CONTINENT_PATHS.map((path) => densifyPath(path, 3));
+const LAND_DOTS = buildLandDots(CONTINENT_PATHS, 4);
 
 export function HeroSection({ primaryHref, secondaryHref }: { primaryHref: string; secondaryHref: string }) {
   return (
@@ -72,12 +280,15 @@ export function HeroSection({ primaryHref, secondaryHref }: { primaryHref: strin
 
 function InteractiveGlobe() {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const frameRef = useRef<number | null>(null);
+  const isVisibleRef = useRef(true);
+  const lastRenderRef = useRef(0);
   const stateRef = useRef<RotationState>({
-    x: -0.22,
-    y: -0.5,
+    x: -0.16,
+    y: 0.72,
     vx: 0,
-    vy: 0.005,
+    vy: 0.0042,
     dragging: false,
     lastX: 0,
     lastY: 0,
@@ -85,124 +296,53 @@ function InteractiveGlobe() {
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) {
+    const canvas = canvasRef.current;
+    const context = canvas?.getContext("2d");
+
+    if (!container || !canvas || !context) {
       return;
     }
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(24, 1, 0.1, 100);
-    camera.position.set(0, 0, 7.2);
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const renderer = new THREE.WebGLRenderer({
-      alpha: true,
-      antialias: true,
-      powerPreference: "high-performance",
-    });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x000000, 0);
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.domElement.style.width = "100%";
-    renderer.domElement.style.height = "100%";
-    renderer.domElement.style.display = "block";
-    container.appendChild(renderer.domElement);
-
-    const globeGroup = new THREE.Group();
-    scene.add(globeGroup);
-
-    const globeRadius = 1.38;
-    const texture = createGlobeTexture();
-    const globe = new THREE.Mesh(
-      new THREE.SphereGeometry(globeRadius, 72, 72),
-      new THREE.MeshStandardMaterial({
-        color: new THREE.Color("#07111a"),
-        map: texture,
-        emissive: new THREE.Color("#42bff8"),
-        emissiveMap: texture,
-        emissiveIntensity: 0.34,
-        roughness: 0.88,
-        metalness: 0.04,
-      }),
-    );
-    globeGroup.add(globe);
-
-    const atmosphere = new THREE.Mesh(
-      new THREE.SphereGeometry(globeRadius * 1.035, 72, 72),
-      new THREE.MeshBasicMaterial({
-        color: new THREE.Color("#5bc5ff"),
-        transparent: true,
-        opacity: 0.08,
-        side: THREE.BackSide,
-      }),
-    );
-    globeGroup.add(atmosphere);
-
-    const ambient = new THREE.AmbientLight(0xc9edff, 0.72);
-    scene.add(ambient);
-
-    const keyLight = new THREE.DirectionalLight(0x9ed8ff, 1.45);
-    keyLight.position.set(4.2, 2.4, 5.2);
-    scene.add(keyLight);
-
-    const rimLight = new THREE.DirectionalLight(0x2fb8ff, 0.65);
-    rimLight.position.set(-4.4, -1.4, 1.6);
-    scene.add(rimLight);
-
-    const orbitGroup = new THREE.Group();
-    scene.add(orbitGroup);
-    orbitGroup.add(createOrbitLine(globeRadius * 1.24, globeRadius * 1.05, "#d7e7f8", 0.22, 0.38, 0.18, 0.22));
-    orbitGroup.add(createOrbitLine(globeRadius * 1.1, globeRadius * 0.96, "#69d7ff", 0.14, -0.5, -0.08, -0.34));
-
-    const markerCoordinates: LatLon[] = [
-      { lat: 40.7, lon: -74.0 },
-      { lat: 51.5, lon: -0.12 },
-      { lat: 1.35, lon: 103.8 },
-      { lat: -33.86, lon: 151.2 },
-      { lat: 35.68, lon: 139.7 },
-    ];
-
-    markerCoordinates.forEach((coordinate, index) => {
-      const marker = new THREE.Mesh(
-        new THREE.SphereGeometry(index === 0 ? 0.05 : 0.038, 18, 18),
-        new THREE.MeshBasicMaterial({
-          color: index === 0 ? 0xd8f6ff : 0x93e6ff,
-          transparent: true,
-          opacity: index === 0 ? 0.95 : 0.82,
-        }),
-      );
-      marker.position.copy(latLonToVector3(coordinate.lat, coordinate.lon, globeRadius * 1.01));
-      globeGroup.add(marker);
-
-      const glow = new THREE.Mesh(
-        new THREE.SphereGeometry(index === 0 ? 0.1 : 0.075, 16, 16),
-        new THREE.MeshBasicMaterial({
-          color: 0x63d1ff,
-          transparent: true,
-          opacity: index === 0 ? 0.18 : 0.12,
-        }),
-      );
-      glow.position.copy(marker.position);
-      globeGroup.add(glow);
-    });
-
-    globeGroup.add(createConnection(markerCoordinates[0], markerCoordinates[1], globeRadius, "#8ad8ff", 0.48));
-    globeGroup.add(createConnection(markerCoordinates[1], markerCoordinates[2], globeRadius, "#6fd7ff", 0.36));
-    globeGroup.add(createConnection(markerCoordinates[0], markerCoordinates[3], globeRadius, "#8ad8ff", 0.28));
+    const draw = () => {
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      drawScene(context, width, height, stateRef.current);
+    };
 
     const resize = () => {
-      const { clientWidth, clientHeight } = container;
-      renderer.setSize(clientWidth, clientHeight, false);
-      camera.aspect = clientWidth / clientHeight;
-      camera.updateProjectionMatrix();
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      canvas.width = Math.max(1, Math.floor(width * dpr));
+      canvas.height = Math.max(1, Math.floor(height * dpr));
+      context.setTransform(dpr, 0, 0, dpr, 0, 0);
+      draw();
     };
 
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(container);
     resize();
 
-    const animate = () => {
-      const state = stateRef.current;
+    const intersectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = Boolean(entry?.isIntersecting);
+      },
+      { threshold: 0.12 },
+    );
+    intersectionObserver.observe(container);
 
-      if (!state.dragging) {
+    const handleVisibility = () => {
+      isVisibleRef.current = document.visibilityState === "visible";
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    const animate = (now = 0) => {
+      const state = stateRef.current;
+      const shouldAnimate = isVisibleRef.current;
+
+      if (shouldAnimate && !state.dragging && !reducedMotion) {
         state.y += state.vy;
         state.x = clamp(state.x + state.vx, -0.48, 0.48);
         state.vx *= 0.94;
@@ -210,12 +350,11 @@ function InteractiveGlobe() {
         state.vy += 0.00003;
       }
 
-      globeGroup.rotation.x = state.x;
-      globeGroup.rotation.y = state.y;
-      orbitGroup.rotation.y = state.y * 0.35;
-      orbitGroup.rotation.x = state.x * 0.2;
+      if (shouldAnimate && now - lastRenderRef.current > 20) {
+        draw();
+        lastRenderRef.current = now;
+      }
 
-      renderer.render(scene, camera);
       frameRef.current = requestAnimationFrame(animate);
     };
 
@@ -226,27 +365,8 @@ function InteractiveGlobe() {
         cancelAnimationFrame(frameRef.current);
       }
       resizeObserver.disconnect();
-      texture.dispose();
-      renderer.dispose();
-      scene.traverse((object) => {
-        if (object instanceof THREE.Mesh) {
-          object.geometry.dispose();
-          if (Array.isArray(object.material)) {
-            object.material.forEach((material) => material.dispose());
-          } else {
-            object.material.dispose();
-          }
-        }
-        if (object instanceof THREE.Line) {
-          object.geometry.dispose();
-          if (Array.isArray(object.material)) {
-            object.material.forEach((material) => material.dispose());
-          } else {
-            object.material.dispose();
-          }
-        }
-      });
-      container.innerHTML = "";
+      intersectionObserver.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibility);
     };
   }, []);
 
@@ -282,11 +402,12 @@ function InteractiveGlobe() {
 
   return (
     <div className="relative mx-auto flex w-full max-w-[34rem] items-center justify-center lg:min-h-[32rem]">
-      <div className="pointer-events-none absolute inset-4 rounded-full bg-[radial-gradient(circle,rgba(96,165,250,0.26),rgba(14,22,33,0)_58%)] blur-3xl" />
+      <div className="pointer-events-none absolute inset-4 rounded-full bg-[radial-gradient(circle,rgba(96,165,250,0.24),rgba(14,22,33,0)_58%)] blur-3xl" />
       <div className="pointer-events-none absolute h-[94%] w-[94%] rounded-full border border-white/5 [transform:rotate(18deg)_scaleY(0.76)]" />
       <div className="pointer-events-none absolute h-[80%] w-[80%] rounded-full border border-sky-300/10 [transform:rotate(-12deg)_scaleX(0.84)]" />
 
       <div
+        ref={containerRef}
         className="group relative h-[21rem] w-[21rem] touch-none select-none sm:h-[25rem] sm:w-[25rem] lg:h-[31rem] lg:w-[31rem]"
         onPointerDown={(event) => {
           event.currentTarget.setPointerCapture(event.pointerId);
@@ -314,183 +435,456 @@ function InteractiveGlobe() {
         aria-label="Interactive globe representing strategic AI operations advisory"
         tabIndex={0}
       >
-        <div className="absolute inset-[6%] rounded-full bg-[radial-gradient(circle_at_46%_44%,rgba(125,211,252,0.18),rgba(15,23,34,0)_62%)] blur-2xl" />
-        <div
-          ref={containerRef}
-          className="absolute inset-0 rounded-full"
-        />
+        <div className="pointer-events-none absolute inset-[6%] rounded-full bg-[radial-gradient(circle_at_46%_44%,rgba(125,211,252,0.16),rgba(15,23,34,0)_62%)] blur-2xl" />
+        <canvas ref={canvasRef} className="absolute inset-0 h-full w-full rounded-full" />
       </div>
     </div>
   );
 }
 
-function clamp(value: number, min: number, max: number) {
-  return Math.min(max, Math.max(min, value));
+function drawScene(context: CanvasRenderingContext2D, width: number, height: number, state: RotationState) {
+  context.clearRect(0, 0, width, height);
+
+  const centerX = width / 2;
+  const centerY = height / 2;
+  const radius = Math.min(width, height) * 0.31;
+  const centerLat = state.x;
+  const centerLon = state.y;
+
+  drawOrbitalFrame(context, centerX, centerY, radius);
+  drawAtmosphere(context, centerX, centerY, radius);
+  drawSphereBase(context, centerX, centerY, radius);
+
+  context.save();
+  context.beginPath();
+  context.arc(centerX, centerY, radius, 0, Math.PI * 2);
+  context.clip();
+
+  drawGraticule(context, centerX, centerY, radius, centerLat, centerLon);
+  drawLandDots(context, centerX, centerY, radius, centerLat, centerLon);
+  drawCoastlines(context, centerX, centerY, radius, centerLat, centerLon);
+  drawConnections(context, centerX, centerY, radius, centerLat, centerLon);
+  drawMarkers(context, centerX, centerY, radius, centerLat, centerLon);
+
+  context.restore();
+  drawRim(context, centerX, centerY, radius);
 }
 
-type LatLon = {
-  lat: number;
-  lon: number;
-};
-
-function latLonToVector3(lat: number, lon: number, radius: number) {
-  const phi = ((90 - lat) * Math.PI) / 180;
-  const theta = ((lon + 180) * Math.PI) / 180;
-
-  return new THREE.Vector3(
-    -(radius * Math.sin(phi) * Math.cos(theta)),
-    radius * Math.cos(phi),
-    radius * Math.sin(phi) * Math.sin(theta),
-  );
+function drawAtmosphere(context: CanvasRenderingContext2D, centerX: number, centerY: number, radius: number) {
+  const halo = context.createRadialGradient(centerX, centerY, radius * 0.3, centerX, centerY, radius * 1.55);
+  halo.addColorStop(0, "rgba(90, 190, 255, 0.18)");
+  halo.addColorStop(0.5, "rgba(58, 138, 206, 0.08)");
+  halo.addColorStop(1, "rgba(9, 14, 19, 0)");
+  context.fillStyle = halo;
+  context.beginPath();
+  context.arc(centerX, centerY, radius * 1.6, 0, Math.PI * 2);
+  context.fill();
 }
 
-function createOrbitLine(
+function drawSphereBase(context: CanvasRenderingContext2D, centerX: number, centerY: number, radius: number) {
+  const base = context.createRadialGradient(centerX - radius * 0.22, centerY - radius * 0.3, radius * 0.12, centerX, centerY, radius);
+  base.addColorStop(0, "#16334a");
+  base.addColorStop(0.24, "#0f2030");
+  base.addColorStop(0.62, "#081520");
+  base.addColorStop(1, "#050c13");
+  context.fillStyle = base;
+  context.beginPath();
+  context.arc(centerX, centerY, radius, 0, Math.PI * 2);
+  context.fill();
+
+  const highlight = context.createRadialGradient(centerX - radius * 0.42, centerY - radius * 0.44, 0, centerX - radius * 0.1, centerY - radius * 0.14, radius * 1.08);
+  highlight.addColorStop(0, "rgba(152, 226, 255, 0.16)");
+  highlight.addColorStop(0.25, "rgba(96, 196, 255, 0.08)");
+  highlight.addColorStop(1, "rgba(96, 196, 255, 0)");
+  context.fillStyle = highlight;
+  context.beginPath();
+  context.arc(centerX, centerY, radius, 0, Math.PI * 2);
+  context.fill();
+}
+
+function drawRim(context: CanvasRenderingContext2D, centerX: number, centerY: number, radius: number) {
+  context.strokeStyle = "rgba(130, 205, 255, 0.42)";
+  context.lineWidth = 1.5;
+  context.beginPath();
+  context.arc(centerX, centerY, radius + 0.5, 0, Math.PI * 2);
+  context.stroke();
+
+  context.strokeStyle = "rgba(221, 242, 255, 0.08)";
+  context.lineWidth = 8;
+  context.beginPath();
+  context.arc(centerX, centerY, radius - 3, Math.PI * 1.02, Math.PI * 1.6);
+  context.stroke();
+}
+
+function drawOrbitalFrame(context: CanvasRenderingContext2D, centerX: number, centerY: number, radius: number) {
+  drawEllipse(context, centerX, centerY, radius * 1.28, radius * 1.04, 0.38, "rgba(216, 231, 248, 0.14)", 1);
+  drawEllipse(context, centerX, centerY, radius * 1.13, radius * 0.97, -0.52, "rgba(119, 216, 255, 0.08)", 1);
+  drawEllipseSegment(context, centerX, centerY, radius * 1.28, radius * 1.04, 0.38, 0.92, 1.64, "rgba(162, 229, 255, 0.38)", 1.3);
+  drawEllipseSegment(context, centerX, centerY, radius * 1.13, radius * 0.97, -0.52, 4.18, 4.92, "rgba(125, 228, 255, 0.28)", 1.2);
+}
+
+function drawEllipse(
+  context: CanvasRenderingContext2D,
+  centerX: number,
+  centerY: number,
   radiusX: number,
   radiusY: number,
-  color: string,
-  opacity: number,
-  rotationZ: number,
-  rotationX: number,
-  rotationY: number,
+  rotation: number,
+  strokeStyle: string,
+  lineWidth: number,
 ) {
-  const curve = new THREE.EllipseCurve(0, 0, radiusX, radiusY, 0, Math.PI * 2, false, 0);
-  const points = curve.getPoints(220).map((point) => new THREE.Vector3(point.x, point.y, 0));
-  const geometry = new THREE.BufferGeometry().setFromPoints(points);
-  const material = new THREE.LineBasicMaterial({
-    color: new THREE.Color(color),
-    transparent: true,
-    opacity,
-  });
-  const line = new THREE.LineLoop(geometry, material);
-  line.rotation.z = rotationZ;
-  line.rotation.x = rotationX;
-  line.rotation.y = rotationY;
-  return line;
-}
-
-function createConnection(from: LatLon, to: LatLon, radius: number, color: string, opacity: number) {
-  const start = latLonToVector3(from.lat, from.lon, radius * 1.015);
-  const end = latLonToVector3(to.lat, to.lon, radius * 1.015);
-  const midpoint = start.clone().add(end).multiplyScalar(0.5).normalize().multiplyScalar(radius * 1.38);
-  const curve = new THREE.CatmullRomCurve3([start, midpoint, end]);
-  const geometry = new THREE.BufferGeometry().setFromPoints(curve.getPoints(80));
-  const material = new THREE.LineBasicMaterial({
-    color: new THREE.Color(color),
-    transparent: true,
-    opacity,
-  });
-  return new THREE.Line(geometry, material);
-}
-
-function createGlobeTexture() {
-  const canvas = document.createElement("canvas");
-  canvas.width = 2048;
-  canvas.height = 1024;
-  const context = canvas.getContext("2d");
-
-  if (!context) {
-    return new THREE.CanvasTexture(canvas);
-  }
-
-  context.fillStyle = "#061018";
-  context.fillRect(0, 0, canvas.width, canvas.height);
-
-  const baseGradient = context.createRadialGradient(canvas.width * 0.32, canvas.height * 0.28, 20, canvas.width * 0.5, canvas.height * 0.5, canvas.width * 0.6);
-  baseGradient.addColorStop(0, "rgba(123, 211, 252, 0.16)");
-  baseGradient.addColorStop(0.35, "rgba(14, 28, 40, 0.08)");
-  baseGradient.addColorStop(1, "rgba(6, 16, 24, 0)");
-  context.fillStyle = baseGradient;
-  context.fillRect(0, 0, canvas.width, canvas.height);
-
-  context.strokeStyle = "rgba(125, 211, 252, 0.16)";
-  context.lineWidth = 1;
-  for (let x = 0; x <= canvas.width; x += 90) {
-    context.beginPath();
-    context.moveTo(x, 0);
-    context.lineTo(x, canvas.height);
-    context.stroke();
-  }
-
-  context.strokeStyle = "rgba(226, 232, 240, 0.08)";
-  for (let y = 0; y <= canvas.height; y += 78) {
-    context.beginPath();
-    context.moveTo(0, y);
-    context.lineTo(canvas.width, y);
-    context.stroke();
-  }
-
-  drawContinent(context, [
-    [0.15, 0.22],
-    [0.21, 0.18],
-    [0.28, 0.2],
-    [0.3, 0.27],
-    [0.27, 0.33],
-    [0.24, 0.4],
-    [0.19, 0.44],
-    [0.15, 0.38],
-    [0.13, 0.3],
-  ]);
-  drawContinent(context, [
-    [0.23, 0.48],
-    [0.29, 0.45],
-    [0.33, 0.5],
-    [0.31, 0.6],
-    [0.27, 0.72],
-    [0.2, 0.7],
-    [0.18, 0.56],
-  ]);
-  drawContinent(context, [
-    [0.48, 0.2],
-    [0.55, 0.17],
-    [0.63, 0.18],
-    [0.7, 0.24],
-    [0.74, 0.31],
-    [0.69, 0.37],
-    [0.61, 0.36],
-    [0.55, 0.31],
-    [0.49, 0.28],
-  ]);
-  drawContinent(context, [
-    [0.49, 0.38],
-    [0.54, 0.35],
-    [0.59, 0.37],
-    [0.61, 0.45],
-    [0.58, 0.57],
-    [0.54, 0.67],
-    [0.48, 0.63],
-    [0.45, 0.52],
-    [0.46, 0.43],
-  ]);
-  drawContinent(context, [
-    [0.69, 0.62],
-    [0.74, 0.6],
-    [0.78, 0.64],
-    [0.76, 0.7],
-    [0.7, 0.71],
-    [0.66, 0.66],
-  ]);
-
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.anisotropy = 8;
-  return texture;
-}
-
-function drawContinent(context: CanvasRenderingContext2D, points: number[][]) {
+  context.strokeStyle = strokeStyle;
+  context.lineWidth = lineWidth;
   context.beginPath();
-  points.forEach(([x, y], index) => {
-    const px = x * context.canvas.width;
-    const py = y * context.canvas.height;
-    if (index === 0) {
-      context.moveTo(px, py);
+  context.ellipse(centerX, centerY, radiusX, radiusY, rotation, 0, Math.PI * 2);
+  context.stroke();
+}
+
+function drawEllipseSegment(
+  context: CanvasRenderingContext2D,
+  centerX: number,
+  centerY: number,
+  radiusX: number,
+  radiusY: number,
+  rotation: number,
+  startAngle: number,
+  endAngle: number,
+  strokeStyle: string,
+  lineWidth: number,
+) {
+  context.strokeStyle = strokeStyle;
+  context.lineWidth = lineWidth;
+  context.beginPath();
+  context.ellipse(centerX, centerY, radiusX, radiusY, rotation, startAngle, endAngle);
+  context.stroke();
+}
+
+function drawGraticule(
+  context: CanvasRenderingContext2D,
+  centerX: number,
+  centerY: number,
+  radius: number,
+  centerLat: number,
+  centerLon: number,
+) {
+  context.strokeStyle = "rgba(127, 209, 246, 0.12)";
+  context.lineWidth = 0.8;
+
+  for (let lat = -60; lat <= 60; lat += 30) {
+    drawProjectedLine(
+      context,
+      buildLinePoints(-180, 180, 7, (lon) => ({ lat, lon })),
+      centerX,
+      centerY,
+      radius,
+      centerLat,
+      centerLon,
+    );
+  }
+
+  context.strokeStyle = "rgba(219, 233, 241, 0.06)";
+  for (let lon = -150; lon <= 180; lon += 30) {
+    drawProjectedLine(
+      context,
+      buildLinePoints(-85, 85, 7, (lat) => ({ lat, lon })),
+      centerX,
+      centerY,
+      radius,
+      centerLat,
+      centerLon,
+    );
+  }
+}
+
+function drawLandDots(
+  context: CanvasRenderingContext2D,
+  centerX: number,
+  centerY: number,
+  radius: number,
+  centerLat: number,
+  centerLon: number,
+) {
+  context.fillStyle = "rgba(113, 220, 255, 0.16)";
+  LAND_DOTS.forEach((point) => {
+    const projected = projectPoint(point, centerLat, centerLon, radius, centerX, centerY);
+    if (!projected.visible) {
       return;
     }
-    context.lineTo(px, py);
+    context.fillRect(projected.x - 0.9, projected.y - 0.9, 1.8, 1.8);
   });
-  context.closePath();
-  context.fillStyle = "rgba(110, 214, 255, 0.12)";
-  context.strokeStyle = "rgba(188, 233, 255, 0.16)";
-  context.lineWidth = 1.4;
-  context.fill();
+}
+
+function drawCoastlines(
+  context: CanvasRenderingContext2D,
+  centerX: number,
+  centerY: number,
+  radius: number,
+  centerLat: number,
+  centerLon: number,
+) {
+  DENSIFIED_PATHS.forEach((path) => {
+    context.strokeStyle = "rgba(98, 211, 255, 0.14)";
+    context.lineWidth = 3.2;
+    drawProjectedLine(context, path, centerX, centerY, radius, centerLat, centerLon);
+
+    context.strokeStyle = "rgba(212, 241, 255, 0.34)";
+    context.lineWidth = 1.15;
+    drawProjectedLine(context, path, centerX, centerY, radius, centerLat, centerLon);
+  });
+}
+
+function drawConnections(
+  context: CanvasRenderingContext2D,
+  centerX: number,
+  centerY: number,
+  radius: number,
+  centerLat: number,
+  centerLon: number,
+) {
+  CONNECTIONS.forEach(([from, to, color, opacity]) => {
+    const points = interpolateGreatCircle(from, to, 42);
+    const elevated = points.map((point, index) => {
+      const t = index / Math.max(points.length - 1, 1);
+      return { point, radiusScale: 1 + Math.sin(Math.PI * t) * 0.17 };
+    });
+
+    context.strokeStyle = hexToRgba(color, opacity);
+    context.lineWidth = 1.3;
+    context.beginPath();
+
+    let started = false;
+    elevated.forEach(({ point, radiusScale }) => {
+      const projected = projectPoint(point, centerLat, centerLon, radius * radiusScale, centerX, centerY);
+      if (!projected.visible) {
+        started = false;
+        return;
+      }
+      if (!started) {
+        context.moveTo(projected.x, projected.y);
+        started = true;
+        return;
+      }
+      context.lineTo(projected.x, projected.y);
+    });
+
+    context.stroke();
+  });
+}
+
+function drawMarkers(
+  context: CanvasRenderingContext2D,
+  centerX: number,
+  centerY: number,
+  radius: number,
+  centerLat: number,
+  centerLon: number,
+) {
+  MARKER_COORDINATES.forEach((point, index) => {
+    const projected = projectPoint(point, centerLat, centerLon, radius, centerX, centerY);
+    if (!projected.visible) {
+      return;
+    }
+
+    const glowRadius = index === 0 ? 9 : 7;
+    const glow = context.createRadialGradient(projected.x, projected.y, 0, projected.x, projected.y, glowRadius);
+    glow.addColorStop(0, index === 0 ? "rgba(227, 249, 255, 0.9)" : "rgba(158, 232, 255, 0.7)");
+    glow.addColorStop(1, "rgba(99, 209, 255, 0)");
+    context.fillStyle = glow;
+    context.beginPath();
+    context.arc(projected.x, projected.y, glowRadius, 0, Math.PI * 2);
+    context.fill();
+
+    context.fillStyle = index === 0 ? "#def8ff" : "#96e4ff";
+    context.beginPath();
+    context.arc(projected.x, projected.y, index === 0 ? 3.6 : 2.8, 0, Math.PI * 2);
+    context.fill();
+  });
+}
+
+function drawProjectedLine(
+  context: CanvasRenderingContext2D,
+  points: LatLon[],
+  centerX: number,
+  centerY: number,
+  radius: number,
+  centerLat: number,
+  centerLon: number,
+) {
+  context.beginPath();
+  let started = false;
+
+  points.forEach((point) => {
+    const projected = projectPoint(point, centerLat, centerLon, radius, centerX, centerY);
+    if (!projected.visible) {
+      started = false;
+      return;
+    }
+    if (!started) {
+      context.moveTo(projected.x, projected.y);
+      started = true;
+      return;
+    }
+    context.lineTo(projected.x, projected.y);
+  });
+
   context.stroke();
+}
+
+function projectPoint(
+  point: LatLon,
+  centerLat: number,
+  centerLon: number,
+  radius: number,
+  centerX: number,
+  centerY: number,
+): ProjectedPoint {
+  const lat = degreesToRadians(point.lat);
+  const lon = degreesToRadians(point.lon);
+  const deltaLon = lon - centerLon;
+
+  const sinLat = Math.sin(lat);
+  const cosLat = Math.cos(lat);
+  const sinCenterLat = Math.sin(centerLat);
+  const cosCenterLat = Math.cos(centerLat);
+
+  const visibility = sinCenterLat * sinLat + cosCenterLat * cosLat * Math.cos(deltaLon);
+
+  return {
+    x: centerX + radius * cosLat * Math.sin(deltaLon),
+    y: centerY - radius * (cosCenterLat * sinLat - sinCenterLat * cosLat * Math.cos(deltaLon)),
+    visible: visibility > 0,
+  };
+}
+
+function interpolateGreatCircle(from: LatLon, to: LatLon, steps: number) {
+  const start = latLonToVector(from);
+  const end = latLonToVector(to);
+  const dot = clamp(start.x * end.x + start.y * end.y + start.z * end.z, -1, 1);
+  const angle = Math.acos(dot);
+
+  if (angle === 0) {
+    return [from];
+  }
+
+  const sinAngle = Math.sin(angle);
+  const points: LatLon[] = [];
+
+  for (let index = 0; index <= steps; index += 1) {
+    const t = index / steps;
+    const scaleA = Math.sin((1 - t) * angle) / sinAngle;
+    const scaleB = Math.sin(t * angle) / sinAngle;
+
+    const x = start.x * scaleA + end.x * scaleB;
+    const y = start.y * scaleA + end.y * scaleB;
+    const z = start.z * scaleA + end.z * scaleB;
+    points.push(vectorToLatLon(normalizeVector({ x, y, z })));
+  }
+
+  return points;
+}
+
+function latLonToVector(point: LatLon) {
+  const lat = degreesToRadians(point.lat);
+  const lon = degreesToRadians(point.lon);
+  return {
+    x: Math.cos(lat) * Math.cos(lon),
+    y: Math.sin(lat),
+    z: Math.cos(lat) * Math.sin(lon),
+  };
+}
+
+function vectorToLatLon(vector: { x: number; y: number; z: number }): LatLon {
+  return {
+    lat: radiansToDegrees(Math.asin(vector.y)),
+    lon: radiansToDegrees(Math.atan2(vector.z, vector.x)),
+  };
+}
+
+function normalizeVector(vector: { x: number; y: number; z: number }) {
+  const length = Math.hypot(vector.x, vector.y, vector.z) || 1;
+  return {
+    x: vector.x / length,
+    y: vector.y / length,
+    z: vector.z / length,
+  };
+}
+
+function buildLinePoints(start: number, end: number, step: number, buildPoint: (value: number) => LatLon) {
+  const points: LatLon[] = [];
+  for (let value = start; value <= end; value += step) {
+    points.push(buildPoint(value));
+  }
+  return points;
+}
+
+function densifyPath(path: LatLon[], segmentsPerEdge: number) {
+  const densified: LatLon[] = [];
+  path.forEach((point, index) => {
+    const next = path[(index + 1) % path.length];
+    densified.push(point);
+    for (let step = 1; step < segmentsPerEdge; step += 1) {
+      const t = step / segmentsPerEdge;
+      densified.push({
+        lat: point.lat + (next.lat - point.lat) * t,
+        lon: point.lon + (next.lon - point.lon) * t,
+      });
+    }
+  });
+  return densified;
+}
+
+function buildLandDots(paths: LatLon[][], step: number) {
+  const dots: LatLon[] = [];
+
+  for (let lat = -58; lat <= 82; lat += step) {
+    for (let lon = -178; lon <= 178; lon += step) {
+      if (paths.some((path) => pointInPolygon({ lat, lon }, path))) {
+        dots.push({ lat, lon });
+      }
+    }
+  }
+
+  return dots;
+}
+
+function pointInPolygon(point: LatLon, polygon: LatLon[]) {
+  let inside = false;
+
+  for (let index = 0, previous = polygon.length - 1; index < polygon.length; previous = index, index += 1) {
+    const xi = polygon[index].lon;
+    const yi = polygon[index].lat;
+    const xj = polygon[previous].lon;
+    const yj = polygon[previous].lat;
+
+    const intersects =
+      yi > point.lat !== yj > point.lat &&
+      point.lon < ((xj - xi) * (point.lat - yi)) / ((yj - yi) || 1e-9) + xi;
+
+    if (intersects) {
+      inside = !inside;
+    }
+  }
+
+  return inside;
+}
+
+function hexToRgba(hex: string, alpha: number) {
+  const value = hex.replace("#", "");
+  const normalized = value.length === 3 ? value.split("").map((character) => character + character).join("") : value;
+  const red = Number.parseInt(normalized.slice(0, 2), 16);
+  const green = Number.parseInt(normalized.slice(2, 4), 16);
+  const blue = Number.parseInt(normalized.slice(4, 6), 16);
+  return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+}
+
+function degreesToRadians(value: number) {
+  return (value * Math.PI) / 180;
+}
+
+function radiansToDegrees(value: number) {
+  return (value * 180) / Math.PI;
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
 }
