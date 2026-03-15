@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import * as THREE from "three";
 
 const trustItems = ["Founder-led", "Practical scope", "Decision-ready recommendations"];
 
@@ -70,44 +71,151 @@ export function HeroSection({ primaryHref, secondaryHref }: { primaryHref: strin
 }
 
 function InteractiveGlobe() {
-  const globeRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const frameRef = useRef<number | null>(null);
   const stateRef = useRef<RotationState>({
-    x: -18,
-    y: -24,
+    x: -0.22,
+    y: -0.5,
     vx: 0,
-    vy: 0.16,
+    vy: 0.005,
     dragging: false,
     lastX: 0,
     lastY: 0,
   });
 
   useEffect(() => {
-    const animate = () => {
-      const globe = globeRef.current;
-      const state = stateRef.current;
+    const container = containerRef.current;
+    if (!container) {
+      return;
+    }
 
-      if (!globe) {
-        frameRef.current = requestAnimationFrame(animate);
-        return;
-      }
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(24, 1, 0.1, 100);
+    camera.position.set(0, 0, 7.2);
+
+    const renderer = new THREE.WebGLRenderer({
+      alpha: true,
+      antialias: true,
+      powerPreference: "high-performance",
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(0x000000, 0);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.domElement.style.width = "100%";
+    renderer.domElement.style.height = "100%";
+    renderer.domElement.style.display = "block";
+    container.appendChild(renderer.domElement);
+
+    const globeGroup = new THREE.Group();
+    scene.add(globeGroup);
+
+    const globeRadius = 1.38;
+    const texture = createGlobeTexture();
+    const globe = new THREE.Mesh(
+      new THREE.SphereGeometry(globeRadius, 72, 72),
+      new THREE.MeshStandardMaterial({
+        color: new THREE.Color("#07111a"),
+        map: texture,
+        emissive: new THREE.Color("#42bff8"),
+        emissiveMap: texture,
+        emissiveIntensity: 0.34,
+        roughness: 0.88,
+        metalness: 0.04,
+      }),
+    );
+    globeGroup.add(globe);
+
+    const atmosphere = new THREE.Mesh(
+      new THREE.SphereGeometry(globeRadius * 1.035, 72, 72),
+      new THREE.MeshBasicMaterial({
+        color: new THREE.Color("#5bc5ff"),
+        transparent: true,
+        opacity: 0.08,
+        side: THREE.BackSide,
+      }),
+    );
+    globeGroup.add(atmosphere);
+
+    const ambient = new THREE.AmbientLight(0xc9edff, 0.72);
+    scene.add(ambient);
+
+    const keyLight = new THREE.DirectionalLight(0x9ed8ff, 1.45);
+    keyLight.position.set(4.2, 2.4, 5.2);
+    scene.add(keyLight);
+
+    const rimLight = new THREE.DirectionalLight(0x2fb8ff, 0.65);
+    rimLight.position.set(-4.4, -1.4, 1.6);
+    scene.add(rimLight);
+
+    const orbitGroup = new THREE.Group();
+    scene.add(orbitGroup);
+    orbitGroup.add(createOrbitLine(globeRadius * 1.24, globeRadius * 1.05, "#d7e7f8", 0.22, 0.38, 0.18, 0.22));
+    orbitGroup.add(createOrbitLine(globeRadius * 1.1, globeRadius * 0.96, "#69d7ff", 0.14, -0.5, -0.08, -0.34));
+
+    const markerCoordinates: LatLon[] = [
+      { lat: 40.7, lon: -74.0 },
+      { lat: 51.5, lon: -0.12 },
+      { lat: 1.35, lon: 103.8 },
+      { lat: -33.86, lon: 151.2 },
+      { lat: 35.68, lon: 139.7 },
+    ];
+
+    markerCoordinates.forEach((coordinate, index) => {
+      const marker = new THREE.Mesh(
+        new THREE.SphereGeometry(index === 0 ? 0.05 : 0.038, 18, 18),
+        new THREE.MeshBasicMaterial({
+          color: index === 0 ? 0xd8f6ff : 0x93e6ff,
+          transparent: true,
+          opacity: index === 0 ? 0.95 : 0.82,
+        }),
+      );
+      marker.position.copy(latLonToVector3(coordinate.lat, coordinate.lon, globeRadius * 1.01));
+      globeGroup.add(marker);
+
+      const glow = new THREE.Mesh(
+        new THREE.SphereGeometry(index === 0 ? 0.1 : 0.075, 16, 16),
+        new THREE.MeshBasicMaterial({
+          color: 0x63d1ff,
+          transparent: true,
+          opacity: index === 0 ? 0.18 : 0.12,
+        }),
+      );
+      glow.position.copy(marker.position);
+      globeGroup.add(glow);
+    });
+
+    globeGroup.add(createConnection(markerCoordinates[0], markerCoordinates[1], globeRadius, "#8ad8ff", 0.48));
+    globeGroup.add(createConnection(markerCoordinates[1], markerCoordinates[2], globeRadius, "#6fd7ff", 0.36));
+    globeGroup.add(createConnection(markerCoordinates[0], markerCoordinates[3], globeRadius, "#8ad8ff", 0.28));
+
+    const resize = () => {
+      const { clientWidth, clientHeight } = container;
+      renderer.setSize(clientWidth, clientHeight, false);
+      camera.aspect = clientWidth / clientHeight;
+      camera.updateProjectionMatrix();
+    };
+
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(container);
+    resize();
+
+    const animate = () => {
+      const state = stateRef.current;
 
       if (!state.dragging) {
         state.y += state.vy;
-        state.x += state.vx;
-        state.vx *= 0.96;
+        state.x = clamp(state.x + state.vx, -0.48, 0.48);
+        state.vx *= 0.94;
         state.vy *= 0.992;
-        state.vy += 0.004;
-        state.x = clamp(state.x, -32, 32);
+        state.vy += 0.00003;
       }
 
-      const driftX = Math.sin((state.y * Math.PI) / 180) * 12;
-      const driftY = Math.sin((state.x * Math.PI) / 180) * 8;
-      const panPrimary = state.y * 1.2;
-      const panSecondary = state.y * 0.55;
+      globeGroup.rotation.x = state.x;
+      globeGroup.rotation.y = state.y;
+      orbitGroup.rotation.y = state.y * 0.35;
+      orbitGroup.rotation.x = state.x * 0.2;
 
-      globe.style.transform = `translate3d(${driftX}px, ${driftY}px, 0) scale(1.04)`;
-      globe.style.backgroundPosition = `${panPrimary}px ${50 + driftY}px, ${panSecondary}px ${driftY}px, center center`;
+      renderer.render(scene, camera);
       frameRef.current = requestAnimationFrame(animate);
     };
 
@@ -117,6 +225,28 @@ function InteractiveGlobe() {
       if (frameRef.current) {
         cancelAnimationFrame(frameRef.current);
       }
+      resizeObserver.disconnect();
+      texture.dispose();
+      renderer.dispose();
+      scene.traverse((object) => {
+        if (object instanceof THREE.Mesh) {
+          object.geometry.dispose();
+          if (Array.isArray(object.material)) {
+            object.material.forEach((material) => material.dispose());
+          } else {
+            object.material.dispose();
+          }
+        }
+        if (object instanceof THREE.Line) {
+          object.geometry.dispose();
+          if (Array.isArray(object.material)) {
+            object.material.forEach((material) => material.dispose());
+          } else {
+            object.material.dispose();
+          }
+        }
+      });
+      container.innerHTML = "";
     };
   }, []);
 
@@ -138,10 +268,10 @@ function InteractiveGlobe() {
     const deltaX = clientX - state.lastX;
     const deltaY = clientY - state.lastY;
 
-    state.y += deltaX * 0.28;
-    state.x = clamp(state.x - deltaY * 0.18, -32, 32);
-    state.vy = deltaX * 0.035;
-    state.vx = -deltaY * 0.02;
+    state.y += deltaX * 0.0072;
+    state.x = clamp(state.x - deltaY * 0.0045, -0.48, 0.48);
+    state.vy = deltaX * 0.00085;
+    state.vx = -deltaY * 0.0006;
     state.lastX = clientX;
     state.lastY = clientY;
   }
@@ -152,9 +282,9 @@ function InteractiveGlobe() {
 
   return (
     <div className="relative mx-auto flex w-full max-w-[34rem] items-center justify-center lg:min-h-[32rem]">
-      <div className="pointer-events-none absolute inset-6 rounded-full bg-[radial-gradient(circle,rgba(96,165,250,0.28),rgba(14,22,33,0)_58%)] blur-3xl" />
-      <div className="pointer-events-none absolute h-[92%] w-[92%] rounded-full border border-white/5 [transform:rotate(16deg)_scaleY(0.74)]" />
-      <div className="pointer-events-none absolute h-[78%] w-[78%] rounded-full border border-sky-300/10 [transform:rotate(-12deg)_scaleX(0.82)]" />
+      <div className="pointer-events-none absolute inset-4 rounded-full bg-[radial-gradient(circle,rgba(96,165,250,0.26),rgba(14,22,33,0)_58%)] blur-3xl" />
+      <div className="pointer-events-none absolute h-[94%] w-[94%] rounded-full border border-white/5 [transform:rotate(18deg)_scaleY(0.76)]" />
+      <div className="pointer-events-none absolute h-[80%] w-[80%] rounded-full border border-sky-300/10 [transform:rotate(-12deg)_scaleX(0.84)]" />
 
       <div
         className="group relative h-[21rem] w-[21rem] touch-none select-none sm:h-[25rem] sm:w-[25rem] lg:h-[31rem] lg:w-[31rem]"
@@ -171,80 +301,24 @@ function InteractiveGlobe() {
         onKeyDown={(event) => {
           const state = stateRef.current;
           if (event.key === "ArrowLeft") {
-            state.vy -= 0.22;
+            state.vy -= 0.014;
           } else if (event.key === "ArrowRight") {
-            state.vy += 0.22;
+            state.vy += 0.014;
           } else if (event.key === "ArrowUp") {
-            state.vx -= 0.16;
+            state.vx -= 0.012;
           } else if (event.key === "ArrowDown") {
-            state.vx += 0.16;
+            state.vx += 0.012;
           }
         }}
         role="img"
         aria-label="Interactive globe representing strategic AI operations advisory"
         tabIndex={0}
       >
-        <div className="absolute inset-[8%] rounded-full bg-[radial-gradient(circle_at_50%_45%,rgba(125,211,252,0.18),rgba(15,23,34,0)_58%)] blur-2xl" />
-
-        <div className="absolute inset-[10%] rounded-full transition-shadow duration-300 group-hover:shadow-[0_0_60px_rgba(56,189,248,0.18)]">
-          <div className="absolute inset-0 rounded-full border border-sky-300/20 bg-[radial-gradient(circle_at_30%_26%,rgba(255,255,255,0.16),rgba(13,19,28,0.05)_22%,rgba(7,11,16,0.98)_72%)] shadow-[0_20px_70px_rgba(2,6,23,0.78),inset_-38px_-34px_90px_rgba(0,0,0,0.72),inset_20px_18px_36px_rgba(147,197,253,0.08)]" />
-          <div className="absolute inset-[1.8%] rounded-full border border-white/10" />
-          <div className="pointer-events-none absolute inset-[-3%] rounded-full border border-white/6 [transform:rotate(14deg)_scaleY(0.76)]" />
-
-          <div
-            ref={globeRef}
-            className="absolute inset-[3%] overflow-hidden rounded-full border border-white/10 will-change-transform"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(90deg, rgba(125,211,252,0.22) 0 1px, transparent 1px 28px), radial-gradient(circle at 36% 28%, rgba(191,219,254,0.18), rgba(8,12,18,0) 22%)",
-            }}
-          >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_34%_30%,rgba(255,255,255,0.14),rgba(255,255,255,0)_16%),linear-gradient(90deg,rgba(7,11,16,0)_0%,rgba(7,11,16,0.08)_44%,rgba(7,11,16,0.54)_76%,rgba(2,6,23,0.84)_100%)]" />
-
-            {latitudeArcs.map((arc) => (
-              <div
-                key={arc.id}
-                className="absolute left-1/2 rounded-full border"
-                style={{
-                  top: arc.top,
-                  width: arc.width,
-                  height: arc.height,
-                  transform: "translateX(-50%)",
-                  borderColor: arc.borderColor,
-                  opacity: arc.opacity,
-                }}
-              />
-            ))}
-
-            {landmasses.map((mass) => (
-              <div
-                key={mass.id}
-                className="absolute border"
-                style={{
-                  left: mass.left,
-                  top: mass.top,
-                  width: mass.width,
-                  height: mass.height,
-                  borderRadius: mass.radius,
-                  transform: mass.transform,
-                  background: mass.background,
-                  borderColor: mass.borderColor,
-                  opacity: mass.opacity,
-                }}
-              />
-            ))}
-
-            <div className="absolute left-[16%] top-[52%] h-[1px] w-[42%] rounded-full bg-sky-300/52 [transform:rotate(-12deg)]" />
-            <div className="absolute left-[28%] top-[31%] h-[1px] w-[30%] rounded-full bg-cyan-300/36 [transform:rotate(-8deg)]" />
-            <div className="absolute left-[26%] top-[30%] h-2.5 w-2.5 rounded-full bg-sky-300/85 shadow-[0_0_18px_rgba(125,211,252,0.8)]" />
-            <div className="absolute left-[55%] top-[25%] h-2 w-2 rounded-full bg-cyan-200/80 shadow-[0_0_16px_rgba(165,243,252,0.7)]" />
-            <div className="absolute left-[64%] top-[42%] h-2.5 w-2.5 rounded-full bg-sky-200/80 shadow-[0_0_18px_rgba(125,211,252,0.8)]" />
-            <div className="absolute left-[42%] top-[49%] h-2 w-2 rounded-full bg-blue-100/70 shadow-[0_0_16px_rgba(191,219,254,0.6)]" />
-          </div>
-
-          <div className="pointer-events-none absolute inset-[6%] rounded-full bg-[radial-gradient(circle_at_34%_28%,rgba(255,255,255,0.18),rgba(255,255,255,0)_24%)]" />
-          <div className="pointer-events-none absolute inset-[3%] rounded-full bg-[radial-gradient(circle_at_68%_68%,rgba(2,6,23,0),rgba(2,6,23,0.26)_54%,rgba(2,6,23,0.72)_100%)]" />
-        </div>
+        <div className="absolute inset-[6%] rounded-full bg-[radial-gradient(circle_at_46%_44%,rgba(125,211,252,0.18),rgba(15,23,34,0)_62%)] blur-2xl" />
+        <div
+          ref={containerRef}
+          className="absolute inset-0 rounded-full"
+        />
       </div>
     </div>
   );
@@ -254,49 +328,169 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
 }
 
-const latitudeArcs = [
-  { id: "lat-1", top: "18%", width: "42%", height: "10%", borderColor: "rgba(255,255,255,0.14)", opacity: 0.75 },
-  { id: "lat-2", top: "30%", width: "64%", height: "13%", borderColor: "rgba(125,211,252,0.18)", opacity: 0.8 },
-  { id: "lat-3", top: "44%", width: "82%", height: "17%", borderColor: "rgba(125,211,252,0.24)", opacity: 0.92 },
-  { id: "lat-4", top: "59%", width: "64%", height: "13%", borderColor: "rgba(125,211,252,0.18)", opacity: 0.8 },
-  { id: "lat-5", top: "72%", width: "42%", height: "10%", borderColor: "rgba(255,255,255,0.14)", opacity: 0.75 },
-];
+type LatLon = {
+  lat: number;
+  lon: number;
+};
 
-const landmasses = [
-  {
-    id: "mass-1",
-    left: "22%",
-    top: "22%",
-    width: "24%",
-    height: "20%",
-    radius: "44% 56% 42% 58% / 45% 42% 58% 55%",
-    transform: "rotate(-14deg)",
-    background: "linear-gradient(180deg, rgba(148,163,184,0.12), rgba(148,163,184,0.04))",
-    borderColor: "rgba(191,219,254,0.12)",
-    opacity: 0.78,
-  },
-  {
-    id: "mass-2",
-    left: "50%",
-    top: "18%",
-    width: "22%",
-    height: "24%",
-    radius: "50% 38% 54% 46% / 42% 56% 44% 58%",
-    transform: "rotate(10deg)",
-    background: "linear-gradient(180deg, rgba(103,232,249,0.12), rgba(103,232,249,0.03))",
-    borderColor: "rgba(103,232,249,0.16)",
-    opacity: 0.72,
-  },
-  {
-    id: "mass-3",
-    left: "34%",
-    top: "54%",
-    width: "28%",
-    height: "18%",
-    radius: "48% 52% 40% 60% / 52% 46% 54% 48%",
-    transform: "rotate(8deg)",
-    background: "linear-gradient(180deg, rgba(148,163,184,0.1), rgba(148,163,184,0.03))",
-    borderColor: "rgba(191,219,254,0.12)",
-    opacity: 0.76,
-  },
-];
+function latLonToVector3(lat: number, lon: number, radius: number) {
+  const phi = ((90 - lat) * Math.PI) / 180;
+  const theta = ((lon + 180) * Math.PI) / 180;
+
+  return new THREE.Vector3(
+    -(radius * Math.sin(phi) * Math.cos(theta)),
+    radius * Math.cos(phi),
+    radius * Math.sin(phi) * Math.sin(theta),
+  );
+}
+
+function createOrbitLine(
+  radiusX: number,
+  radiusY: number,
+  color: string,
+  opacity: number,
+  rotationZ: number,
+  rotationX: number,
+  rotationY: number,
+) {
+  const curve = new THREE.EllipseCurve(0, 0, radiusX, radiusY, 0, Math.PI * 2, false, 0);
+  const points = curve.getPoints(220).map((point) => new THREE.Vector3(point.x, point.y, 0));
+  const geometry = new THREE.BufferGeometry().setFromPoints(points);
+  const material = new THREE.LineBasicMaterial({
+    color: new THREE.Color(color),
+    transparent: true,
+    opacity,
+  });
+  const line = new THREE.LineLoop(geometry, material);
+  line.rotation.z = rotationZ;
+  line.rotation.x = rotationX;
+  line.rotation.y = rotationY;
+  return line;
+}
+
+function createConnection(from: LatLon, to: LatLon, radius: number, color: string, opacity: number) {
+  const start = latLonToVector3(from.lat, from.lon, radius * 1.015);
+  const end = latLonToVector3(to.lat, to.lon, radius * 1.015);
+  const midpoint = start.clone().add(end).multiplyScalar(0.5).normalize().multiplyScalar(radius * 1.38);
+  const curve = new THREE.CatmullRomCurve3([start, midpoint, end]);
+  const geometry = new THREE.BufferGeometry().setFromPoints(curve.getPoints(80));
+  const material = new THREE.LineBasicMaterial({
+    color: new THREE.Color(color),
+    transparent: true,
+    opacity,
+  });
+  return new THREE.Line(geometry, material);
+}
+
+function createGlobeTexture() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 2048;
+  canvas.height = 1024;
+  const context = canvas.getContext("2d");
+
+  if (!context) {
+    return new THREE.CanvasTexture(canvas);
+  }
+
+  context.fillStyle = "#061018";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+
+  const baseGradient = context.createRadialGradient(canvas.width * 0.32, canvas.height * 0.28, 20, canvas.width * 0.5, canvas.height * 0.5, canvas.width * 0.6);
+  baseGradient.addColorStop(0, "rgba(123, 211, 252, 0.16)");
+  baseGradient.addColorStop(0.35, "rgba(14, 28, 40, 0.08)");
+  baseGradient.addColorStop(1, "rgba(6, 16, 24, 0)");
+  context.fillStyle = baseGradient;
+  context.fillRect(0, 0, canvas.width, canvas.height);
+
+  context.strokeStyle = "rgba(125, 211, 252, 0.16)";
+  context.lineWidth = 1;
+  for (let x = 0; x <= canvas.width; x += 90) {
+    context.beginPath();
+    context.moveTo(x, 0);
+    context.lineTo(x, canvas.height);
+    context.stroke();
+  }
+
+  context.strokeStyle = "rgba(226, 232, 240, 0.08)";
+  for (let y = 0; y <= canvas.height; y += 78) {
+    context.beginPath();
+    context.moveTo(0, y);
+    context.lineTo(canvas.width, y);
+    context.stroke();
+  }
+
+  drawContinent(context, [
+    [0.15, 0.22],
+    [0.21, 0.18],
+    [0.28, 0.2],
+    [0.3, 0.27],
+    [0.27, 0.33],
+    [0.24, 0.4],
+    [0.19, 0.44],
+    [0.15, 0.38],
+    [0.13, 0.3],
+  ]);
+  drawContinent(context, [
+    [0.23, 0.48],
+    [0.29, 0.45],
+    [0.33, 0.5],
+    [0.31, 0.6],
+    [0.27, 0.72],
+    [0.2, 0.7],
+    [0.18, 0.56],
+  ]);
+  drawContinent(context, [
+    [0.48, 0.2],
+    [0.55, 0.17],
+    [0.63, 0.18],
+    [0.7, 0.24],
+    [0.74, 0.31],
+    [0.69, 0.37],
+    [0.61, 0.36],
+    [0.55, 0.31],
+    [0.49, 0.28],
+  ]);
+  drawContinent(context, [
+    [0.49, 0.38],
+    [0.54, 0.35],
+    [0.59, 0.37],
+    [0.61, 0.45],
+    [0.58, 0.57],
+    [0.54, 0.67],
+    [0.48, 0.63],
+    [0.45, 0.52],
+    [0.46, 0.43],
+  ]);
+  drawContinent(context, [
+    [0.69, 0.62],
+    [0.74, 0.6],
+    [0.78, 0.64],
+    [0.76, 0.7],
+    [0.7, 0.71],
+    [0.66, 0.66],
+  ]);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.anisotropy = 8;
+  return texture;
+}
+
+function drawContinent(context: CanvasRenderingContext2D, points: number[][]) {
+  context.beginPath();
+  points.forEach(([x, y], index) => {
+    const px = x * context.canvas.width;
+    const py = y * context.canvas.height;
+    if (index === 0) {
+      context.moveTo(px, py);
+      return;
+    }
+    context.lineTo(px, py);
+  });
+  context.closePath();
+  context.fillStyle = "rgba(110, 214, 255, 0.12)";
+  context.strokeStyle = "rgba(188, 233, 255, 0.16)";
+  context.lineWidth = 1.4;
+  context.fill();
+  context.stroke();
+}
