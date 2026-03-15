@@ -6,12 +6,12 @@ import {
   Eyebrow,
   FitChecklist,
   ProblemComparison,
-  ProcessTimeline,
   ProofStrip,
   SectionLead,
   SectionShell,
   SectionTitle,
 } from "@/components/landing/AdvisoryBlocks";
+import { OperationsDiagnostic } from "@/components/landing/OperationsDiagnostic";
 
 const CALENDLY_URL = "https://calendly.com/finlay-temporaryutopia/30min";
 
@@ -41,25 +41,6 @@ const problemColumns = [
       "Prioritise opportunities by fit, readiness, and business value",
     ],
     tone: "accent" as const,
-  },
-];
-
-const auditSteps = [
-  {
-    title: "Understand current operations",
-    text: "Review how work moves through the business today, from enquiries and follow-up to delivery, admin, and reporting.",
-  },
-  {
-    title: "Identify friction and repeated work",
-    text: "Surface the points where delays, bottlenecks, duplicate effort, and inconsistent execution are costing time.",
-  },
-  {
-    title: "Map high-fit AI opportunities",
-    text: "Assess where automation or AI support could improve quality, speed, or follow-up without adding unnecessary complexity.",
-  },
-  {
-    title: "Prioritise implementation sequence",
-    text: "Turn the findings into a practical order of decisions so the next step is clear and defensible.",
   },
 ];
 
@@ -252,18 +233,7 @@ export function LandingPage() {
           </div>
         </SectionShell>
 
-        <SectionShell id="how-it-works">
-          <div className="section-heading-center">
-            <Eyebrow>How the audit works</Eyebrow>
-            <SectionTitle>The method is simple, structured, and designed to produce a clear next step.</SectionTitle>
-            <SectionLead>
-              The process is deliberately diagnostic. It turns operational ambiguity into a map of where AI can add value and
-              where it should not be forced.
-            </SectionLead>
-          </div>
-
-          <ProcessTimeline steps={auditSteps} />
-        </SectionShell>
+        <OperationsDiagnostic />
 
         <SectionShell id="examples" tone="contrast">
           <div className="section-heading-center">
