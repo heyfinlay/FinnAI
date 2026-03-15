@@ -1,12 +1,13 @@
 import { BookingFlow } from "@/components/BookingFlow";
 import {
-  BeforeAfterWorkflow,
   DeliverablePreview,
   Eyebrow,
   FitChecklist,
+  OperationalClarityVisualization,
   ProblemComparison,
-  SectionLead,
+  SectionHeader,
   SectionShell,
+  SectionLead,
   SectionTitle,
 } from "@/components/landing/AdvisoryBlocks";
 import { HeroSection } from "@/components/landing/HeroSection";
@@ -37,41 +38,12 @@ const problemColumns = [
   },
 ];
 
-const workflowExamples = [
-  {
-    title: "Inbound enquiries and triage",
-    before: ["Email, phone, and web enquiries arrive in different places", "Follow-up depends on manual attention"],
-    after: ["Central triage and logging flow", "AI-assisted routing, context capture, and CRM entry"],
-    outcome: "Faster first response and a cleaner pipeline without relying on memory.",
-  },
-  {
-    title: "Follow-up and booking",
-    before: ["Prospects go quiet after the first contact", "Reminder steps are inconsistent across the team"],
-    after: ["Prompted follow-up sequence", "Clear status tracking and easier booking handoff"],
-    outcome: "Better booking consistency and fewer leads lost between touchpoints.",
-  },
-  {
-    title: "Internal admin and reporting",
-    before: ["Weekly updates and summaries are assembled manually", "Actions get buried across threads and notes"],
-    after: ["Structured summaries and action capture", "Repeatable reporting process with less manual cleanup"],
-    outcome: "Lower admin drag and clearer visibility on what needs attention next.",
-  },
-  {
-    title: "Ownership and handoffs",
-    before: ["Tasks sit between people without a clear owner", "Context gets dropped during transitions"],
-    after: ["Defined routing logic and ownership", "Context packaged before work moves to the next person"],
-    outcome: "Less rework, better accountability, and smoother delivery across the team.",
-  },
-];
-
 const deliverables = [
   "Current-state workflow map",
-  "Friction and bottleneck analysis",
-  "AI opportunity map with fit notes",
-  "Priority recommendations",
-  "Implementation sequence",
-  "Risk and readiness notes",
-  "Readout session with next-step guidance",
+  "Bottleneck and friction diagnosis",
+  "AI opportunity and constraint map",
+  "Prioritised implementation sequence",
+  "Strategic readout and next-step recommendations",
 ];
 
 const previewSections = [
@@ -114,12 +86,7 @@ const founderPoints = [
   "Grounded implementation thinking: every recommendation should be realistic for the team using it.",
 ];
 
-const engagementSteps = [
-  { title: "Scoping call", text: "Confirm business context, priorities, and the workflows worth reviewing." },
-  { title: "Operational review", text: "Examine current processes, repeated work, and the points where execution slows down." },
-  { title: "Audit and report", text: "Deliver the workflow map, recommendation set, and implementation sequence." },
-  { title: "Readout session", text: "Walk through the findings, answer questions, and align on next decisions." },
-];
+const founderSignals = ["Founder-led", "Independent advisory", "Workflow-first lens"];
 
 const fitColumns = [
   {
@@ -189,7 +156,9 @@ export function LandingPage() {
           <div className="editorial-grid">
             <div className="reveal-up">
               <Eyebrow>The real problem</Eyebrow>
-              <SectionTitle>Most AI adoption stalls because the operating model is unclear, not because the tools are missing.</SectionTitle>
+              <SectionTitle className="section-title-compact">
+                Most AI adoption stalls because the operating model is unclear, not because the tools are missing.
+              </SectionTitle>
               <SectionLead>
                 Owners are already juggling delivery, client communication, staffing, reporting, and growth. When AI gets
                 layered on top without workflow clarity, the result is usually more experimentation than improvement.
@@ -207,26 +176,22 @@ export function LandingPage() {
         <OperationsDiagnostic />
 
         <SectionShell id="examples" tone="contrast">
-          <div className="section-heading-center">
-            <Eyebrow>Example improvements</Eyebrow>
-            <SectionTitle>Practical workflow changes the audit can uncover.</SectionTitle>
-            <SectionLead>
-              These are illustrative transformations, not canned packages. The point is to make the outcomes concrete.
-            </SectionLead>
-          </div>
+          <SectionHeader
+            eyebrow="Operational clarity"
+            title="From fragmented workflows to a system you can actually act on."
+            description="The audit makes hidden handoffs, duplicated work, and realistic AI leverage points visible without reducing the business to generic before-and-after scenarios."
+          />
 
-          <div className="workflow-examples">
-            {workflowExamples.map((example, index) => (
-              <BeforeAfterWorkflow key={example.title} example={example} delay={index * 80} />
-            ))}
-          </div>
+          <OperationalClarityVisualization />
         </SectionShell>
 
         <SectionShell id="deliverables">
-          <div className="two-column-balance">
+          <div className="two-column-balance deliverables-layout">
             <div className="reveal-up">
               <Eyebrow>What you receive</Eyebrow>
-              <SectionTitle>A decision-ready audit, not a vague list of software suggestions.</SectionTitle>
+              <SectionTitle className="section-title-compact">
+                A decision-ready audit, not a vague list of software suggestions.
+              </SectionTitle>
               <SectionLead>
                 The deliverable is built to help you decide what matters, what can wait, and how implementation should be sequenced.
               </SectionLead>
@@ -238,18 +203,18 @@ export function LandingPage() {
               </ul>
             </div>
 
-            <DeliverablePreview sections={previewSections} />
+            <div className="deliverable-preview-column">
+              <DeliverablePreview sections={previewSections} />
+            </div>
           </div>
         </SectionShell>
 
         <SectionShell id="value" tone="contrast">
-          <div className="section-heading-center section-heading-left">
-            <Eyebrow>Why this is valuable</Eyebrow>
-            <SectionTitle>Better decisions, cleaner operations, and less wasted motion.</SectionTitle>
-            <SectionLead>
-              The value is usually found in sharper priorities, stronger follow-up, and reduced admin friction, not in chasing the most tools.
-            </SectionLead>
-          </div>
+          <SectionHeader
+            eyebrow="Why this matters"
+            title="Better decisions, cleaner operations, and less wasted motion."
+            description="The value is usually found in sharper priorities, stronger follow-up, and reduced admin friction, not in chasing the most tools."
+          />
 
           <div className="value-grid">
             {valueRows.map((row, index) => (
@@ -262,14 +227,21 @@ export function LandingPage() {
         </SectionShell>
 
         <SectionShell id="about">
-          <div className="founder-layout">
+          <div className="founder-layout founder-section">
             <aside className="founder-profile reveal-up" aria-label="Founder profile">
-              <div className="founder-avatar" aria-hidden="true">
-                F
+              <div className="founder-profile-top">
+                <div className="founder-avatar" aria-hidden="true">
+                  F
+                </div>
+                <div>
+                  <p className="founder-name">Finlay Sturzaker</p>
+                  <p className="founder-role">Founder, Temporary Utopia</p>
+                </div>
               </div>
-              <div>
-                <p className="founder-name">Finlay Sturzaker</p>
-                <p className="founder-role">Founder, Temporary Utopia</p>
+              <div className="founder-signal-row" aria-label="Founder credibility">
+                {founderSignals.map((signal) => (
+                  <span key={signal}>{signal}</span>
+                ))}
               </div>
               <p className="founder-summary">
                 I work with service businesses that want grounded advice on where AI fits their operations and where it does not.
@@ -278,7 +250,9 @@ export function LandingPage() {
 
             <div className="reveal-up">
               <Eyebrow>Founder perspective</Eyebrow>
-              <SectionTitle>I keep the work practical: diagnose the business clearly, then recommend selectively.</SectionTitle>
+              <SectionTitle className="section-title-compact">
+                I keep the work practical: diagnose the business clearly, then recommend selectively.
+              </SectionTitle>
               <SectionLead>
                 Most owners do not need another app list. They need someone who can translate a fast-moving technical space into
                 defensible operating decisions.
@@ -295,67 +269,45 @@ export function LandingPage() {
           </div>
         </SectionShell>
 
-        <SectionShell id="engagement" tone="contrast">
-          <div className="section-heading-center">
-            <Eyebrow>Engagement process</Eyebrow>
-            <SectionTitle>What happens after you book.</SectionTitle>
-            <SectionLead>The engagement is lightweight to start and structured enough to keep the output useful.</SectionLead>
-          </div>
-
-          <ol className="engagement-timeline">
-            {engagementSteps.map((step, index) => (
-              <li key={step.title} className="engagement-step reveal-up" style={{ animationDelay: `${index * 70}ms` }}>
-                <span className="engagement-step-index">{index + 1}</span>
-                <div>
-                  <h3>{step.title}</h3>
-                  <p>{step.text}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </SectionShell>
-
         <SectionShell id="fit">
-          <div className="section-heading-center section-heading-left">
-            <Eyebrow>Who this is for</Eyebrow>
-            <SectionTitle>A strong fit for businesses that want clarity before committing to implementation.</SectionTitle>
-            <SectionLead>
-              The audit is most useful when there is real operational complexity to diagnose and the owner wants better decisions, not just faster tool shopping.
-            </SectionLead>
-          </div>
+          <SectionHeader
+            eyebrow="Who this is for"
+            title="A strong fit for businesses that want clarity before committing to implementation."
+            description="The audit is most useful when there is real operational complexity to diagnose and the owner wants better decisions, not just faster tool shopping."
+          />
 
           <FitChecklist columns={fitColumns} />
         </SectionShell>
 
         <SectionShell id="pricing" tone="contrast">
-          <div className="pricing-block reveal-up">
-            <div>
-              <Eyebrow>Pricing</Eyebrow>
-              <SectionTitle className="max-w-none">AI Operations Audit</SectionTitle>
-              <p className="pricing-amount">From $1,000</p>
-              <p className="pricing-copy">
-                Final scope depends on workflow complexity, business context, and the depth of operational review required.
-              </p>
-            </div>
+          <div className="pricing-wrap">
+            <div className="pricing-block reveal-up">
+              <div>
+                <Eyebrow>Pricing</Eyebrow>
+                <SectionTitle className="pricing-title">AI Operations Audit</SectionTitle>
+                <p className="pricing-amount">From $1,000</p>
+                <p className="pricing-copy">
+                  Final scope depends on workflow complexity, business context, and the depth of operational review required.
+                </p>
+              </div>
 
-            <div className="pricing-aside">
-              <p>Includes the audit, tailored recommendations, risk and readiness notes, and a readout session.</p>
-              <div className="section-actions">
-                <PrimaryButton href="#booking">Book a strategy call</PrimaryButton>
-                <SecondaryButton href="mailto:hello@temporaryutopia.com">Email Temporary Utopia</SecondaryButton>
+              <div className="pricing-aside">
+                <p>Includes the audit, tailored recommendations, risk and readiness notes, and a readout session.</p>
+                <div className="section-actions section-actions-center">
+                  <PrimaryButton href="#booking">Book a strategy call</PrimaryButton>
+                  <SecondaryButton href="mailto:hello@temporaryutopia.com">Email Temporary Utopia</SecondaryButton>
+                </div>
               </div>
             </div>
           </div>
         </SectionShell>
 
         <SectionShell id="booking">
-          <div className="section-heading-center">
-            <Eyebrow>Booking</Eyebrow>
-            <SectionTitle>Book directly or send a short request with your business context.</SectionTitle>
-            <SectionLead>
-              Use the live scheduler if you are ready to choose a time. If not, send a short request and include the workflow area you want to review.
-            </SectionLead>
-          </div>
+          <SectionHeader
+            eyebrow="Booking / next steps"
+            title="Book directly or send a short request with your business context."
+            description="Use the live scheduler if you are ready to choose a time. If not, send a short request and include the workflow area you want to review."
+          />
 
           <div className="booking-wrap reveal-up">
             <BookingFlow />

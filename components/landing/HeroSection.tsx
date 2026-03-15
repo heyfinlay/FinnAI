@@ -225,26 +225,26 @@ const LAND_DOTS = buildLandDots(CONTINENT_PATHS, 4);
 
 export function HeroSection({ primaryHref, secondaryHref }: { primaryHref: string; secondaryHref: string }) {
   return (
-    <section id="top" className="relative overflow-hidden pt-10 sm:pt-14 lg:pt-16">
+    <section id="top" className="hero-section">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(116,180,255,0.16),transparent_26%),radial-gradient(circle_at_78%_40%,rgba(115,212,197,0.12),transparent_24%),linear-gradient(180deg,rgba(9,13,18,0.35),rgba(9,13,18,0))]" />
 
       <div className="section-container relative">
-        <div className="grid items-center gap-12 pb-12 pt-8 lg:grid-cols-[minmax(0,1fr)_minmax(420px,540px)] lg:gap-10 lg:pb-20 lg:pt-10">
-          <div className="reveal-up max-w-2xl">
-            <p className="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-slate-300">
+        <div className="hero-grid">
+          <div className="reveal-up hero-copy-column">
+            <p className="hero-kicker">
               Founder-Led AI Operations Advisory
             </p>
 
-            <h1 className="mt-6 max-w-[11ch] font-display text-4xl leading-[0.98] text-white sm:text-5xl lg:text-[4.15rem]">
+            <h1 className="hero-main-title">
               Understand where AI fits before you commit to the wrong systems.
             </h1>
 
-            <p className="mt-6 max-w-xl text-pretty text-base leading-8 text-slate-300 sm:text-lg">
+            <p className="hero-subtitle">
               Temporary Utopia runs practical AI Operations Audits for business owners who want clarity before implementation.
               We map how work actually moves, where friction exists, and where AI should — and should not — be introduced.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="hero-cta-row">
               <a
                 href={primaryHref}
                 className="inline-flex min-h-12 items-center justify-center rounded-2xl border border-sky-200/40 bg-[linear-gradient(180deg,#7fc0ff,#4b9bf7)] px-6 py-3 text-sm font-semibold text-slate-950 shadow-[0_14px_32px_rgba(75,155,247,0.28)] transition duration-200 hover:-translate-y-0.5 hover:bg-[linear-gradient(180deg,#93caff,#60a8fb)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
@@ -259,7 +259,7 @@ export function HeroSection({ primaryHref, secondaryHref }: { primaryHref: strin
               </a>
             </div>
 
-            <p className="mt-5 text-sm leading-7 text-slate-400">
+            <p className="hero-trust">
               {trustItems.map((item, index) => (
                 <span key={item}>
                   {index > 0 ? <span className="mx-2 text-slate-600">·</span> : null}
@@ -269,7 +269,7 @@ export function HeroSection({ primaryHref, secondaryHref }: { primaryHref: strin
             </p>
           </div>
 
-          <div className="reveal-up lg:justify-self-end" style={{ animationDelay: "80ms" }}>
+          <div className="reveal-up hero-globe-column" style={{ animationDelay: "80ms" }}>
             <InteractiveGlobe />
           </div>
         </div>
@@ -283,12 +283,13 @@ function InteractiveGlobe() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const frameRef = useRef<number | null>(null);
   const isVisibleRef = useRef(true);
+  const hoveredRef = useRef(false);
   const lastRenderRef = useRef(0);
   const stateRef = useRef<RotationState>({
     x: -0.16,
     y: 0.72,
     vx: 0,
-    vy: 0.0042,
+    vy: 0.0026,
     dragging: false,
     lastX: 0,
     lastY: 0,
@@ -343,11 +344,11 @@ function InteractiveGlobe() {
       const shouldAnimate = isVisibleRef.current;
 
       if (shouldAnimate && !state.dragging && !reducedMotion) {
+        const targetVy = hoveredRef.current ? 0.00055 : 0.0022;
         state.y += state.vy;
         state.x = clamp(state.x + state.vx, -0.48, 0.48);
-        state.vx *= 0.94;
-        state.vy *= 0.992;
-        state.vy += 0.00003;
+        state.vx *= hoveredRef.current ? 0.88 : 0.94;
+        state.vy += (targetVy - state.vy) * 0.018;
       }
 
       if (shouldAnimate && now - lastRenderRef.current > 20) {
@@ -401,14 +402,15 @@ function InteractiveGlobe() {
   }
 
   return (
-    <div className="relative mx-auto flex w-full max-w-[34rem] items-center justify-center lg:min-h-[32rem]">
-      <div className="pointer-events-none absolute inset-4 rounded-full bg-[radial-gradient(circle,rgba(96,165,250,0.24),rgba(14,22,33,0)_58%)] blur-3xl" />
-      <div className="pointer-events-none absolute h-[94%] w-[94%] rounded-full border border-white/5 [transform:rotate(18deg)_scaleY(0.76)]" />
-      <div className="pointer-events-none absolute h-[80%] w-[80%] rounded-full border border-sky-300/10 [transform:rotate(-12deg)_scaleX(0.84)]" />
+    <div className="hero-globe-shell">
+      <div className="hero-globe-backdrop" />
+      <div className="hero-globe-ring hero-globe-ring-one" />
+      <div className="hero-globe-ring hero-globe-ring-two" />
+      <div className="hero-globe-ring hero-globe-ring-three" />
 
       <div
         ref={containerRef}
-        className="group relative h-[21rem] w-[21rem] touch-none select-none sm:h-[25rem] sm:w-[25rem] lg:h-[31rem] lg:w-[31rem]"
+        className="group hero-globe-canvas touch-none select-none"
         onPointerDown={(event) => {
           event.currentTarget.setPointerCapture(event.pointerId);
           beginDrag(event.clientX, event.clientY);
@@ -419,6 +421,20 @@ function InteractiveGlobe() {
           endDrag();
         }}
         onPointerCancel={endDrag}
+        onPointerEnter={() => {
+          hoveredRef.current = true;
+        }}
+        onPointerLeave={() => {
+          hoveredRef.current = false;
+          endDrag();
+        }}
+        onFocus={() => {
+          hoveredRef.current = true;
+        }}
+        onBlur={() => {
+          hoveredRef.current = false;
+          endDrag();
+        }}
         onKeyDown={(event) => {
           const state = stateRef.current;
           if (event.key === "ArrowLeft") {
@@ -432,10 +448,10 @@ function InteractiveGlobe() {
           }
         }}
         role="img"
-        aria-label="Interactive globe representing strategic AI operations advisory"
+        aria-label="Interactive globe representing a premium operational systems view"
         tabIndex={0}
       >
-        <div className="pointer-events-none absolute inset-[6%] rounded-full bg-[radial-gradient(circle_at_46%_44%,rgba(125,211,252,0.16),rgba(15,23,34,0)_62%)] blur-2xl" />
+        <div className="hero-globe-core-glow" />
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full rounded-full" />
       </div>
     </div>
@@ -447,10 +463,11 @@ function drawScene(context: CanvasRenderingContext2D, width: number, height: num
 
   const centerX = width / 2;
   const centerY = height / 2;
-  const radius = Math.min(width, height) * 0.31;
+  const radius = Math.min(width, height) * 0.39;
   const centerLat = state.x;
   const centerLon = state.y;
 
+  drawOrbShadow(context, centerX, centerY, radius);
   drawOrbitalFrame(context, centerX, centerY, radius);
   drawAtmosphere(context, centerX, centerY, radius);
   drawSphereBase(context, centerX, centerY, radius);
@@ -470,57 +487,75 @@ function drawScene(context: CanvasRenderingContext2D, width: number, height: num
   drawRim(context, centerX, centerY, radius);
 }
 
+function drawOrbShadow(context: CanvasRenderingContext2D, centerX: number, centerY: number, radius: number) {
+  const shadow = context.createRadialGradient(centerX, centerY + radius * 0.34, radius * 0.15, centerX, centerY + radius * 0.34, radius * 1.28);
+  shadow.addColorStop(0, "rgba(9, 14, 19, 0.52)");
+  shadow.addColorStop(1, "rgba(9, 14, 19, 0)");
+  context.fillStyle = shadow;
+  context.beginPath();
+  context.ellipse(centerX, centerY + radius * 0.36, radius * 1.16, radius * 0.62, 0, 0, Math.PI * 2);
+  context.fill();
+}
+
 function drawAtmosphere(context: CanvasRenderingContext2D, centerX: number, centerY: number, radius: number) {
-  const halo = context.createRadialGradient(centerX, centerY, radius * 0.3, centerX, centerY, radius * 1.55);
-  halo.addColorStop(0, "rgba(90, 190, 255, 0.18)");
-  halo.addColorStop(0.5, "rgba(58, 138, 206, 0.08)");
+  const halo = context.createRadialGradient(centerX, centerY, radius * 0.26, centerX, centerY, radius * 1.68);
+  halo.addColorStop(0, "rgba(110, 210, 255, 0.24)");
+  halo.addColorStop(0.42, "rgba(59, 153, 228, 0.12)");
   halo.addColorStop(1, "rgba(9, 14, 19, 0)");
   context.fillStyle = halo;
   context.beginPath();
-  context.arc(centerX, centerY, radius * 1.6, 0, Math.PI * 2);
+  context.arc(centerX, centerY, radius * 1.72, 0, Math.PI * 2);
   context.fill();
 }
 
 function drawSphereBase(context: CanvasRenderingContext2D, centerX: number, centerY: number, radius: number) {
-  const base = context.createRadialGradient(centerX - radius * 0.22, centerY - radius * 0.3, radius * 0.12, centerX, centerY, radius);
-  base.addColorStop(0, "#16334a");
-  base.addColorStop(0.24, "#0f2030");
-  base.addColorStop(0.62, "#081520");
-  base.addColorStop(1, "#050c13");
+  const base = context.createRadialGradient(centerX - radius * 0.24, centerY - radius * 0.34, radius * 0.08, centerX, centerY, radius * 1.02);
+  base.addColorStop(0, "#1a4662");
+  base.addColorStop(0.28, "#10283a");
+  base.addColorStop(0.68, "#071522");
+  base.addColorStop(1, "#040a11");
   context.fillStyle = base;
   context.beginPath();
   context.arc(centerX, centerY, radius, 0, Math.PI * 2);
   context.fill();
 
-  const highlight = context.createRadialGradient(centerX - radius * 0.42, centerY - radius * 0.44, 0, centerX - radius * 0.1, centerY - radius * 0.14, radius * 1.08);
-  highlight.addColorStop(0, "rgba(152, 226, 255, 0.16)");
-  highlight.addColorStop(0.25, "rgba(96, 196, 255, 0.08)");
+  const highlight = context.createRadialGradient(centerX - radius * 0.46, centerY - radius * 0.48, 0, centerX - radius * 0.12, centerY - radius * 0.16, radius * 1.08);
+  highlight.addColorStop(0, "rgba(188, 241, 255, 0.22)");
+  highlight.addColorStop(0.25, "rgba(104, 205, 255, 0.12)");
   highlight.addColorStop(1, "rgba(96, 196, 255, 0)");
   context.fillStyle = highlight;
+  context.beginPath();
+  context.arc(centerX, centerY, radius, 0, Math.PI * 2);
+  context.fill();
+
+  const edgeShade = context.createLinearGradient(centerX, centerY - radius, centerX, centerY + radius);
+  edgeShade.addColorStop(0, "rgba(8, 13, 19, 0)");
+  edgeShade.addColorStop(1, "rgba(2, 5, 9, 0.34)");
+  context.fillStyle = edgeShade;
   context.beginPath();
   context.arc(centerX, centerY, radius, 0, Math.PI * 2);
   context.fill();
 }
 
 function drawRim(context: CanvasRenderingContext2D, centerX: number, centerY: number, radius: number) {
-  context.strokeStyle = "rgba(130, 205, 255, 0.42)";
-  context.lineWidth = 1.5;
+  context.strokeStyle = "rgba(151, 222, 255, 0.54)";
+  context.lineWidth = 1.7;
   context.beginPath();
   context.arc(centerX, centerY, radius + 0.5, 0, Math.PI * 2);
   context.stroke();
 
-  context.strokeStyle = "rgba(221, 242, 255, 0.08)";
-  context.lineWidth = 8;
+  context.strokeStyle = "rgba(221, 242, 255, 0.1)";
+  context.lineWidth = 9;
   context.beginPath();
   context.arc(centerX, centerY, radius - 3, Math.PI * 1.02, Math.PI * 1.6);
   context.stroke();
 }
 
 function drawOrbitalFrame(context: CanvasRenderingContext2D, centerX: number, centerY: number, radius: number) {
-  drawEllipse(context, centerX, centerY, radius * 1.28, radius * 1.04, 0.38, "rgba(216, 231, 248, 0.14)", 1);
-  drawEllipse(context, centerX, centerY, radius * 1.13, radius * 0.97, -0.52, "rgba(119, 216, 255, 0.08)", 1);
-  drawEllipseSegment(context, centerX, centerY, radius * 1.28, radius * 1.04, 0.38, 0.92, 1.64, "rgba(162, 229, 255, 0.38)", 1.3);
-  drawEllipseSegment(context, centerX, centerY, radius * 1.13, radius * 0.97, -0.52, 4.18, 4.92, "rgba(125, 228, 255, 0.28)", 1.2);
+  drawEllipse(context, centerX, centerY, radius * 1.24, radius * 1.02, 0.34, "rgba(216, 231, 248, 0.1)", 1);
+  drawEllipse(context, centerX, centerY, radius * 1.08, radius * 0.94, -0.48, "rgba(119, 216, 255, 0.07)", 1);
+  drawEllipseSegment(context, centerX, centerY, radius * 1.24, radius * 1.02, 0.34, 0.9, 1.7, "rgba(162, 229, 255, 0.34)", 1.4);
+  drawEllipseSegment(context, centerX, centerY, radius * 1.08, radius * 0.94, -0.48, 4.14, 4.94, "rgba(125, 228, 255, 0.24)", 1.2);
 }
 
 function drawEllipse(
@@ -567,7 +602,7 @@ function drawGraticule(
   centerLat: number,
   centerLon: number,
 ) {
-  context.strokeStyle = "rgba(127, 209, 246, 0.12)";
+  context.strokeStyle = "rgba(127, 209, 246, 0.14)";
   context.lineWidth = 0.8;
 
   for (let lat = -60; lat <= 60; lat += 30) {
@@ -582,7 +617,7 @@ function drawGraticule(
     );
   }
 
-  context.strokeStyle = "rgba(219, 233, 241, 0.06)";
+  context.strokeStyle = "rgba(219, 233, 241, 0.07)";
   for (let lon = -150; lon <= 180; lon += 30) {
     drawProjectedLine(
       context,
@@ -604,7 +639,7 @@ function drawLandDots(
   centerLat: number,
   centerLon: number,
 ) {
-  context.fillStyle = "rgba(113, 220, 255, 0.16)";
+  context.fillStyle = "rgba(113, 220, 255, 0.14)";
   LAND_DOTS.forEach((point) => {
     const projected = projectPoint(point, centerLat, centerLon, radius, centerX, centerY);
     if (!projected.visible) {
@@ -623,12 +658,12 @@ function drawCoastlines(
   centerLon: number,
 ) {
   DENSIFIED_PATHS.forEach((path) => {
-    context.strokeStyle = "rgba(98, 211, 255, 0.14)";
-    context.lineWidth = 3.2;
+    context.strokeStyle = "rgba(98, 211, 255, 0.12)";
+    context.lineWidth = 3.4;
     drawProjectedLine(context, path, centerX, centerY, radius, centerLat, centerLon);
 
-    context.strokeStyle = "rgba(212, 241, 255, 0.34)";
-    context.lineWidth = 1.15;
+    context.strokeStyle = "rgba(212, 241, 255, 0.42)";
+    context.lineWidth = 1.2;
     drawProjectedLine(context, path, centerX, centerY, radius, centerLat, centerLon);
   });
 }

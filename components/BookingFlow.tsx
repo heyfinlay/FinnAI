@@ -94,8 +94,15 @@ export function BookingFlow() {
           </p>
         </div>
 
-        <div className="schedule-embed">
-          <iframe src={embedUrl} title="Book a strategy call" loading="lazy" />
+        <div className="schedule-panel">
+          <div className="schedule-panel-top" aria-hidden="true">
+            <span>Live scheduler</span>
+            <span>30 minute strategy call</span>
+          </div>
+
+          <div className="schedule-embed">
+            <iframe src={embedUrl} title="Book a strategy call" loading="lazy" />
+          </div>
         </div>
 
         <p className="booking-note">

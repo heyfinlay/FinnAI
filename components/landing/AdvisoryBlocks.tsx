@@ -39,6 +39,28 @@ export function Eyebrow({ children }: { children: ReactNode }) {
   return <p className="eyebrow">{children}</p>;
 }
 
+export function SectionHeader({
+  eyebrow,
+  title,
+  description,
+  id,
+  className = "",
+}: {
+  eyebrow: ReactNode;
+  title: ReactNode;
+  description?: ReactNode;
+  id?: string;
+  className?: string;
+}) {
+  return (
+    <div className={`section-header ${className}`.trim()}>
+      <Eyebrow>{eyebrow}</Eyebrow>
+      <SectionTitle id={id}>{title}</SectionTitle>
+      {description ? <SectionLead>{description}</SectionLead> : null}
+    </div>
+  );
+}
+
 export function SectionTitle({
   id,
   children,
@@ -253,6 +275,108 @@ export function DeliverablePreview({ sections }: { sections: PreviewSection[] })
         </div>
       </div>
     </aside>
+  );
+}
+
+const outcomeChips = ["Faster response", "Cleaner handoffs", "Less admin drag", "Better visibility"];
+
+export function OperationalClarityVisualization() {
+  return (
+    <div className="clarity-grid" aria-label="Operational clarity transformation">
+      <article className="system-card system-card-messy reveal-up">
+        <div className="system-visual" aria-hidden="true">
+          <svg viewBox="0 0 480 340" className="system-svg">
+            <defs>
+              <linearGradient id="messyStroke" x1="0%" x2="100%" y1="0%" y2="100%">
+                <stop offset="0%" stopColor="rgba(140,170,208,0.45)" />
+                <stop offset="100%" stopColor="rgba(100,129,168,0.12)" />
+              </linearGradient>
+            </defs>
+
+            <path d="M86 92C148 82 172 184 246 174C307 166 332 76 394 90" className="system-line system-line-muted" />
+            <path d="M88 248C152 214 176 116 252 120C329 123 346 228 402 244" className="system-line system-line-muted" />
+            <path d="M86 92C156 128 210 280 314 270C372 265 388 204 402 168" className="system-line system-line-soft" />
+            <path d="M88 248C160 226 192 176 246 174C302 171 356 189 394 90" className="system-line system-line-noisy" />
+            <path d="M150 46L150 288" className="system-guide" />
+            <path d="M324 42L324 292" className="system-guide" />
+
+            <circle cx="86" cy="92" r="20" className="system-node system-node-muted" />
+            <circle cx="88" cy="248" r="20" className="system-node system-node-muted" />
+            <circle cx="246" cy="174" r="26" className="system-node system-node-alert" />
+            <circle cx="394" cy="90" r="20" className="system-node system-node-muted" />
+            <circle cx="402" cy="244" r="20" className="system-node system-node-muted" />
+            <circle cx="314" cy="270" r="16" className="system-node system-node-soft" />
+            <circle cx="252" cy="120" r="16" className="system-node system-node-soft" />
+
+            <g className="system-warning">
+              <circle cx="198" cy="92" r="14" />
+              <path d="M198 85v7" />
+              <circle cx="198" cy="96" r="1.5" />
+            </g>
+            <g className="system-warning">
+              <circle cx="352" cy="182" r="14" />
+              <path d="M352 175v7" />
+              <circle cx="352" cy="186" r="1.5" />
+            </g>
+          </svg>
+        </div>
+
+        <p className="system-caption">
+          Most operations evolve into fragmented systems, with duplicated work, hidden delays, and manual coordination.
+        </p>
+      </article>
+
+      <article className="system-card system-card-clear reveal-up" style={{ animationDelay: "90ms" }}>
+        <div className="system-visual" aria-hidden="true">
+          <svg viewBox="0 0 480 340" className="system-svg">
+            <defs>
+              <linearGradient id="clearStroke" x1="0%" x2="100%" y1="0%" y2="0%">
+                <stop offset="0%" stopColor="rgba(123,208,255,0.3)" />
+                <stop offset="55%" stopColor="rgba(140,242,225,0.85)" />
+                <stop offset="100%" stopColor="rgba(123,208,255,0.28)" />
+              </linearGradient>
+            </defs>
+
+            <path d="M74 106H174" className="system-line system-line-clean" />
+            <path d="M174 106H300" className="system-line system-line-clean system-line-priority" />
+            <path d="M300 106H400" className="system-line system-line-clean" />
+            <path d="M174 106V234" className="system-line system-line-clean" />
+            <path d="M300 106V234" className="system-line system-line-clean" />
+            <path d="M174 234H300" className="system-line system-line-clean" />
+
+            <circle cx="74" cy="106" r="18" className="system-node system-node-clean" />
+            <circle cx="174" cy="106" r="22" className="system-node system-node-clean" />
+            <circle cx="300" cy="106" r="28" className="system-node system-node-priority" />
+            <circle cx="400" cy="106" r="18" className="system-node system-node-clean" />
+            <circle cx="174" cy="234" r="18" className="system-node system-node-clean" />
+            <circle cx="300" cy="234" r="18" className="system-node system-node-clean" />
+
+            <g className="system-success">
+              <circle cx="352" cy="206" r="16" />
+              <path d="m345 206 5 5 9-10" />
+            </g>
+            <g className="system-success">
+              <circle cx="124" cy="250" r="16" />
+              <path d="m117 250 5 5 9-10" />
+            </g>
+
+            <rect x="138" y="54" width="198" height="156" rx="30" className="system-focus" />
+          </svg>
+        </div>
+
+        <p className="system-caption">
+          The audit restructures the operational map, showing where automation and AI create real leverage.
+        </p>
+
+        <div className="system-chip-row" aria-label="Operational outcomes">
+          {outcomeChips.map((chip) => (
+            <span key={chip} className="system-chip">
+              {chip}
+            </span>
+          ))}
+        </div>
+      </article>
+    </div>
   );
 }
 
