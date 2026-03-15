@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useId, useMemo, useState } from "react";
 
 type BookingFormState = {
   name: string;
@@ -29,8 +29,14 @@ export function BookingFlow() {
     business: "",
     notes: "",
   });
-  const [error, setError] = useState<string>("");
-  const [ready, setReady] = useState<boolean>(false);
+  const [error, setError] = useState("");
+  const [ready, setReady] = useState(false);
+
+  const nameId = useId();
+  const emailId = useId();
+  const businessId = useId();
+  const notesId = useId();
+  const errorId = useId();
 
   const embedUrl = useMemo(() => getEmbedUrl(schedulerUrl), []);
 
@@ -39,7 +45,7 @@ export function BookingFlow() {
     const body = [
       "Hi Finlay,",
       "",
-      "I would like to request a strategy call for the AI Efficiency Audit.",
+      "I would like to request a strategy call for the AI Operations Audit.",
       "",
       `Name: ${form.name}`,
       `Email: ${form.email}`,
@@ -59,96 +65,144 @@ export function BookingFlow() {
 
     if (!form.name.trim() || !form.email.trim() || !form.business.trim()) {
       setReady(false);
-      setError("Please complete name, email, and business before generating your request.");
+      setError("Complete name, email, and business before generating the request.");
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(form.email.trim())) {
       setReady(false);
-      setError("Please enter a valid email address.");
+      setError("Enter a valid email address.");
       return;
     }
 
     setReady(true);
   }
 
+  const describedBy = error ? errorId : undefined;
+
   return (
     <div className="booking-shell">
-      <div className="booking-column">
-        <p className="booking-kicker">Instant Booking</p>
+      <section className="booking-column" aria-labelledby="scheduler-title">
+        <div className="booking-card-head">
+          <p className="booking-kicker">Instant booking</p>
+          <h3 id="scheduler-title" className="booking-title">
+            Choose a time directly
+          </h3>
+          <p className="booking-description">
+            Use the live scheduler if you already know you want to review your workflows and next-step priorities.
+          </p>
+        </div>
+
         <div className="schedule-embed">
           <iframe src={embedUrl} title="Book a strategy call" loading="lazy" />
         </div>
+
         <p className="booking-note">
           If the embed does not load, use the direct link:
           <a href={schedulerUrl} target="_blank" rel="noreferrer">
-            Open Scheduler
+            Open scheduler
           </a>
         </p>
-      </div>
+      </section>
 
-      <form className="booking-column" onSubmit={handleGenerateDraft}>
-        <p className="booking-kicker">Request By Email</p>
-        <div className="form-grid">
-          <label className="form-field">
-            <span>Name</span>
-            <input
-              value={form.name}
-              onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
-              placeholder="Alex Carter"
-            />
-          </label>
-          <label className="form-field">
-            <span>Email</span>
-            <input
-              value={form.email}
-              onChange={(event) => setForm((prev) => ({ ...prev, email: event.target.value }))}
-              type="email"
-              placeholder="alex@business.com"
-            />
-          </label>
-          <label className="form-field sm:col-span-2">
-            <span>Business</span>
-            <input
-              value={form.business}
-              onChange={(event) => setForm((prev) => ({ ...prev, business: event.target.value }))}
-              placeholder="Northside Legal"
-            />
-          </label>
-          <label className="form-field sm:col-span-2">
-            <span>Main Focus</span>
-            <textarea
-              value={form.notes}
-              onChange={(event) => setForm((prev) => ({ ...prev, notes: event.target.value }))}
-              placeholder="Where do you want more clarity or efficiency?"
-              rows={4}
-            />
-          </label>
+      <section className="booking-column" aria-labelledby="request-title">
+        <div className="booking-card-head">
+          <p className="booking-kicker">Request by email</p>
+          <h3 id="request-title" className="booking-title">
+            Send a short booking request
+          </h3>
+          <p className="booking-description">
+            Share your business name and the workflow area you want help diagnosing. A draft email is generated for you.
+          </p>
         </div>
 
-        {error ? <p className="mt-3 text-sm text-[#9fc8ff]">{error}</p> : null}
+        <form onSubmit={handleGenerateDraft} noValidate>
+          <div className="form-grid">
+            <div className="form-field">
+              <label htmlFor={nameId}>Name</label>
+              <input
+                id={nameId}
+                name="name"
+                autoComplete="name"
+                value={form.name}
+                onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
+                placeholder="Alex Carter"
+                aria-invalid={Boolean(error && !form.name.trim())}
+                aria-describedby={describedBy}
+              />
+            </div>
 
-        <button type="submit" className="btn-primary mt-5 w-full sm:w-auto">
-          Generate Request
-        </button>
+            <div className="form-field">
+              <label htmlFor={emailId}>Email</label>
+              <input
+                id={emailId}
+                name="email"
+                autoComplete="email"
+                type="email"
+                value={form.email}
+                onChange={(event) => setForm((prev) => ({ ...prev, email: event.target.value }))}
+                placeholder="alex@business.com"
+                aria-invalid={Boolean(error && !form.email.trim())}
+                aria-describedby={describedBy}
+              />
+            </div>
 
-        {ready ? (
-          <div className="draft-panel mt-5">
-            <p className="text-sm text-[#d4dbe7]">
-              Your booking request is ready. Send the email and I will reply with next available times.
-            </p>
-            <div className="mt-4 flex flex-wrap gap-3">
-              <a href={draftLink} className="btn-primary">
-                Send Booking Request
-              </a>
-              <a href={schedulerUrl} target="_blank" rel="noreferrer" className="btn-secondary">
-                Use Live Scheduler
-              </a>
+            <div className="form-field form-field-wide">
+              <label htmlFor={businessId}>Business</label>
+              <input
+                id={businessId}
+                name="business"
+                autoComplete="organization"
+                value={form.business}
+                onChange={(event) => setForm((prev) => ({ ...prev, business: event.target.value }))}
+                placeholder="Northside Legal"
+                aria-invalid={Boolean(error && !form.business.trim())}
+                aria-describedby={describedBy}
+              />
+            </div>
+
+            <div className="form-field form-field-wide">
+              <label htmlFor={notesId}>Workflow focus</label>
+              <textarea
+                id={notesId}
+                name="notes"
+                value={form.notes}
+                onChange={(event) => setForm((prev) => ({ ...prev, notes: event.target.value }))}
+                placeholder="Example: inbound enquiries, follow-up consistency, reporting, internal routing"
+                rows={5}
+              />
             </div>
           </div>
-        ) : null}
-      </form>
+
+          <p className="form-helper">Required fields: name, email, and business.</p>
+          <button type="submit" className="btn-primary booking-submit">
+            Generate request email
+          </button>
+
+          <div className="form-status" aria-live="polite">
+            {error ? (
+              <p id={errorId} className="form-error">
+                {error}
+              </p>
+            ) : null}
+
+            {ready ? (
+              <div className="draft-panel">
+                <p>Your booking request is ready. Send the draft email and Finlay will reply with the next available times.</p>
+                <div className="section-actions">
+                  <a href={draftLink} className="btn-primary">
+                    Send booking request
+                  </a>
+                  <a href={schedulerUrl} target="_blank" rel="noreferrer" className="btn-secondary">
+                    Use live scheduler
+                  </a>
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </form>
+      </section>
     </div>
   );
 }

@@ -1,119 +1,173 @@
 import { BookingFlow } from "@/components/BookingFlow";
+import {
+  AuditDiagram,
+  BeforeAfterWorkflow,
+  DeliverablePreview,
+  Eyebrow,
+  FitChecklist,
+  ProblemComparison,
+  ProcessTimeline,
+  ProofStrip,
+  SectionLead,
+  SectionShell,
+  SectionTitle,
+} from "@/components/landing/AdvisoryBlocks";
 
 const CALENDLY_URL = "https://calendly.com/finlay-temporaryutopia/30min";
 
-type UseCase = {
-  name: string;
-  context: string;
-  flow: string;
-  outcome: string;
-};
+const heroProof = [
+  { label: "Founder-led", detail: "Independent advice without software bias" },
+  { label: "Practical scope", detail: "Workflow clarity before technical change" },
+  { label: "Decision-ready", detail: "Report, priorities, and readout session" },
+];
 
-const useCases: UseCase[] = [
+const problemColumns = [
   {
-    name: "Call And Inquiry Handling",
-    context: "Incoming enquiries are inconsistent and hard to track.",
-    flow: "Caller -> AI triage -> CRM",
-    outcome: "Faster first response and cleaner lead records.",
+    title: "Tool-first adoption",
+    text: "Businesses trial tools in isolation, then struggle to connect them to the real work that creates value.",
+    points: [
+      "Scattered experiments across disconnected apps",
+      "Unclear ownership, messy handoffs, and repeated admin",
+      "More spend and complexity without a stronger operating model",
+    ],
+    tone: "muted" as const,
   },
   {
-    name: "Follow-Up And Scheduling",
-    context: "Leads drop between first contact and booked calls.",
-    flow: "Inquiry -> AI follow-up -> Calendar",
-    outcome: "More reliable follow-up without manual chasing.",
+    title: "Diagnostic-first advisory",
+    text: "The audit starts with workflow visibility, then identifies where AI can responsibly remove friction.",
+    points: [
+      "Map how leads, delivery, admin, and reporting actually move",
+      "Identify delays, duplication, and repeated work before recommending tools",
+      "Prioritise opportunities by fit, readiness, and business value",
+    ],
+    tone: "accent" as const,
+  },
+];
+
+const auditSteps = [
+  {
+    title: "Understand current operations",
+    text: "Review how work moves through the business today, from enquiries and follow-up to delivery, admin, and reporting.",
   },
   {
-    name: "Internal Workflow Routing",
-    context: "Manual handoffs create delays and rework.",
-    flow: "Task -> AI routing -> Owner or team",
-    outcome: "Clearer ownership and smoother execution.",
+    title: "Identify friction and repeated work",
+    text: "Surface the points where delays, bottlenecks, duplicate effort, and inconsistent execution are costing time.",
   },
   {
-    name: "Reporting And Admin Support",
-    context: "Weekly reporting and admin consume valuable time.",
-    flow: "Data -> AI summary -> Action list",
-    outcome: "Quicker insight cycles and reduced admin friction.",
+    title: "Map high-fit AI opportunities",
+    text: "Assess where automation or AI support could improve quality, speed, or follow-up without adding unnecessary complexity.",
+  },
+  {
+    title: "Prioritise implementation sequence",
+    text: "Turn the findings into a practical order of decisions so the next step is clear and defensible.",
+  },
+];
+
+const workflowExamples = [
+  {
+    title: "Inbound enquiries and triage",
+    before: ["Email, phone, and web enquiries arrive in different places", "Follow-up depends on manual attention"],
+    after: ["Central triage and logging flow", "AI-assisted routing, context capture, and CRM entry"],
+    outcome: "Faster first response and a cleaner pipeline without relying on memory.",
+  },
+  {
+    title: "Follow-up and booking",
+    before: ["Prospects go quiet after the first contact", "Reminder steps are inconsistent across the team"],
+    after: ["Prompted follow-up sequence", "Clear status tracking and easier booking handoff"],
+    outcome: "Better booking consistency and fewer leads lost between touchpoints.",
+  },
+  {
+    title: "Internal admin and reporting",
+    before: ["Weekly updates and summaries are assembled manually", "Actions get buried across threads and notes"],
+    after: ["Structured summaries and action capture", "Repeatable reporting process with less manual cleanup"],
+    outcome: "Lower admin drag and clearer visibility on what needs attention next.",
+  },
+  {
+    title: "Ownership and handoffs",
+    before: ["Tasks sit between people without a clear owner", "Context gets dropped during transitions"],
+    after: ["Defined routing logic and ownership", "Context packaged before work moves to the next person"],
+    outcome: "Less rework, better accountability, and smoother delivery across the team.",
   },
 ];
 
 const deliverables = [
-  "Current-state workflow map and friction analysis",
-  "AI opportunity assessment with practical fit notes",
-  "Prioritized recommendations with implementation sequence",
-  "Risk, dependency, and readiness considerations",
-  "Tool shortlist aligned to your real operating needs",
-  "Readout call with decision-ready next steps",
+  "Current-state workflow map",
+  "Friction and bottleneck analysis",
+  "AI opportunity map with fit notes",
+  "Priority recommendations",
+  "Implementation sequence",
+  "Risk and readiness notes",
+  "Readout session with next-step guidance",
 ];
 
-const timeline = [
+const previewSections = [
   {
-    label: "Scoping Call",
-    text: "Define business context, goals, and operational priorities.",
+    title: "Current-state view",
+    items: ["Key workflows", "Operational bottlenecks", "Repeated admin load"],
   },
   {
-    label: "Operational Review",
-    text: "Map workflows, repetitive work, and process bottlenecks.",
+    title: "Opportunity map",
+    items: ["High-fit automation ideas", "Constraints and dependencies", "Readiness signals"],
   },
   {
-    label: "Audit Report",
-    text: "Deliver tailored recommendations with clear rationale.",
-  },
-  {
-    label: "Readout Session",
-    text: "Walk through findings, priorities, and practical next steps.",
+    title: "Recommendation sequence",
+    items: ["Priority order", "Quick wins vs deeper work", "Decision notes for implementation"],
   },
 ];
 
-const outcomes = [
-  "Less repetitive admin and fewer workflow bottlenecks",
-  "Clearer decisions on where AI should and should not be used",
-  "Better response consistency across client and lead workflows",
-  "A practical implementation path your team can follow",
-  "More confidence before committing spend to new systems",
-];
-
-const fitList = [
-  "Service businesses managing growing operational complexity",
-  "Owners who want clarity before buying tools",
-  "Teams spending too much time on repetitive workflows",
-  "Businesses that need practical, implementation-aware advice",
-  "Operators looking for better process quality and consistency",
+const valueRows = [
+  {
+    title: "Clearer decisions",
+    text: "You can see where AI should help, where it should wait, and what to prioritise first.",
+  },
+  {
+    title: "Less wasted software spend",
+    text: "The audit helps avoid buying tools before the underlying workflow and ownership model are clear.",
+  },
+  {
+    title: "Better follow-up consistency",
+    text: "Lead handling, client communication, and handoffs become easier to standardise and improve.",
+  },
+  {
+    title: "Lower admin friction",
+    text: "Repeated summaries, routing, tracking, and reporting are assessed through an operational lens rather than tool hype.",
+  },
 ];
 
 const founderPoints = [
-  "I study and test AI tools daily so recommendations stay current.",
-  "I translate technical change into practical operating decisions.",
-  "I focus on process clarity first, then selective implementation.",
-  "I advise based on fit and usefulness, not software hype.",
+  "Practical before technical: workflow clarity comes first.",
+  "Independent recommendations: advice is based on fit, not software incentives.",
+  "Grounded implementation thinking: every recommendation should be realistic for the team using it.",
 ];
 
-function Section({
-  id,
-  className = "",
-  children,
-}: {
-  id?: string;
-  className?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section id={id} className={`relative py-16 md:py-24 ${className}`}>
-      <div className="mx-auto w-full max-w-[1200px] px-6">{children}</div>
-    </section>
-  );
-}
+const engagementSteps = [
+  { title: "Scoping call", text: "Confirm business context, priorities, and the workflows worth reviewing." },
+  { title: "Operational review", text: "Examine current processes, repeated work, and the points where execution slows down." },
+  { title: "Audit and report", text: "Deliver the workflow map, recommendation set, and implementation sequence." },
+  { title: "Readout session", text: "Walk through the findings, answer questions, and align on next decisions." },
+];
 
-function Eyebrow({ children }: { children: React.ReactNode }) {
-  return <p className="eyebrow">{children}</p>;
-}
-
-function SectionTitle({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <h2 className={`mt-5 max-w-4xl font-display text-3xl leading-tight text-ink sm:text-4xl lg:text-[2.75rem] ${className}`}>
-      {children}
-    </h2>
-  );
-}
+const fitColumns = [
+  {
+    title: "Good fit",
+    items: [
+      "Service businesses with growing operational complexity",
+      "Owners who want clarity before buying more tools",
+      "Teams losing time to repeated admin, follow-up, or reporting work",
+      "Businesses that want advisory guidance before implementation",
+    ],
+    tone: "fit" as const,
+  },
+  {
+    title: "Not ideal",
+    items: [
+      "You want immediate automation build work without a diagnostic phase",
+      "You mainly want tool demos or trend commentary",
+      "You are looking for a large software rollout before core workflows are understood",
+    ],
+    tone: "unfit" as const,
+  },
+];
 
 function PrimaryButton({ href, children }: { href: string; children: React.ReactNode }) {
   return (
@@ -131,463 +185,265 @@ function SecondaryButton({ href, children }: { href: string; children: React.Rea
   );
 }
 
-function HeroDiagram() {
-  return (
-    <div className="workflow-board reveal-up">
-      <p className="workflow-kicker">What The Audit Examines</p>
-      <div className="workflow-track">
-        <div className="workflow-node">
-          <p>Daily Operations</p>
-          <span>How work flows through your team today</span>
-        </div>
-        <div className="workflow-arrow" aria-hidden="true" />
-        <div className="workflow-node workflow-node-highlight">
-          <p>Workflow Analysis</p>
-          <span>Where time is lost, duplicated, or delayed</span>
-        </div>
-        <div className="workflow-arrow" aria-hidden="true" />
-        <div className="workflow-node">
-          <p>Practical Recommendations</p>
-          <span>Where AI can help without adding complexity</span>
-        </div>
-      </div>
-      <div className="workflow-foot">
-        <span>Analysis first</span>
-        <span>Implementation second</span>
-      </div>
-    </div>
-  );
-}
-
-function UseCaseCard({ item, delay }: { item: UseCase; delay: number }) {
-  return (
-    <article className="usecase-card reveal-up" style={{ animationDelay: `${delay}ms` }}>
-      <p className="usecase-title">{item.name}</p>
-      <p className="usecase-flow">{item.flow}</p>
-      <p className="usecase-challenge">{item.context}</p>
-      <p className="usecase-outcome">{item.outcome}</p>
-    </article>
-  );
-}
-
 export function LandingPage() {
   return (
-    <main className="relative overflow-hidden text-ink">
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-x-0 top-[-16rem] h-[38rem] bg-[radial-gradient(circle_at_top,_rgba(77,163,255,0.14),_rgba(14,17,22,0)_62%)]" />
-        <div className="absolute inset-0 opacity-[0.1] [background:radial-gradient(circle_at_1px_1px,rgba(168,176,189,0.25)_1px,transparent_0)] [background-size:32px_32px]" />
-      </div>
-
-      <header className="sticky top-0 z-40 border-b border-line bg-[#0E1116]/88 backdrop-blur-xl">
-        <div className="mx-auto flex w-full max-w-[1200px] items-center gap-3 px-6 py-3.5">
-          <a href="#top" className="min-w-0 flex-1 truncate font-display text-lg tracking-tight text-ink sm:text-xl">
+    <>
+      <header className="site-header">
+        <div className="section-container site-header-inner">
+          <a href="#top" className="site-brand">
             Temporary Utopia
           </a>
-          <nav className="hidden items-center gap-6 text-sm text-mute md:flex">
-            <a className="transition hover:text-ink" href="#approach">
-              Approach
-            </a>
-            <a className="transition hover:text-ink" href="#included">
-              Deliverables
-            </a>
-            <a className="transition hover:text-ink" href="#about">
-              Founder
-            </a>
-            <a className="transition hover:text-ink" href="#booking">
-              Book
-            </a>
+
+          <nav className="site-nav" aria-label="Primary">
+            <a href="#problem">Problem</a>
+            <a href="#how-it-works">Method</a>
+            <a href="#deliverables">Deliverables</a>
+            <a href="#about">Founder</a>
+            <a href="#booking">Booking</a>
           </nav>
-          <a href="#booking" className="btn-secondary shrink-0 px-3 py-2 text-xs sm:px-5 sm:py-3 sm:text-sm" aria-label="Request Availability">
-            <span className="sm:hidden">Book</span>
-            <span className="hidden sm:inline">Request Availability</span>
+
+          <a href="#booking" className="btn-secondary site-header-cta">
+            Book a call
           </a>
         </div>
       </header>
 
-      <Section id="top">
-        <div className="grid items-start gap-12 lg:grid-cols-[1.02fr_0.98fr]">
-          <div className="reveal-up">
-            <Eyebrow>Founder-Led AI Advisory</Eyebrow>
-            <h1 className="mt-6 max-w-3xl font-display text-4xl leading-[1.06] text-ink sm:text-5xl lg:text-[3.3rem]">
-              Understand where AI fits in your business before you invest in the wrong systems.
-            </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-mute">
-              Temporary Utopia provides an AI Operations Audit for business owners who want practical guidance. We start by understanding how your business actually runs, then recommend what is worth implementing.
-            </p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <PrimaryButton href={CALENDLY_URL}>Book Your Audit</PrimaryButton>
-              <SecondaryButton href="#fit">See If You Are A Fit</SecondaryButton>
-            </div>
-            <p className="mt-5 text-sm text-mute">
-              Business understanding before tool selection. Clarity before complexity.
-            </p>
-          </div>
+      <main id="main-content" className="site-main">
+        <SectionShell id="top">
+          <div className="hero-layout">
+            <div className="reveal-up">
+              <Eyebrow>Founder-led AI operations advisory</Eyebrow>
+              <h1 className="hero-title">
+                Understand where AI fits in your business before you commit to the wrong systems.
+              </h1>
+              <p className="hero-copy">
+                Temporary Utopia runs an AI Operations Audit for business owners who want practical clarity. The work starts
+                with how your operations actually function, then turns that diagnosis into a focused implementation path.
+              </p>
 
-          <HeroDiagram />
-        </div>
-      </Section>
-
-      <Section id="problem" className="section-contrast">
-        <div className="problem-panel reveal-up">
-          <Eyebrow>The Core Problem</Eyebrow>
-          <SectionTitle>
-            Most business owners are trying to run a company and keep up with AI at the same time, which is a difficult combination.
-          </SectionTitle>
-          <div className="mt-8 grid gap-6 md:grid-cols-2">
-            <p className="leading-relaxed text-mute">
-              Day to day, owners are already managing delivery, client communication, staffing, and planning. On top of that, AI tools and workflows are evolving quickly enough that it is hard to separate what is genuinely useful from what is simply new.
-            </p>
-            <p className="leading-relaxed text-mute">
-              A common pattern is to trial a handful of tools without a clear operational strategy. That experimentation usually consumes time and budget, but rarely creates lasting improvement because the tools are not aligned with how the business actually works.
-            </p>
-          </div>
-          <p className="mt-6 max-w-4xl leading-relaxed text-mute">
-            When AI initiatives fail, it is usually not because the technology is weak. It is because implementation starts before the underlying workflow has been understood. The audit exists to solve that exact problem.
-          </p>
-        </div>
-      </Section>
-
-      <Section id="approach">
-        <div className="mx-auto max-w-3xl text-center">
-          <Eyebrow>Approach</Eyebrow>
-          <SectionTitle>The difference is not the tools. The difference is the order of decisions.</SectionTitle>
-          <p className="mx-auto mt-6 max-w-3xl leading-relaxed text-mute">
-            We do not begin by prescribing software. We begin by understanding how your operations run, where friction appears, and which changes are likely to produce meaningful improvements.
-          </p>
-        </div>
-
-        <div className="mt-12 grid gap-5 lg:grid-cols-2">
-          <article className="comparison-panel comparison-panel-left reveal-up">
-            <p className="comparison-kicker">Typical AI service model</p>
-            <h3 className="comparison-heading">Software first, context second.</h3>
-            <ul className="comparison-list">
-              <li>Starts with product demos before understanding workflows</li>
-              <li>Encourages scattered adoption across disconnected tools</li>
-              <li>Makes ROI harder to evaluate and sustain over time</li>
-              <li>Often adds complexity without fixing the root process issue</li>
-            </ul>
-          </article>
-
-          <article className="comparison-panel comparison-panel-right reveal-up">
-            <p className="comparison-kicker">Temporary Utopia model</p>
-            <h3 className="comparison-heading">Business understanding first, then selective implementation.</h3>
-            <ul className="comparison-list">
-              <li>Maps operations before any recommendations are made</li>
-              <li>Finds workflow friction and repetitive work first</li>
-              <li>Prioritizes high-fit opportunities based on real constraints</li>
-              <li>Produces practical guidance your team can actually execute</li>
-            </ul>
-          </article>
-        </div>
-      </Section>
-
-      <Section id="solutions" className="section-contrast">
-        <div className="mx-auto max-w-3xl text-center">
-          <Eyebrow>Illustrative Use Cases</Eyebrow>
-          <SectionTitle>Examples of operational improvements this audit can surface.</SectionTitle>
-          <p className="mx-auto mt-6 max-w-3xl text-mute">
-            These are not generic templates. They illustrate the kinds of workflow improvements we assess and tailor to each business.
-          </p>
-        </div>
-
-        <div className="mt-10 grid gap-4 md:grid-cols-2">
-          {useCases.map((item, index) => (
-            <UseCaseCard key={item.name} item={item} delay={index * 70} />
-          ))}
-        </div>
-      </Section>
-
-      <Section id="offer">
-        <div className="reveal-up">
-          <Eyebrow>Service Overview</Eyebrow>
-          <SectionTitle>AI Efficiency Audit / AI Operations Audit</SectionTitle>
-          <p className="mt-6 max-w-3xl leading-relaxed text-mute">
-            This is a paid advisory engagement focused on operational clarity. You receive a structured analysis of your workflows, a set of tailored recommendations, and a practical roadmap for implementation.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <PrimaryButton href="#booking">Request Availability</PrimaryButton>
-            <SecondaryButton href="#report-depth">See Report Depth</SecondaryButton>
-          </div>
-        </div>
-      </Section>
-
-      <Section id="included">
-        <div className="mx-auto max-w-3xl text-center">
-          <Eyebrow>What Is Included</Eyebrow>
-          <SectionTitle>A practical report built for real business decisions.</SectionTitle>
-        </div>
-
-        <div className="mt-11 grid gap-8 lg:grid-cols-[1fr_1fr]">
-          <div className="deliverable-list reveal-up">
-            {deliverables.map((item, index) => (
-              <div key={item} className="deliverable-row" style={{ animationDelay: `${index * 60}ms` }}>
-                <span>{item}</span>
+              <div className="hero-cta-group">
+                <PrimaryButton href={CALENDLY_URL}>Book a strategy call</PrimaryButton>
+                <SecondaryButton href="#how-it-works">See how the audit works</SecondaryButton>
               </div>
+
+              <ProofStrip items={heroProof} />
+            </div>
+
+            <AuditDiagram />
+          </div>
+        </SectionShell>
+
+        <SectionShell id="problem" tone="contrast">
+          <div className="editorial-grid">
+            <div className="reveal-up">
+              <Eyebrow>The real problem</Eyebrow>
+              <SectionTitle>Most AI adoption stalls because the operating model is unclear, not because the tools are missing.</SectionTitle>
+              <SectionLead>
+                Owners are already juggling delivery, client communication, staffing, reporting, and growth. When AI gets
+                layered on top without workflow clarity, the result is usually more experimentation than improvement.
+              </SectionLead>
+              <p className="body-copy">
+                The audit reframes the problem. Instead of asking which tools are trending, it asks where work is delayed,
+                duplicated, or inconsistently handled, and which changes are worth making first.
+              </p>
+            </div>
+
+            <ProblemComparison columns={problemColumns} />
+          </div>
+        </SectionShell>
+
+        <SectionShell id="how-it-works">
+          <div className="section-heading-center">
+            <Eyebrow>How the audit works</Eyebrow>
+            <SectionTitle>The method is simple, structured, and designed to produce a clear next step.</SectionTitle>
+            <SectionLead>
+              The process is deliberately diagnostic. It turns operational ambiguity into a map of where AI can add value and
+              where it should not be forced.
+            </SectionLead>
+          </div>
+
+          <ProcessTimeline steps={auditSteps} />
+        </SectionShell>
+
+        <SectionShell id="examples" tone="contrast">
+          <div className="section-heading-center">
+            <Eyebrow>Example improvements</Eyebrow>
+            <SectionTitle>Practical workflow changes the audit can uncover.</SectionTitle>
+            <SectionLead>
+              These are illustrative transformations, not canned packages. The point is to make the outcomes concrete.
+            </SectionLead>
+          </div>
+
+          <div className="workflow-examples">
+            {workflowExamples.map((example, index) => (
+              <BeforeAfterWorkflow key={example.title} example={example} delay={index * 80} />
             ))}
           </div>
+        </SectionShell>
 
-          <aside className="report-preview reveal-up">
-            <p className="report-preview-kicker">Report Preview</p>
-            <h3 className="report-preview-title">How Findings Are Structured</h3>
-            <div className="report-preview-grid">
-              <div>Operational friction points</div>
-              <div>Process quality observations</div>
-              <div>AI opportunity map</div>
-              <div>Priority recommendation table</div>
-              <div>Implementation guidance</div>
-              <div>Risk and dependency notes</div>
+        <SectionShell id="deliverables">
+          <div className="two-column-balance">
+            <div className="reveal-up">
+              <Eyebrow>What you receive</Eyebrow>
+              <SectionTitle>A decision-ready audit, not a vague list of software suggestions.</SectionTitle>
+              <SectionLead>
+                The deliverable is built to help you decide what matters, what can wait, and how implementation should be sequenced.
+              </SectionLead>
+
+              <ul className="deliverable-list">
+                {deliverables.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
             </div>
-          </aside>
-        </div>
-      </Section>
 
-      <Section id="report-depth" className="section-contrast">
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-          <div className="reveal-up">
-            <Eyebrow>Report Quality</Eyebrow>
-            <SectionTitle>A detailed operational review, not surface-level tool recommendations.</SectionTitle>
-            <p className="mt-6 max-w-2xl leading-relaxed text-mute">
-              You receive clear reasoning behind each recommendation, where it fits in your operations, and what to prioritize first.
-            </p>
+            <DeliverablePreview sections={previewSections} />
+          </div>
+        </SectionShell>
+
+        <SectionShell id="value" tone="contrast">
+          <div className="section-heading-center section-heading-left">
+            <Eyebrow>Why this is valuable</Eyebrow>
+            <SectionTitle>Better decisions, cleaner operations, and less wasted motion.</SectionTitle>
+            <SectionLead>
+              The value is usually found in sharper priorities, stronger follow-up, and reduced admin friction, not in chasing the most tools.
+            </SectionLead>
           </div>
 
-          <div className="architecture-grid reveal-up">
-            <div className="architecture-card">
-              <p>Current workflow analysis</p>
-            </div>
-            <div className="architecture-card">
-              <p>Opportunity fit and constraints</p>
-            </div>
-            <div className="architecture-card">
-              <p>Priority sequence for implementation</p>
-            </div>
-            <div className="architecture-card">
-              <p>Practical next steps for your team</p>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      <Section id="value-anchor">
-        <div className="value-anchor reveal-up">
-          <div>
-            <Eyebrow>Where Value Is Usually Found</Eyebrow>
-            <h2 className="mt-5 max-w-3xl font-display text-3xl leading-tight text-ink sm:text-4xl lg:text-[2.75rem]">
-              Most gains come from reducing day-to-day friction, not adding more software.
-            </h2>
-            <p className="mt-5 max-w-2xl text-mute">
-              The audit highlights where process quality can improve and where AI can responsibly reduce repetitive work.
-            </p>
-            <div className="metrics-grid">
-              <div className="metric-block">
-                <p>Follow-up reliability</p>
-                <span>Reduce delays across leads and clients</span>
-              </div>
-              <div className="metric-block">
-                <p>Workflow handoffs</p>
-                <span>Lower rework between owner and team</span>
-              </div>
-              <div className="metric-block">
-                <p>Admin consistency</p>
-                <span>Streamline recurring operational tasks</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="value-side">
-            <p className="value-side-kicker">Before And After View</p>
-            <div className="value-state">
-              <p className="value-state-label">Before</p>
-              <p className="value-state-text">Unclear priorities, fragmented processes, and inconsistent execution.</p>
-            </div>
-            <div className="value-divider" />
-            <div className="value-state">
-              <p className="value-state-label">After</p>
-              <p className="value-state-text">A clear operating plan with focused, practical AI recommendations.</p>
-            </div>
-            <p className="mt-4 text-xs text-mute">Each recommendation is tailored to your business context and readiness.</p>
-          </div>
-        </div>
-      </Section>
-
-      <Section id="outcomes">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
-          <div className="reveal-up">
-            <Eyebrow>Outcomes</Eyebrow>
-            <SectionTitle>What this gives you as an owner.</SectionTitle>
-            <p className="mt-6 max-w-xl text-mute">
-              Better operational clarity, more deliberate AI adoption, and less uncertainty about what to do next.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-2">
-              <span className="impact-badge">Clear priorities</span>
-              <span className="impact-badge">Lower friction</span>
-              <span className="impact-badge">Better consistency</span>
-            </div>
-          </div>
-
-          <div className="reveal-up grid gap-3">
-            {outcomes.map((item) => (
-              <div key={item} className="outcome-row">
-                {item}
-              </div>
+          <div className="value-grid">
+            {valueRows.map((row, index) => (
+              <article key={row.title} className="value-row reveal-up" style={{ animationDelay: `${index * 70}ms` }}>
+                <h3>{row.title}</h3>
+                <p>{row.text}</p>
+              </article>
             ))}
           </div>
-        </div>
-      </Section>
+        </SectionShell>
 
-      <Section id="about" className="section-contrast">
-        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-          <aside className="founder-panel reveal-up">
-            <div className="founder-avatar">F</div>
-            <div>
-              <p className="founder-name">Finlay Sturzaker</p>
-              <p className="founder-role">Founder, Temporary Utopia</p>
-            </div>
-            <p className="founder-bio">
-              I work with service businesses that want to use AI thoughtfully. My role is to help owners understand where AI fits their operations and where it does not.
-            </p>
-          </aside>
+        <SectionShell id="about">
+          <div className="founder-layout">
+            <aside className="founder-profile reveal-up" aria-label="Founder profile">
+              <div className="founder-avatar" aria-hidden="true">
+                F
+              </div>
+              <div>
+                <p className="founder-name">Finlay Sturzaker</p>
+                <p className="founder-role">Founder, Temporary Utopia</p>
+              </div>
+              <p className="founder-summary">
+                I work with service businesses that want grounded advice on where AI fits their operations and where it does not.
+              </p>
+            </aside>
 
-          <div className="reveal-up rounded-3xl border border-line bg-card p-7 sm:p-9">
-            <Eyebrow>Founder Perspective</Eyebrow>
-            <SectionTitle>I spend time with new AI tools every day, but my job is to keep your decisions grounded.</SectionTitle>
-            <p className="mt-6 leading-relaxed text-mute">
-              Most owners do not need another list of apps. They need someone who can translate a fast-moving space into practical decisions that improve operations without creating unnecessary disruption.
-            </p>
-            <p className="mt-4 leading-relaxed text-mute">
-              That is the focus here: understand the business clearly, recommend selectively, and make sure every suggestion has a practical reason behind it.
-            </p>
-            <ul className="founder-points">
-              {founderPoints.map((point) => (
-                <li key={point}>{point}</li>
-              ))}
-            </ul>
-            <div className="mt-8">
-              <PrimaryButton href="#booking">Start With A Strategy Call</PrimaryButton>
+            <div className="reveal-up">
+              <Eyebrow>Founder perspective</Eyebrow>
+              <SectionTitle>I keep the work practical: diagnose the business clearly, then recommend selectively.</SectionTitle>
+              <SectionLead>
+                Most owners do not need another app list. They need someone who can translate a fast-moving technical space into
+                defensible operating decisions.
+              </SectionLead>
+              <ul className="advisory-points">
+                {founderPoints.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
+              </ul>
+              <div className="section-actions">
+                <PrimaryButton href="#booking">Start with a strategy call</PrimaryButton>
+              </div>
             </div>
           </div>
-        </div>
-      </Section>
+        </SectionShell>
 
-      <Section id="process">
-        <div className="mx-auto max-w-3xl text-center">
-          <Eyebrow>How The Engagement Works</Eyebrow>
-          <SectionTitle>A straightforward process designed for busy operators.</SectionTitle>
-        </div>
+        <SectionShell id="engagement" tone="contrast">
+          <div className="section-heading-center">
+            <Eyebrow>Engagement process</Eyebrow>
+            <SectionTitle>What happens after you book.</SectionTitle>
+            <SectionLead>The engagement is lightweight to start and structured enough to keep the output useful.</SectionLead>
+          </div>
 
-        <div className="mt-10 timeline-panel reveal-up">
-          <div className="timeline-track">
-            {timeline.map((item) => (
-              <div key={item.label} className="timeline-item">
-                <span className="timeline-dot" />
+          <ol className="engagement-timeline">
+            {engagementSteps.map((step, index) => (
+              <li key={step.title} className="engagement-step reveal-up" style={{ animationDelay: `${index * 70}ms` }}>
+                <span className="engagement-step-index">{index + 1}</span>
                 <div>
-                  <p className="timeline-label">{item.label}</p>
-                  <p className="timeline-text">{item.text}</p>
+                  <h3>{step.title}</h3>
+                  <p>{step.text}</p>
                 </div>
-              </div>
+              </li>
             ))}
-          </div>
-        </div>
-      </Section>
+          </ol>
+        </SectionShell>
 
-      <Section id="trust" className="section-contrast">
-        <div className="mx-auto max-w-3xl text-center">
-          <Eyebrow>Trust And Process</Eyebrow>
-          <SectionTitle>A deliberate advisory process designed to reduce implementation risk.</SectionTitle>
-        </div>
-
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
-          <article className="trust-card reveal-up">
-            <p className="trust-title">Independent Advice</p>
-            <p className="trust-body">Recommendations are based on operational fit, not software sales incentives.</p>
-          </article>
-          <article className="trust-card reveal-up" style={{ animationDelay: "80ms" }}>
-            <p className="trust-title">Structured Analysis</p>
-            <p className="trust-body">Each finding is tied to a real workflow and a practical action pathway.</p>
-          </article>
-          <article className="trust-card reveal-up" style={{ animationDelay: "160ms" }}>
-            <p className="trust-title">Practical Delivery</p>
-            <p className="trust-body">The output is designed to guide decisions, not overwhelm teams with complexity.</p>
-          </article>
-        </div>
-      </Section>
-
-      <Section id="fit">
-        <div className="grid gap-6 rounded-3xl border border-line bg-card p-7 sm:p-9 lg:grid-cols-[1.2fr_0.8fr]">
-          <div className="reveal-up">
-            <Eyebrow>Who This Is For</Eyebrow>
-            <h3 className="mt-5 text-2xl font-semibold text-ink sm:text-3xl">
-              Best for businesses that want practical AI clarity before making bigger implementation decisions.
-            </h3>
-            <ul className="mt-6 space-y-3 text-sm text-mute sm:text-base">
-              {fitList.map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-accent" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+        <SectionShell id="fit">
+          <div className="section-heading-center section-heading-left">
+            <Eyebrow>Who this is for</Eyebrow>
+            <SectionTitle>A strong fit for businesses that want clarity before committing to implementation.</SectionTitle>
+            <SectionLead>
+              The audit is most useful when there is real operational complexity to diagnose and the owner wants better decisions, not just faster tool shopping.
+            </SectionLead>
           </div>
 
-          <div className="reveal-up rounded-2xl border border-line bg-[#131820] p-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.13em] text-mute">Not Ideal If</p>
-            <ul className="mt-4 space-y-3 text-sm leading-relaxed text-[#c5cdd8]">
-              <li>You want immediate automation implementation without a diagnostic phase.</li>
-              <li>You mainly want tool demos rather than operational recommendations.</li>
-              <li>You are looking for trend commentary instead of practical business guidance.</li>
-            </ul>
+          <FitChecklist columns={fitColumns} />
+        </SectionShell>
+
+        <SectionShell id="pricing" tone="contrast">
+          <div className="pricing-block reveal-up">
+            <div>
+              <Eyebrow>Pricing</Eyebrow>
+              <SectionTitle className="max-w-none">AI Operations Audit</SectionTitle>
+              <p className="pricing-amount">From $1,000</p>
+              <p className="pricing-copy">
+                Final scope depends on workflow complexity, business context, and the depth of operational review required.
+              </p>
+            </div>
+
+            <div className="pricing-aside">
+              <p>Includes the audit, tailored recommendations, risk and readiness notes, and a readout session.</p>
+              <div className="section-actions">
+                <PrimaryButton href="#booking">Book a strategy call</PrimaryButton>
+                <SecondaryButton href="mailto:hello@temporaryutopia.com">Email Temporary Utopia</SecondaryButton>
+              </div>
+            </div>
           </div>
-        </div>
-      </Section>
+        </SectionShell>
 
-      <Section id="pricing" className="section-contrast">
-        <div className="pricing-panel reveal-up">
-          <Eyebrow>Pricing</Eyebrow>
-          <h2 className="mt-5 font-display text-3xl text-ink sm:text-5xl">AI Efficiency Audit</h2>
-          <p className="mt-4 text-4xl font-semibold text-accent sm:text-5xl">From $1,000</p>
-          <p className="mx-auto mt-5 max-w-2xl text-mute">
-            Final scope is set by workflow complexity and team context. Each engagement includes the audit report, recommendations, and a strategy readout call.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <PrimaryButton href="#booking">Book Strategy Call</PrimaryButton>
-            <SecondaryButton href="mailto:hello@temporaryutopia.com">Email Temporary Utopia</SecondaryButton>
+        <SectionShell id="booking">
+          <div className="section-heading-center">
+            <Eyebrow>Booking</Eyebrow>
+            <SectionTitle>Book directly or send a short request with your business context.</SectionTitle>
+            <SectionLead>
+              Use the live scheduler if you are ready to choose a time. If not, send a short request and include the workflow area you want to review.
+            </SectionLead>
           </div>
-        </div>
-      </Section>
 
-      <Section id="booking">
-        <div className="mx-auto max-w-3xl text-center">
-          <Eyebrow>Booking</Eyebrow>
-          <SectionTitle>Book a strategy call or send a short booking request.</SectionTitle>
-          <p className="mx-auto mt-6 max-w-3xl text-mute">
-            Use the embedded scheduler for instant booking, or submit your details and I will confirm availability.
-          </p>
-        </div>
-
-        <div className="mt-10 reveal-up">
-          <BookingFlow />
-        </div>
-      </Section>
-
-      <Section id="final-cta" className="section-contrast">
-        <div className="final-cta reveal-up">
-          <p className="final-kicker">Next Step</p>
-          <h2 className="mx-auto mt-6 max-w-3xl font-display text-3xl text-ink sm:text-5xl">
-            Get a clear, practical view of how AI can support your operations.
-          </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-mute">
-            If you want thoughtful guidance before making implementation decisions, start with a strategy call.
-          </p>
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-            <a href={CALENDLY_URL} className="btn-primary">
-              Request Availability
-            </a>
-            <a href="#offer" className="btn-secondary">
-              Review The Service
-            </a>
+          <div className="booking-wrap reveal-up">
+            <BookingFlow />
           </div>
+        </SectionShell>
+
+        <SectionShell id="final-cta" tone="contrast">
+          <div className="final-cta reveal-up">
+            <Eyebrow>Next step</Eyebrow>
+            <SectionTitle className="mx-auto max-w-3xl text-center">
+              Get a clear view of where AI can support your operations and where it should stay out of the way.
+            </SectionTitle>
+            <SectionLead className="mx-auto max-w-2xl text-center">
+              If you want practical guidance before bigger implementation decisions, start with a strategy call.
+            </SectionLead>
+            <div className="section-actions section-actions-center">
+              <PrimaryButton href={CALENDLY_URL}>Request availability</PrimaryButton>
+              <SecondaryButton href="#deliverables">Review deliverables</SecondaryButton>
+            </div>
+          </div>
+        </SectionShell>
+      </main>
+
+      <footer className="site-footer">
+        <div className="section-container site-footer-inner">
+          <p>Temporary Utopia</p>
+          <a href="mailto:hello@temporaryutopia.com">hello@temporaryutopia.com</a>
         </div>
-      </Section>
-    </main>
+      </footer>
+    </>
   );
 }
