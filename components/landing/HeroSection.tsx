@@ -25,203 +25,13 @@ type ProjectedPoint = {
   visible: boolean;
 };
 
-const MARKER_COORDINATES: LatLon[] = [
-  { lat: 40.7, lon: -74.0 },
-  { lat: 51.5, lon: -0.12 },
-  { lat: 1.35, lon: 103.8 },
-  { lat: -33.86, lon: 151.2 },
-  { lat: 35.68, lon: 139.7 },
+const LATITUDE_LINES = [-58, -28, 0, 24, 52];
+const LONGITUDE_LINES = [-110, -55, 0, 55, 110];
+const SIGNAL_PATHS: Array<{ from: LatLon; to: LatLon; color: string; opacity: number; width: number }> = [
+  { from: { lat: 40, lon: -132 }, to: { lat: -28, lon: 34 }, color: "#8ad8ff", opacity: 0.38, width: 2.5 },
+  { from: { lat: 18, lon: -24 }, to: { lat: -42, lon: 140 }, color: "#7de8d7", opacity: 0.34, width: 2.2 },
+  { from: { lat: -12, lon: -150 }, to: { lat: 52, lon: 86 }, color: "#d8efff", opacity: 0.22, width: 1.6 },
 ];
-
-const CONNECTIONS: Array<[LatLon, LatLon, string, number]> = [
-  [MARKER_COORDINATES[0], MARKER_COORDINATES[1], "#8ad8ff", 0.44],
-  [MARKER_COORDINATES[1], MARKER_COORDINATES[2], "#6fd7ff", 0.32],
-  [MARKER_COORDINATES[0], MARKER_COORDINATES[3], "#8ad8ff", 0.24],
-];
-
-const CONTINENT_PATHS: LatLon[][] = [
-  [
-    { lat: 73, lon: -168 },
-    { lat: 70, lon: -156 },
-    { lat: 66, lon: -146 },
-    { lat: 61, lon: -136 },
-    { lat: 56, lon: -128 },
-    { lat: 51, lon: -124 },
-    { lat: 48, lon: -124 },
-    { lat: 46, lon: -126 },
-    { lat: 43, lon: -124 },
-    { lat: 39, lon: -121 },
-    { lat: 35, lon: -118 },
-    { lat: 31, lon: -114 },
-    { lat: 28, lon: -109 },
-    { lat: 25, lon: -104 },
-    { lat: 22, lon: -98 },
-    { lat: 19, lon: -92 },
-    { lat: 21, lon: -86 },
-    { lat: 26, lon: -82 },
-    { lat: 31, lon: -81 },
-    { lat: 37, lon: -76 },
-    { lat: 44, lon: -67 },
-    { lat: 49, lon: -61 },
-    { lat: 54, lon: -60 },
-    { lat: 58, lon: -67 },
-    { lat: 62, lon: -79 },
-    { lat: 66, lon: -96 },
-    { lat: 69, lon: -116 },
-    { lat: 72, lon: -144 },
-  ],
-  [
-    { lat: 82, lon: -72 },
-    { lat: 79, lon: -60 },
-    { lat: 74, lon: -46 },
-    { lat: 69, lon: -34 },
-    { lat: 62, lon: -38 },
-    { lat: 60, lon: -50 },
-    { lat: 66, lon: -62 },
-    { lat: 74, lon: -70 },
-  ],
-  [
-    { lat: 24, lon: -97 },
-    { lat: 18, lon: -91 },
-    { lat: 14, lon: -88 },
-    { lat: 11, lon: -85 },
-    { lat: 9, lon: -81 },
-    { lat: 11, lon: -78 },
-    { lat: 15, lon: -80 },
-    { lat: 19, lon: -84 },
-    { lat: 22, lon: -89 },
-  ],
-  [
-    { lat: 12, lon: -81 },
-    { lat: 6, lon: -77 },
-    { lat: -2, lon: -75 },
-    { lat: -12, lon: -72 },
-    { lat: -22, lon: -66 },
-    { lat: -32, lon: -62 },
-    { lat: -42, lon: -60 },
-    { lat: -52, lon: -63 },
-    { lat: -56, lon: -71 },
-    { lat: -50, lon: -77 },
-    { lat: -38, lon: -76 },
-    { lat: -26, lon: -74 },
-    { lat: -14, lon: -75 },
-    { lat: -4, lon: -78 },
-  ],
-  [
-    { lat: 71, lon: -12 },
-    { lat: 68, lon: -2 },
-    { lat: 64, lon: 12 },
-    { lat: 60, lon: 24 },
-    { lat: 57, lon: 34 },
-    { lat: 56, lon: 48 },
-    { lat: 58, lon: 64 },
-    { lat: 60, lon: 82 },
-    { lat: 60, lon: 100 },
-    { lat: 58, lon: 118 },
-    { lat: 56, lon: 136 },
-    { lat: 52, lon: 150 },
-    { lat: 46, lon: 146 },
-    { lat: 40, lon: 136 },
-    { lat: 34, lon: 126 },
-    { lat: 28, lon: 116 },
-    { lat: 22, lon: 108 },
-    { lat: 16, lon: 98 },
-    { lat: 12, lon: 88 },
-    { lat: 14, lon: 74 },
-    { lat: 18, lon: 62 },
-    { lat: 24, lon: 52 },
-    { lat: 30, lon: 44 },
-    { lat: 36, lon: 38 },
-    { lat: 42, lon: 32 },
-    { lat: 50, lon: 24 },
-    { lat: 58, lon: 12 },
-    { lat: 64, lon: 2 },
-  ],
-  [
-    { lat: 36, lon: -17 },
-    { lat: 32, lon: -6 },
-    { lat: 29, lon: 6 },
-    { lat: 24, lon: 16 },
-    { lat: 18, lon: 24 },
-    { lat: 10, lon: 32 },
-    { lat: 0, lon: 36 },
-    { lat: -10, lon: 34 },
-    { lat: -20, lon: 30 },
-    { lat: -30, lon: 22 },
-    { lat: -35, lon: 14 },
-    { lat: -33, lon: 6 },
-    { lat: -26, lon: -2 },
-    { lat: -14, lon: -8 },
-    { lat: 0, lon: -10 },
-    { lat: 14, lon: -12 },
-    { lat: 26, lon: -14 },
-  ],
-  [
-    { lat: 59, lon: -8 },
-    { lat: 57, lon: -5 },
-    { lat: 54, lon: -2 },
-    { lat: 52, lon: -4 },
-    { lat: 54, lon: -7 },
-  ],
-  [
-    { lat: 31, lon: 34 },
-    { lat: 28, lon: 40 },
-    { lat: 24, lon: 46 },
-    { lat: 20, lon: 51 },
-    { lat: 16, lon: 50 },
-    { lat: 14, lon: 44 },
-    { lat: 18, lon: 38 },
-    { lat: 24, lon: 34 },
-  ],
-  [
-    { lat: 24, lon: 68 },
-    { lat: 20, lon: 76 },
-    { lat: 18, lon: 84 },
-    { lat: 14, lon: 92 },
-    { lat: 8, lon: 100 },
-    { lat: 4, lon: 104 },
-    { lat: 0, lon: 107 },
-    { lat: -4, lon: 112 },
-    { lat: -6, lon: 120 },
-    { lat: -5, lon: 128 },
-    { lat: -2, lon: 134 },
-    { lat: 0, lon: 130 },
-    { lat: 1, lon: 120 },
-    { lat: 0, lon: 110 },
-    { lat: 2, lon: 98 },
-    { lat: 10, lon: 84 },
-    { lat: 18, lon: 72 },
-  ],
-  [
-    { lat: 46, lon: 143 },
-    { lat: 42, lon: 146 },
-    { lat: 38, lon: 142 },
-    { lat: 35, lon: 138 },
-    { lat: 38, lon: 136 },
-    { lat: 42, lon: 139 },
-  ],
-  [
-    { lat: -10, lon: 112 },
-    { lat: -18, lon: 124 },
-    { lat: -26, lon: 138 },
-    { lat: -34, lon: 148 },
-    { lat: -40, lon: 146 },
-    { lat: -42, lon: 132 },
-    { lat: -36, lon: 118 },
-    { lat: -26, lon: 112 },
-  ],
-  [
-    { lat: -13, lon: 49 },
-    { lat: -18, lon: 50 },
-    { lat: -22, lon: 48 },
-    { lat: -24, lon: 45 },
-    { lat: -19, lon: 44 },
-    { lat: -14, lon: 46 },
-  ],
-];
-
-const DENSIFIED_PATHS = CONTINENT_PATHS.map((path) => densifyPath(path, 3));
-const LAND_DOTS = buildLandDots(CONTINENT_PATHS, 4);
 
 export function HeroSection({ primaryHref, secondaryHref }: { primaryHref: string; secondaryHref: string }) {
   return (
@@ -231,17 +41,13 @@ export function HeroSection({ primaryHref, secondaryHref }: { primaryHref: strin
       <div className="section-container relative">
         <div className="hero-grid">
           <div className="reveal-up hero-copy-column">
-            <p className="hero-kicker">
-              Founder-Led AI Operations Advisory
-            </p>
+            <p className="hero-kicker">Founder-Led AI Operations Advisory</p>
 
-            <h1 className="hero-main-title">
-              Understand where AI fits before you commit to the wrong systems.
-            </h1>
+            <h1 className="hero-main-title">Know where AI belongs before you commit to the wrong systems.</h1>
 
             <p className="hero-subtitle">
-              Temporary Utopia runs practical AI Operations Audits for business owners who want clarity before implementation.
-              We map how work actually moves, where friction exists, and where AI should — and should not — be introduced.
+              Temporary Utopia runs practical AI Operations Audits for owners who want operational clarity before
+              implementation. We map how work moves, where friction sits, and where AI should and should not be introduced.
             </p>
 
             <div className="hero-cta-row">
@@ -286,10 +92,10 @@ function InteractiveGlobe() {
   const hoveredRef = useRef(false);
   const lastRenderRef = useRef(0);
   const stateRef = useRef<RotationState>({
-    x: -0.16,
-    y: 0.72,
+    x: -0.12,
+    y: 0.58,
     vx: 0,
-    vy: 0.0026,
+    vy: 0.0021,
     dragging: false,
     lastX: 0,
     lastY: 0,
@@ -307,9 +113,7 @@ function InteractiveGlobe() {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const draw = () => {
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
-      drawScene(context, width, height, stateRef.current);
+      drawScene(context, canvas.clientWidth, canvas.clientHeight, stateRef.current);
     };
 
     const resize = () => {
@@ -341,17 +145,16 @@ function InteractiveGlobe() {
 
     const animate = (now = 0) => {
       const state = stateRef.current;
-      const shouldAnimate = isVisibleRef.current;
 
-      if (shouldAnimate && !state.dragging && !reducedMotion) {
-        const targetVy = hoveredRef.current ? 0.00055 : 0.0022;
+      if (isVisibleRef.current && !state.dragging && !reducedMotion) {
+        const targetVy = hoveredRef.current ? 0.0005 : 0.0019;
         state.y += state.vy;
-        state.x = clamp(state.x + state.vx, -0.48, 0.48);
-        state.vx *= hoveredRef.current ? 0.88 : 0.94;
-        state.vy += (targetVy - state.vy) * 0.018;
+        state.x = clamp(state.x + state.vx, -0.42, 0.42);
+        state.vx *= hoveredRef.current ? 0.86 : 0.93;
+        state.vy += (targetVy - state.vy) * 0.022;
       }
 
-      if (shouldAnimate && now - lastRenderRef.current > 20) {
+      if (isVisibleRef.current && now - lastRenderRef.current > 20) {
         draw();
         lastRenderRef.current = now;
       }
@@ -389,10 +192,10 @@ function InteractiveGlobe() {
     const deltaX = clientX - state.lastX;
     const deltaY = clientY - state.lastY;
 
-    state.y += deltaX * 0.0072;
-    state.x = clamp(state.x - deltaY * 0.0045, -0.48, 0.48);
-    state.vy = deltaX * 0.00085;
-    state.vx = -deltaY * 0.0006;
+    state.y += deltaX * 0.007;
+    state.x = clamp(state.x - deltaY * 0.0043, -0.42, 0.42);
+    state.vy = deltaX * 0.00075;
+    state.vx = -deltaY * 0.00052;
     state.lastX = clientX;
     state.lastY = clientY;
   }
@@ -448,7 +251,7 @@ function InteractiveGlobe() {
           }
         }}
         role="img"
-        aria-label="Interactive globe representing a premium operational systems view"
+        aria-label="Interactive abstract spherical globe"
         tabIndex={0}
       >
         <div className="hero-globe-core-glow" />
@@ -464,8 +267,6 @@ function drawScene(context: CanvasRenderingContext2D, width: number, height: num
   const centerX = width / 2;
   const centerY = height / 2;
   const radius = Math.min(width, height) * 0.39;
-  const centerLat = state.x;
-  const centerLon = state.y;
 
   drawOrbShadow(context, centerX, centerY, radius);
   drawOrbitalFrame(context, centerX, centerY, radius);
@@ -477,14 +278,107 @@ function drawScene(context: CanvasRenderingContext2D, width: number, height: num
   context.arc(centerX, centerY, radius, 0, Math.PI * 2);
   context.clip();
 
-  drawGraticule(context, centerX, centerY, radius, centerLat, centerLon);
-  drawLandDots(context, centerX, centerY, radius, centerLat, centerLon);
-  drawCoastlines(context, centerX, centerY, radius, centerLat, centerLon);
-  drawConnections(context, centerX, centerY, radius, centerLat, centerLon);
-  drawMarkers(context, centerX, centerY, radius, centerLat, centerLon);
+  drawAbstractGlobe(context, centerX, centerY, radius, state.x, state.y);
 
   context.restore();
   drawRim(context, centerX, centerY, radius);
+}
+
+function drawAbstractGlobe(
+  context: CanvasRenderingContext2D,
+  centerX: number,
+  centerY: number,
+  radius: number,
+  centerLat: number,
+  centerLon: number,
+) {
+  const backGlow = context.createRadialGradient(centerX - radius * 0.2, centerY - radius * 0.3, 0, centerX, centerY, radius * 1.1);
+  backGlow.addColorStop(0, "rgba(118, 202, 255, 0.14)");
+  backGlow.addColorStop(1, "rgba(118, 202, 255, 0)");
+  context.fillStyle = backGlow;
+  context.beginPath();
+  context.arc(centerX, centerY, radius, 0, Math.PI * 2);
+  context.fill();
+
+  LATITUDE_LINES.forEach((lat) => {
+    const isEquator = lat === 0;
+    context.strokeStyle = isEquator ? "rgba(177, 232, 255, 0.32)" : "rgba(112, 174, 222, 0.16)";
+    context.lineWidth = isEquator ? 2.4 : 1.5;
+    drawProjectedLine(
+      context,
+      buildLinePoints(-180, 180, 5, (lon) => ({ lat, lon })),
+      centerX,
+      centerY,
+      radius,
+      centerLat,
+      centerLon,
+    );
+  });
+
+  LONGITUDE_LINES.forEach((lon, index) => {
+    const isPrimary = lon === 0;
+    context.strokeStyle = isPrimary ? "rgba(162, 229, 255, 0.28)" : "rgba(112, 174, 222, 0.13)";
+    context.lineWidth = isPrimary ? 2.1 : 1.3;
+    drawProjectedLine(
+      context,
+      buildLinePoints(-90, 90, 5, (lat) => ({ lat, lon: lon + radiansToDegrees(centerLon) * 0.12 + index * 2 })),
+      centerX,
+      centerY,
+      radius,
+      centerLat,
+      centerLon,
+    );
+  });
+
+  SIGNAL_PATHS.forEach((path) => {
+    const points = interpolateGreatCircle(path.from, path.to, 46);
+    context.strokeStyle = hexToRgba(path.color, path.opacity);
+    context.lineWidth = path.width;
+    context.beginPath();
+
+    let started = false;
+    points.forEach((point) => {
+      const projected = projectPoint(point, centerLat, centerLon, radius, centerX, centerY);
+      if (!projected.visible) {
+        started = false;
+        return;
+      }
+      if (!started) {
+        context.moveTo(projected.x, projected.y);
+        started = true;
+        return;
+      }
+      context.lineTo(projected.x, projected.y);
+    });
+
+    context.stroke();
+  });
+
+  const accentPoints = [
+    { lat: 24, lon: -38 },
+    { lat: -14, lon: 28 },
+    { lat: 42, lon: 86 },
+  ];
+
+  accentPoints.forEach((point, index) => {
+    const projected = projectPoint(point, centerLat, centerLon, radius, centerX, centerY);
+    if (!projected.visible) {
+      return;
+    }
+
+    const glow = context.createRadialGradient(projected.x, projected.y, 0, projected.x, projected.y, index === 0 ? 10 : 8);
+    glow.addColorStop(0, "rgba(233, 248, 255, 0.85)");
+    glow.addColorStop(1, "rgba(122, 214, 255, 0)");
+    context.fillStyle = glow;
+    context.beginPath();
+    context.arc(projected.x, projected.y, index === 0 ? 10 : 8, 0, Math.PI * 2);
+    context.fill();
+
+    context.fillStyle = index === 0 ? "#e8f8ff" : "#9fe8ff";
+    context.beginPath();
+    context.arc(projected.x, projected.y, index === 0 ? 3.4 : 2.8, 0, Math.PI * 2);
+    context.fill();
+  });
 }
 
 function drawOrbShadow(context: CanvasRenderingContext2D, centerX: number, centerY: number, radius: number) {
@@ -509,9 +403,9 @@ function drawAtmosphere(context: CanvasRenderingContext2D, centerX: number, cent
 }
 
 function drawSphereBase(context: CanvasRenderingContext2D, centerX: number, centerY: number, radius: number) {
-  const base = context.createRadialGradient(centerX - radius * 0.24, centerY - radius * 0.34, radius * 0.08, centerX, centerY, radius * 1.02);
-  base.addColorStop(0, "#1a4662");
-  base.addColorStop(0.28, "#10283a");
+  const base = context.createRadialGradient(centerX - radius * 0.22, centerY - radius * 0.34, radius * 0.08, centerX, centerY, radius * 1.02);
+  base.addColorStop(0, "#1d4863");
+  base.addColorStop(0.26, "#112a3c");
   base.addColorStop(0.68, "#071522");
   base.addColorStop(1, "#040a11");
   context.fillStyle = base;
@@ -519,43 +413,43 @@ function drawSphereBase(context: CanvasRenderingContext2D, centerX: number, cent
   context.arc(centerX, centerY, radius, 0, Math.PI * 2);
   context.fill();
 
-  const highlight = context.createRadialGradient(centerX - radius * 0.46, centerY - radius * 0.48, 0, centerX - radius * 0.12, centerY - radius * 0.16, radius * 1.08);
-  highlight.addColorStop(0, "rgba(188, 241, 255, 0.22)");
-  highlight.addColorStop(0.25, "rgba(104, 205, 255, 0.12)");
+  const highlight = context.createRadialGradient(centerX - radius * 0.44, centerY - radius * 0.48, 0, centerX - radius * 0.08, centerY - radius * 0.12, radius * 1.06);
+  highlight.addColorStop(0, "rgba(202, 242, 255, 0.22)");
+  highlight.addColorStop(0.24, "rgba(104, 205, 255, 0.12)");
   highlight.addColorStop(1, "rgba(96, 196, 255, 0)");
   context.fillStyle = highlight;
   context.beginPath();
   context.arc(centerX, centerY, radius, 0, Math.PI * 2);
   context.fill();
 
-  const edgeShade = context.createLinearGradient(centerX, centerY - radius, centerX, centerY + radius);
-  edgeShade.addColorStop(0, "rgba(8, 13, 19, 0)");
-  edgeShade.addColorStop(1, "rgba(2, 5, 9, 0.34)");
-  context.fillStyle = edgeShade;
+  const lowerShade = context.createLinearGradient(centerX, centerY - radius, centerX, centerY + radius);
+  lowerShade.addColorStop(0, "rgba(8, 13, 19, 0)");
+  lowerShade.addColorStop(1, "rgba(2, 5, 9, 0.34)");
+  context.fillStyle = lowerShade;
   context.beginPath();
   context.arc(centerX, centerY, radius, 0, Math.PI * 2);
   context.fill();
 }
 
 function drawRim(context: CanvasRenderingContext2D, centerX: number, centerY: number, radius: number) {
-  context.strokeStyle = "rgba(151, 222, 255, 0.54)";
-  context.lineWidth = 1.7;
+  context.strokeStyle = "rgba(151, 222, 255, 0.56)";
+  context.lineWidth = 1.8;
   context.beginPath();
   context.arc(centerX, centerY, radius + 0.5, 0, Math.PI * 2);
   context.stroke();
 
-  context.strokeStyle = "rgba(221, 242, 255, 0.1)";
-  context.lineWidth = 9;
+  context.strokeStyle = "rgba(221, 242, 255, 0.12)";
+  context.lineWidth = 8.5;
   context.beginPath();
-  context.arc(centerX, centerY, radius - 3, Math.PI * 1.02, Math.PI * 1.6);
+  context.arc(centerX, centerY, radius - 3, Math.PI * 1.04, Math.PI * 1.58);
   context.stroke();
 }
 
 function drawOrbitalFrame(context: CanvasRenderingContext2D, centerX: number, centerY: number, radius: number) {
-  drawEllipse(context, centerX, centerY, radius * 1.24, radius * 1.02, 0.34, "rgba(216, 231, 248, 0.1)", 1);
-  drawEllipse(context, centerX, centerY, radius * 1.08, radius * 0.94, -0.48, "rgba(119, 216, 255, 0.07)", 1);
-  drawEllipseSegment(context, centerX, centerY, radius * 1.24, radius * 1.02, 0.34, 0.9, 1.7, "rgba(162, 229, 255, 0.34)", 1.4);
-  drawEllipseSegment(context, centerX, centerY, radius * 1.08, radius * 0.94, -0.48, 4.14, 4.94, "rgba(125, 228, 255, 0.24)", 1.2);
+  drawEllipse(context, centerX, centerY, radius * 1.24, radius * 1.02, 0.34, "rgba(216, 231, 248, 0.08)", 1);
+  drawEllipse(context, centerX, centerY, radius * 1.08, radius * 0.94, -0.48, "rgba(119, 216, 255, 0.06)", 1);
+  drawEllipseSegment(context, centerX, centerY, radius * 1.24, radius * 1.02, 0.34, 0.92, 1.68, "rgba(162, 229, 255, 0.26)", 1.3);
+  drawEllipseSegment(context, centerX, centerY, radius * 1.08, radius * 0.94, -0.48, 4.12, 4.94, "rgba(125, 228, 255, 0.18)", 1.1);
 }
 
 function drawEllipse(
@@ -592,148 +486,6 @@ function drawEllipseSegment(
   context.beginPath();
   context.ellipse(centerX, centerY, radiusX, radiusY, rotation, startAngle, endAngle);
   context.stroke();
-}
-
-function drawGraticule(
-  context: CanvasRenderingContext2D,
-  centerX: number,
-  centerY: number,
-  radius: number,
-  centerLat: number,
-  centerLon: number,
-) {
-  context.strokeStyle = "rgba(127, 209, 246, 0.14)";
-  context.lineWidth = 0.8;
-
-  for (let lat = -60; lat <= 60; lat += 30) {
-    drawProjectedLine(
-      context,
-      buildLinePoints(-180, 180, 7, (lon) => ({ lat, lon })),
-      centerX,
-      centerY,
-      radius,
-      centerLat,
-      centerLon,
-    );
-  }
-
-  context.strokeStyle = "rgba(219, 233, 241, 0.07)";
-  for (let lon = -150; lon <= 180; lon += 30) {
-    drawProjectedLine(
-      context,
-      buildLinePoints(-85, 85, 7, (lat) => ({ lat, lon })),
-      centerX,
-      centerY,
-      radius,
-      centerLat,
-      centerLon,
-    );
-  }
-}
-
-function drawLandDots(
-  context: CanvasRenderingContext2D,
-  centerX: number,
-  centerY: number,
-  radius: number,
-  centerLat: number,
-  centerLon: number,
-) {
-  context.fillStyle = "rgba(113, 220, 255, 0.14)";
-  LAND_DOTS.forEach((point) => {
-    const projected = projectPoint(point, centerLat, centerLon, radius, centerX, centerY);
-    if (!projected.visible) {
-      return;
-    }
-    context.fillRect(projected.x - 0.9, projected.y - 0.9, 1.8, 1.8);
-  });
-}
-
-function drawCoastlines(
-  context: CanvasRenderingContext2D,
-  centerX: number,
-  centerY: number,
-  radius: number,
-  centerLat: number,
-  centerLon: number,
-) {
-  DENSIFIED_PATHS.forEach((path) => {
-    context.strokeStyle = "rgba(98, 211, 255, 0.12)";
-    context.lineWidth = 3.4;
-    drawProjectedLine(context, path, centerX, centerY, radius, centerLat, centerLon);
-
-    context.strokeStyle = "rgba(212, 241, 255, 0.42)";
-    context.lineWidth = 1.2;
-    drawProjectedLine(context, path, centerX, centerY, radius, centerLat, centerLon);
-  });
-}
-
-function drawConnections(
-  context: CanvasRenderingContext2D,
-  centerX: number,
-  centerY: number,
-  radius: number,
-  centerLat: number,
-  centerLon: number,
-) {
-  CONNECTIONS.forEach(([from, to, color, opacity]) => {
-    const points = interpolateGreatCircle(from, to, 42);
-    const elevated = points.map((point, index) => {
-      const t = index / Math.max(points.length - 1, 1);
-      return { point, radiusScale: 1 + Math.sin(Math.PI * t) * 0.17 };
-    });
-
-    context.strokeStyle = hexToRgba(color, opacity);
-    context.lineWidth = 1.3;
-    context.beginPath();
-
-    let started = false;
-    elevated.forEach(({ point, radiusScale }) => {
-      const projected = projectPoint(point, centerLat, centerLon, radius * radiusScale, centerX, centerY);
-      if (!projected.visible) {
-        started = false;
-        return;
-      }
-      if (!started) {
-        context.moveTo(projected.x, projected.y);
-        started = true;
-        return;
-      }
-      context.lineTo(projected.x, projected.y);
-    });
-
-    context.stroke();
-  });
-}
-
-function drawMarkers(
-  context: CanvasRenderingContext2D,
-  centerX: number,
-  centerY: number,
-  radius: number,
-  centerLat: number,
-  centerLon: number,
-) {
-  MARKER_COORDINATES.forEach((point, index) => {
-    const projected = projectPoint(point, centerLat, centerLon, radius, centerX, centerY);
-    if (!projected.visible) {
-      return;
-    }
-
-    const glowRadius = index === 0 ? 9 : 7;
-    const glow = context.createRadialGradient(projected.x, projected.y, 0, projected.x, projected.y, glowRadius);
-    glow.addColorStop(0, index === 0 ? "rgba(227, 249, 255, 0.9)" : "rgba(158, 232, 255, 0.7)");
-    glow.addColorStop(1, "rgba(99, 209, 255, 0)");
-    context.fillStyle = glow;
-    context.beginPath();
-    context.arc(projected.x, projected.y, glowRadius, 0, Math.PI * 2);
-    context.fill();
-
-    context.fillStyle = index === 0 ? "#def8ff" : "#96e4ff";
-    context.beginPath();
-    context.arc(projected.x, projected.y, index === 0 ? 3.6 : 2.8, 0, Math.PI * 2);
-    context.fill();
-  });
 }
 
 function drawProjectedLine(
@@ -850,57 +602,6 @@ function buildLinePoints(start: number, end: number, step: number, buildPoint: (
     points.push(buildPoint(value));
   }
   return points;
-}
-
-function densifyPath(path: LatLon[], segmentsPerEdge: number) {
-  const densified: LatLon[] = [];
-  path.forEach((point, index) => {
-    const next = path[(index + 1) % path.length];
-    densified.push(point);
-    for (let step = 1; step < segmentsPerEdge; step += 1) {
-      const t = step / segmentsPerEdge;
-      densified.push({
-        lat: point.lat + (next.lat - point.lat) * t,
-        lon: point.lon + (next.lon - point.lon) * t,
-      });
-    }
-  });
-  return densified;
-}
-
-function buildLandDots(paths: LatLon[][], step: number) {
-  const dots: LatLon[] = [];
-
-  for (let lat = -58; lat <= 82; lat += step) {
-    for (let lon = -178; lon <= 178; lon += step) {
-      if (paths.some((path) => pointInPolygon({ lat, lon }, path))) {
-        dots.push({ lat, lon });
-      }
-    }
-  }
-
-  return dots;
-}
-
-function pointInPolygon(point: LatLon, polygon: LatLon[]) {
-  let inside = false;
-
-  for (let index = 0, previous = polygon.length - 1; index < polygon.length; previous = index, index += 1) {
-    const xi = polygon[index].lon;
-    const yi = polygon[index].lat;
-    const xj = polygon[previous].lon;
-    const yj = polygon[previous].lat;
-
-    const intersects =
-      yi > point.lat !== yj > point.lat &&
-      point.lon < ((xj - xi) * (point.lat - yi)) / ((yj - yi) || 1e-9) + xi;
-
-    if (intersects) {
-      inside = !inside;
-    }
-  }
-
-  return inside;
 }
 
 function hexToRgba(hex: string, alpha: number) {

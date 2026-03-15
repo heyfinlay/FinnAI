@@ -328,12 +328,12 @@ textarea:focus-visible {
   display: grid;
   gap: var(--space-48);
   align-items: center;
-  min-height: min(80vh, 52rem);
-  padding: 3rem 0 5rem;
+  min-height: min(76vh, 48rem);
+  padding: 2.5rem 0 4.5rem;
 }
 
 .hero-copy-column {
-  max-width: 35rem;
+  max-width: 40.5rem;
 }
 
 .hero-kicker {
@@ -352,35 +352,37 @@ textarea:focus-visible {
 }
 
 .hero-main-title {
-  margin: 1.5rem 0 0;
-  max-width: 11ch;
+  margin: 1.35rem 0 0;
+  max-width: 13.8ch;
   color: var(--ink);
   font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-  font-size: clamp(3rem, 5.2vw, 4.15rem);
-  line-height: 1.02;
+  font-size: clamp(3rem, 4.8vw, 4rem);
+  line-height: 1;
   letter-spacing: -0.035em;
+  text-wrap: balance;
 }
 
 .hero-subtitle {
-  margin: 1.5rem 0 0;
-  max-width: 34rem;
+  margin: 1.1rem 0 0;
+  max-width: 36rem;
   color: var(--mute-strong);
-  font-size: clamp(1.06rem, 2vw, 1.25rem);
-  line-height: 1.8;
+  font-size: clamp(1rem, 1.55vw, 1.12rem);
+  line-height: 1.72;
+  text-wrap: pretty;
 }
 
 .hero-cta-row {
   display: flex;
   flex-wrap: wrap;
   gap: 0.9rem;
-  margin-top: 2rem;
+  margin-top: 1.6rem;
 }
 
 .hero-trust {
-  margin: 1.25rem 0 0;
+  margin: 1rem 0 0;
   color: var(--mute);
-  font-size: 0.95rem;
-  line-height: 1.8;
+  font-size: 0.92rem;
+  line-height: 1.7;
 }
 
 .hero-globe-column {
@@ -1536,7 +1538,7 @@ textarea:focus-visible {
   }
 
   .hero-grid {
-    padding: 4rem 0 6rem;
+    padding: 3.5rem 0 5.5rem;
   }
 
   .audit-foot,
