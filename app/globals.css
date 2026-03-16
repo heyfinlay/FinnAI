@@ -333,11 +333,11 @@ textarea:focus-visible {
 
 .hero-docket {
   position: absolute;
-  right: -1.2rem;
-  bottom: -1.6rem;
+  right: -0.6rem;
+  bottom: -0.6rem;
   max-width: 18rem;
   border: 1px solid rgba(133, 111, 67, 0.55);
-  border-radius: 1.6rem;
+  border-radius: 1.1rem;
   background:
     linear-gradient(180deg, rgba(22, 26, 34, 0.98), rgba(13, 16, 22, 0.96)),
     radial-gradient(circle at top right, rgba(241, 198, 122, 0.08), transparent 35%);
@@ -478,8 +478,10 @@ textarea:focus-visible {
   align-items: center;
   justify-content: center;
   width: min(100%, 32rem);
-  min-height: 21rem;
+  min-height: 22rem;
   margin: 0 auto;
+  padding-bottom: 2.5rem;
+  overflow: visible;
   contain: layout paint;
 }
 
@@ -1573,7 +1575,7 @@ textarea:focus-visible {
 }
 
 .booking-wrap {
-  max-width: 70rem;
+  max-width: 60rem;
   margin: 0 auto;
   border: 1px solid rgba(84, 102, 125, 0.58);
   border-radius: 2rem;
@@ -1587,6 +1589,11 @@ textarea:focus-visible {
 .booking-shell {
   display: grid;
   gap: 1.25rem;
+  justify-items: center;
+}
+
+.booking-shell .booking-column {
+  width: min(100%, 42rem);
 }
 
 .booking-column {
