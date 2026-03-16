@@ -10,6 +10,7 @@ import {
   SectionLead,
   SectionTitle,
 } from "@/components/landing/AdvisoryBlocks";
+import { ChecklistCaptureSection } from "@/components/landing/ChecklistCaptureSection";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { OperationsDiagnostic } from "@/components/landing/OperationsDiagnostic";
 
@@ -278,6 +279,8 @@ export function LandingPage() {
 
           <FitChecklist columns={fitColumns} />
         </SectionShell>
+
+        <ChecklistCaptureSection />
 
         <SectionShell id="pricing" tone="contrast">
           <div className="pricing-wrap">
