@@ -1,6 +1,11 @@
 "use client";
 
-import { Globe } from "@/components/magicui/globe";
+import dynamic from "next/dynamic";
+
+const Globe = dynamic(() => import("@/components/magicui/globe").then((mod) => mod.Globe), {
+  ssr: false,
+  loading: () => <div className="hero-globe-canvas" aria-hidden="true" />,
+});
 
 const trustItems = ["Founder-led", "Full-day audit", "Decision-ready recommendations"];
 

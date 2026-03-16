@@ -337,7 +337,7 @@ export function LandingPage() {
       <footer className="site-footer">
         <div className="section-container site-footer-inner">
           <p>Temporary Utopia</p>
-          <a href="mailto:hello@temporaryutopia.com">hello@temporaryutopia.com</a>
+          <a href="mailto:finlay@temporaryutopia.com">finlay@temporaryutopia.com</a>
         </div>
       </footer>
     </>

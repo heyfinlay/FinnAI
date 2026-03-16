@@ -153,6 +153,8 @@ textarea:focus-visible {
 .section-shell {
   position: relative;
   padding: var(--space-80, 5rem) 0;
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px;
 }
 
 .section-shell-contrast::before {
@@ -478,6 +480,7 @@ textarea:focus-visible {
   width: min(100%, 32rem);
   min-height: 21rem;
   margin: 0 auto;
+  contain: layout paint;
 }
 
 .hero-globe-backdrop {
