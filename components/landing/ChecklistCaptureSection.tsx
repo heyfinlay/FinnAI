@@ -1,8 +1,8 @@
 "use client";
 
-import { FormEvent, useId, useState } from "react";
+import { FormEvent, useCallback, useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 
-import { Eyebrow, SectionLead, SectionTitle } from "@/components/landing/AdvisoryBlocks";
+import { Eyebrow, SectionTitle } from "@/components/landing/AdvisoryBlocks";
 
 export type ChecklistLead = {
   fullName: string;
@@ -14,7 +14,7 @@ export type ChecklistLead = {
 
 type ChecklistCaptureSectionProps = {
   onSubmit?: (payload: ChecklistLead) => Promise<void>;
-  variant?: "inline";
+  inactivityDelayMs?: number;
 };
 
 type FieldErrors = Partial<Record<keyof ChecklistLead, string>>;
@@ -24,6 +24,9 @@ const checklistPoints = [
   "Where lead handling or client communication can be improved",
   "Where AI may reduce repetitive operational work",
 ];
+
+const dismissedStorageKey = "tu-ai-checklist-dismissed";
+const submittedStorageKey = "tu-ai-checklist-submitted";
 
 function delay(ms: number) {
   return new Promise((resolve) => {
@@ -85,7 +88,7 @@ function validateChecklistLead(form: ChecklistLead): { errors: FieldErrors; payl
 
 export function ChecklistCaptureSection({
   onSubmit = defaultSubmitChecklistLead,
-  variant = "inline",
+  inactivityDelayMs = 60000,
 }: ChecklistCaptureSectionProps) {
   const [form, setForm] = useState<ChecklistLead>({
     fullName: "",
@@ -97,6 +100,7 @@ export function ChecklistCaptureSection({
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [submitState, setSubmitState] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [submitError, setSubmitError] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   const fullNameId = useId();
   const emailAddressId = useId();
@@ -107,6 +111,36 @@ export function ChecklistCaptureSection({
   const emailErrorId = useId();
   const websiteErrorId = useId();
   const submitErrorId = useId();
+  const titleId = useId();
+  const descriptionId = useId();
+
+  const inactivityTimerRef = useRef<number | null>(null);
+  const nameInputRef = useRef<HTMLInputElement | null>(null);
+
+  const isEligible = useSyncExternalStore(
+    () => () => undefined,
+    () => {
+      const dismissed = window.sessionStorage.getItem(dismissedStorageKey) === "true";
+      const submitted = window.sessionStorage.getItem(submittedStorageKey) === "true";
+      return !dismissed && !submitted;
+    },
+    () => false,
+  );
+
+  const openModal = useCallback(() => {
+    setIsOpen((current) => {
+      if (current || !isEligible) {
+        return current;
+      }
+
+      return true;
+    });
+  }, [isEligible]);
+
+  const closeModal = useCallback(() => {
+    setIsOpen(false);
+    window.sessionStorage.setItem(dismissedStorageKey, "true");
+  }, []);
 
   function updateField<Key extends keyof ChecklistLead>(key: Key, value: ChecklistLead[Key]) {
     setForm((current) => ({ ...current, [key]: value }));
@@ -138,6 +172,7 @@ export function ChecklistCaptureSection({
 
     try {
       await onSubmit(payload);
+      window.sessionStorage.setItem(submittedStorageKey, "true");
       setSubmitState("success");
       setForm({
         fullName: "",
@@ -152,19 +187,109 @@ export function ChecklistCaptureSection({
     }
   }
 
+  useEffect(() => {
+    if (!isEligible || isOpen || submitState === "success") {
+      if (inactivityTimerRef.current !== null) {
+        window.clearTimeout(inactivityTimerRef.current);
+        inactivityTimerRef.current = null;
+      }
+
+      return;
+    }
+
+    const scheduleInactivityTimer = () => {
+      if (inactivityTimerRef.current !== null) {
+        window.clearTimeout(inactivityTimerRef.current);
+      }
+
+      inactivityTimerRef.current = window.setTimeout(() => {
+        openModal();
+      }, inactivityDelayMs);
+    };
+
+    const handleMouseLeave = (event: MouseEvent) => {
+      if (window.innerWidth < 1024) {
+        return;
+      }
+
+      if (event.relatedTarget === null && event.clientY <= 8) {
+        openModal();
+      }
+    };
+
+    const activityEvents: Array<keyof WindowEventMap> = ["mousemove", "mousedown", "keydown", "scroll", "touchstart"];
+
+    scheduleInactivityTimer();
+
+    activityEvents.forEach((eventName) => {
+      window.addEventListener(eventName, scheduleInactivityTimer, { passive: true });
+    });
+    document.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      if (inactivityTimerRef.current !== null) {
+        window.clearTimeout(inactivityTimerRef.current);
+        inactivityTimerRef.current = null;
+      }
+
+      activityEvents.forEach((eventName) => {
+        window.removeEventListener(eventName, scheduleInactivityTimer);
+      });
+      document.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, [inactivityDelayMs, isEligible, isOpen, openModal, submitState]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      document.body.style.removeProperty("overflow");
+      return;
+    }
+
+    document.body.style.overflow = "hidden";
+    nameInputRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.removeProperty("overflow");
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [closeModal, isOpen]);
+
+  if (!isOpen) {
+    return null;
+  }
+
   return (
-    <section id="checklist" aria-labelledby="checklist-capture-title" className="section-shell" data-variant={variant}>
-      <div className="section-container">
-        <div className="checklist-capture-shell reveal-up">
+    <div className="checklist-modal-overlay" role="presentation" onClick={closeModal}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        aria-describedby={descriptionId}
+        className="checklist-modal"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <button type="button" className="checklist-modal-close" onClick={closeModal} aria-label="Close checklist popup">
+          <span aria-hidden="true">×</span>
+        </button>
+
+        <div className="checklist-capture-shell checklist-capture-shell-modal">
           <div className="checklist-capture-copy">
             <Eyebrow>Free Resource</Eyebrow>
-            <SectionTitle id="checklist-capture-title" className="section-title-compact">
+            <SectionTitle id={titleId} className="section-title-compact">
               AI Efficiency Checklist for Business Owners
             </SectionTitle>
-            <SectionLead>
+            <p id={descriptionId} className="section-lead checklist-modal-lead">
               A short, practical checklist used during our AI audits to identify where businesses are losing time to manual
               work, slow communication, and inefficient processes.
-            </SectionLead>
+            </p>
             <p className="checklist-capture-subcopy">Review your operations before investing in more tools.</p>
 
             <div className="checklist-inside-card" aria-label="What&apos;s inside the checklist">
@@ -186,6 +311,9 @@ export function ChecklistCaptureSection({
                   We&apos;ll also send a short follow-up with a few practical AI efficiency ideas you can apply to your
                   business.
                 </p>
+                <button type="button" className="btn-secondary checklist-secondary-action" onClick={closeModal}>
+                  Close
+                </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} noValidate className="checklist-form">
@@ -193,6 +321,7 @@ export function ChecklistCaptureSection({
                   <div className="form-field">
                     <label htmlFor={fullNameId}>Full Name</label>
                     <input
+                      ref={nameInputRef}
                       id={fullNameId}
                       name="fullName"
                       autoComplete="name"
@@ -289,14 +418,12 @@ export function ChecklistCaptureSection({
                   ) : null}
                 </div>
 
-                <p className="checklist-trust-note">
-                  No spam. Just the checklist and a few practical follow-up ideas.
-                </p>
+                <p className="checklist-trust-note">No spam. Just the checklist and a few practical follow-up ideas.</p>
               </form>
             )}
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

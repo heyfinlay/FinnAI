@@ -1286,6 +1286,56 @@ textarea:focus-visible {
   margin: 0 auto;
 }
 
+.checklist-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(4, 8, 12, 0.72);
+  backdrop-filter: blur(10px);
+}
+
+.checklist-modal {
+  position: relative;
+  width: min(100%, 68rem);
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+}
+
+.checklist-modal-close {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgba(90, 111, 136, 0.82);
+  border-radius: 999px;
+  background: rgba(10, 14, 19, 0.9);
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.checklist-modal-close:hover {
+  transform: translateY(-1px);
+  background: rgba(18, 24, 32, 0.96);
+  border-color: rgba(123, 151, 184, 0.92);
+}
+
+.checklist-modal-close span {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
 .checklist-capture-shell {
   display: grid;
   gap: clamp(1.4rem, 3vw, 2.4rem);
@@ -1300,8 +1350,18 @@ textarea:focus-visible {
   box-shadow: 0 26px 80px rgba(0, 0, 0, 0.24);
 }
 
+.checklist-capture-shell-modal {
+  max-width: none;
+  margin: 0;
+  min-height: min(42rem, calc(100vh - 2rem));
+}
+
 .checklist-capture-copy {
   max-width: 33rem;
+}
+
+.checklist-modal-lead {
+  max-width: 34rem;
 }
 
 .checklist-capture-subcopy {
@@ -1423,6 +1483,11 @@ textarea:focus-visible {
   margin: 0;
   color: var(--mute-strong);
   line-height: 1.65;
+}
+
+.checklist-secondary-action {
+  margin-top: 0.25rem;
+  justify-self: start;
 }
 
 .booking-wrap {
@@ -1771,6 +1836,27 @@ textarea:focus-visible {
 
   .schedule-panel-top {
     flex-direction: column;
+  }
+
+  .checklist-modal-overlay {
+    padding: 0.75rem;
+    align-items: end;
+  }
+
+  .checklist-modal {
+    width: 100%;
+    max-height: calc(100vh - 1.5rem);
+  }
+
+  .checklist-modal-close {
+    top: 0.7rem;
+    right: 0.7rem;
+  }
+
+  .checklist-capture-shell-modal {
+    min-height: auto;
+    border-radius: 1.6rem;
+    padding-top: 3.5rem;
   }
 
   .schedule-embed iframe {

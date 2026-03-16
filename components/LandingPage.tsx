@@ -280,8 +280,6 @@ export function LandingPage() {
           <FitChecklist columns={fitColumns} />
         </SectionShell>
 
-        <ChecklistCaptureSection />
-
         <SectionShell id="pricing" tone="contrast">
           <div className="pricing-wrap">
             <div className="pricing-block reveal-up">
@@ -332,6 +330,8 @@ export function LandingPage() {
             </div>
           </div>
         </SectionShell>
+
+        <ChecklistCaptureSection />
       </main>
 
       <footer className="site-footer">
