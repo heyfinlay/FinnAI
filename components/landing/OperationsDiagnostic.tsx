@@ -10,20 +10,20 @@ type Stage = {
 const diagnosticStages: Stage[] = [
   {
     step: "Step 01",
-    title: "Scope the operating picture",
-    description: "We identify the workflows, handoffs, and operational pressure points worth diagnosing first.",
+    title: "Find where money leaks",
+    description: "We map where enquiries stall, handoffs slow down, and admin quietly eats margin.",
     icon: ScopeIcon,
   },
   {
     step: "Step 02",
-    title: "Map friction and AI fit",
-    description: "The audit surfaces bottlenecks, repeated admin, and where AI can add leverage without increasing fragility.",
+    title: "Spot the AI wins",
+    description: "We separate the tasks worth automating from the ones that only look exciting on paper.",
     icon: MappingIcon,
   },
   {
     step: "Step 03",
-    title: "Prioritise the next moves",
-    description: "You receive a decision-ready sequence with constraints, risks, and the highest-value actions to take next.",
+    title: "See the next moves",
+    description: "You leave knowing which changes create the fastest upside and which ones will cost you if you wait.",
     icon: PriorityIcon,
   },
 ];
@@ -35,8 +35,8 @@ export function OperationsDiagnostic() {
         <SectionHeader
           eyebrow="How the audit works"
           id="operations-diagnostic-title"
-          title="A structured diagnostic process with a clear strategic output."
-          description="The work is designed to stay lightweight, readable, and grounded in operating decisions rather than generic automation ideas."
+          title="In one audit, you see what’s slowing growth and what to fix first."
+          description="Most teams already have enough tools. The opportunity is finding the few workflow changes that unlock time and profit fastest."
         />
 
         <div className="process-card-grid">

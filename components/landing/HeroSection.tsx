@@ -11,16 +11,16 @@ const trustItems = ["Founder-led", "Fixed-scope", "Decision-ready output"];
 
 const heroProofItems = [
   {
-    label: "Workflow visibility",
-    text: "See where leads, delivery, admin, and reporting actually slow down.",
+    label: "Hidden bottlenecks",
+    text: "See the delays and dead time that quietly drag down growth.",
   },
   {
-    label: "AI fit",
-    text: "Separate genuine automation leverage from process issues and tool noise.",
+    label: "Missed margin",
+    text: "Find where admin, slow follow-up, and messy handoffs are costing you money.",
   },
   {
-    label: "Priority sequence",
-    text: "Leave with a practical order for what to fix now and stage later.",
+    label: "Fastest wins",
+    text: "Know which AI moves create upside now and which ones can wait.",
   },
 ];
 
@@ -32,13 +32,13 @@ export function HeroSection({ primaryHref, secondaryHref }: { primaryHref: strin
       <div className="section-container relative">
         <div className="hero-grid">
           <div className="reveal-up hero-copy-column">
-            <p className="hero-kicker">AI Operations Audit</p>
+            <p className="hero-kicker">What Is Slowing You Down?</p>
 
-            <h1 className="hero-main-title">See where work gets stuck. Leave with a plan for what to fix, automate, and ignore.</h1>
+            <h1 className="hero-main-title">Turn your business into a faster, more profitable system.</h1>
 
             <p className="hero-subtitle">
-              A founder-led audit for service businesses that maps lead flow, delivery handoffs, admin load, and reporting
-              friction before recommending any tooling.
+              We find exactly where AI can save you time, cut costs, and make you more money before more competitors start
+              doing the same.
             </p>
 
             <div className="hero-proof-grid" aria-label="Audit outcomes">

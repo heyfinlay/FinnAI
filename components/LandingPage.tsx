@@ -42,7 +42,7 @@ const topProofItems = [
 
 const workflowShowcases = [
   {
-    title: "Lead response",
+    title: "Slow lead response",
     before: [
       "Enquiries land in a shared inbox and wait for manual triage",
       "Replies get drafted from scratch with inconsistent context",
@@ -53,10 +53,10 @@ const workflowShowcases = [
       "Reply drafts pull the right service and context automatically",
       "Follow-up has a clear owner and next action",
     ],
-    outcome: "Faster first response and fewer missed conversations.",
+    outcome: "What looks like a small delay can quietly cost you revenue every week.",
   },
   {
-    title: "Delivery handoffs",
+    title: "Messy delivery handoffs",
     before: [
       "Project notes live across email, chat, and personal memory",
       "Handoffs depend on verbal context and repeated catch-ups",
@@ -67,7 +67,7 @@ const workflowShowcases = [
       "Next-owner handoff is explicit and visible",
       "Status summaries are easier to generate and check",
     ],
-    outcome: "Cleaner delivery flow without more admin overhead.",
+    outcome: "This is where margin disappears while the business still feels 'busy.'",
   },
 ];
 
@@ -112,9 +112,9 @@ export function LandingPage() {
 
         <SectionShell id="examples" tone="contrast">
           <SectionHeader
-            eyebrow="Show, don’t tell"
-            title="A few workflow shifts the audit is built to surface."
-            description="Instead of promising generic efficiency gains, the audit maps where work gets stuck and what a cleaner operating flow could look like."
+            eyebrow="What You’re Missing"
+            title="The expensive bottlenecks are usually hiding in plain sight."
+            description="Most businesses are sitting on speed, margin, and follow-up gains they never see because the workflow looks 'fine' until it gets mapped properly."
           />
 
           <div className="workflow-showcase-grid">
@@ -122,7 +122,7 @@ export function LandingPage() {
               <article key={showcase.title} className="workflow-showcase reveal-up" style={{ animationDelay: `${index * 80}ms` }}>
                 <div className="workflow-showcase-head">
                   <div>
-                    <p className="workflow-showcase-kicker">Example</p>
+                    <p className="workflow-showcase-kicker">Missed upside</p>
                     <h3>{showcase.title}</h3>
                   </div>
                   <p className="workflow-showcase-outcome">{showcase.outcome}</p>
@@ -162,9 +162,9 @@ export function LandingPage() {
           <div className="two-column-balance deliverables-layout">
             <div className="reveal-up">
               <SectionHeader
-                eyebrow="Deliverable"
-                title="One audit, one report, one sequence of decisions."
-                description="The output is designed to help you decide what to fix, what to automate, and what to leave alone without commissioning a large implementation project first."
+                eyebrow="What You Get"
+                title="You leave with the roadmap most businesses wish they had sooner."
+                description="Instead of guessing where to spend time or budget, you get a clear sequence of the changes most likely to increase speed, reduce waste, and lift profit."
                 className="section-header-left"
               />
 
@@ -192,9 +192,9 @@ export function LandingPage() {
 
         <SectionShell id="booking">
           <SectionHeader
-            eyebrow="Book"
-            title="If the workflow problem is real, book the audit conversation."
-            description="Use the scheduler if you want to review your current setup, pressure points, and whether an audit is the right next step."
+            eyebrow="Next Step"
+            title="If there’s hidden money in your workflow, this is how you find it."
+            description="Book a short call and we’ll see whether the audit can uncover quick wins, missed margin, or AI opportunities you’re currently leaving on the table."
           />
 
           <div className="booking-wrap reveal-up">
