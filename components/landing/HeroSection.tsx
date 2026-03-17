@@ -1,93 +1,99 @@
-"use client";
-
-import dynamic from "next/dynamic";
-
-const Globe = dynamic(() => import("@/components/magicui/globe").then((mod) => mod.Globe), {
-  ssr: false,
-  loading: () => <div className="hero-globe-canvas" aria-hidden="true" />,
-});
-
-const trustItems = ["Founder-led", "Fixed-scope", "Decision-ready output"];
-
-const heroProofItems = [
-  {
-    label: "Hidden bottlenecks",
-    text: "See the delays and dead time that quietly drag down growth.",
-  },
-  {
-    label: "Missed margin",
-    text: "Find where admin, slow follow-up, and messy handoffs are costing you money.",
-  },
-  {
-    label: "Fastest wins",
-    text: "Know which AI moves create upside now and which ones can wait.",
-  },
-];
+const trustItems = ["Founder-led audit", "Clear action roadmap", "30-minute strategy call"];
 
 export function HeroSection({ primaryHref, secondaryHref }: { primaryHref: string; secondaryHref: string }) {
   return (
     <section id="top" className="hero-section">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(201,109,66,0.18),transparent_30%),radial-gradient(circle_at_78%_40%,rgba(46,125,111,0.14),transparent_32%),linear-gradient(180deg,rgba(255,248,238,0.5),rgba(255,248,238,0))]" />
+      <div className="hero-backdrop" aria-hidden="true" />
 
       <div className="section-container relative">
         <div className="hero-grid">
           <div className="reveal-up hero-copy-column">
-            <p className="hero-kicker">What Is Slowing You Down?</p>
+            <p className="hero-kicker">AI Operations Audit</p>
 
             <h1 className="hero-main-title">Turn your business into a faster, more profitable system.</h1>
 
             <p className="hero-subtitle">
-              We find exactly where AI can save you time, cut costs, and make you more money before more competitors start
-              doing the same.
+              We pinpoint where AI can save time, reduce operational drag, and unlock margin, then give you a clear sequence
+              of what to fix first.
             </p>
-
-            <div className="hero-proof-grid" aria-label="Audit outcomes">
-              {heroProofItems.map((item) => (
-                <article key={item.label} className="hero-proof-card">
-                  <span>{item.label}</span>
-                  <p>{item.text}</p>
-                </article>
-              ))}
-            </div>
 
             <div className="hero-cta-row">
               <a href={primaryHref} className="btn-primary">
-                Book a strategy call
+                Book Your Audit
               </a>
               <a href={secondaryHref} className="btn-secondary">
-                See what the audit includes
+                See Sample Audit
               </a>
             </div>
 
-            <p className="hero-trust">
+            <div className="hero-trust" aria-label="Audit trust signals">
               {trustItems.map((item) => (
                 <span key={item} className="hero-trust-item">
                   {item}
                 </span>
               ))}
-            </p>
-          </div>
-
-          <div className="reveal-up hero-globe-column" style={{ animationDelay: "80ms" }}>
-            <div className="hero-globe-shell">
-              <div className="hero-globe-backdrop" />
-              <div className="hero-globe-ring hero-globe-ring-one" />
-              <div className="hero-globe-ring hero-globe-ring-two" />
-              <div className="hero-globe-ring hero-globe-ring-three" />
-
-              <Globe
-                className="hero-globe-canvas"
-                autoRotateSpeed={0.0017}
-                config={{
-                  markers: [],
-                  mapSamples: 12000,
-                  baseColor: [0.21, 0.27, 0.24],
-                  markerColor: [0.79, 0.43, 0.26],
-                  glowColor: [0.18, 0.49, 0.43],
-                }}
-              />
             </div>
           </div>
+
+          <aside className="hero-visual reveal-up" style={{ animationDelay: "80ms" }} aria-label="Audit preview">
+            <div className="hero-visual-shell">
+              <div className="hero-visual-bar">
+                <span />
+                <span />
+                <span />
+              </div>
+
+              <div className="hero-visual-body">
+                <div className="hero-visual-head">
+                  <div>
+                    <p className="hero-visual-kicker">Audit Snapshot</p>
+                    <h2>AI Operations Diagnostic</h2>
+                  </div>
+                  <div className="hero-visual-badge">Priority View</div>
+                </div>
+
+                <div className="hero-visual-metrics">
+                  <div className="hero-metric-card">
+                    <span>Revenue leak</span>
+                    <strong>Slow lead follow-up</strong>
+                    <p>Quoted opportunities cool off before the team responds.</p>
+                  </div>
+                  <div className="hero-metric-card hero-metric-card-alt">
+                    <span>Fastest win</span>
+                    <strong>Reply + routing automation</strong>
+                    <p>Higher response speed without adding admin overhead.</p>
+                  </div>
+                </div>
+
+                <div className="hero-visual-panel">
+                  <div className="hero-flow-row">
+                    <span>Enquiry</span>
+                    <span className="hero-flow-arrow" />
+                    <span>Quote</span>
+                    <span className="hero-flow-arrow" />
+                    <span>Delivery</span>
+                    <span className="hero-flow-arrow" />
+                    <span>Reporting</span>
+                  </div>
+
+                  <div className="hero-findings-list">
+                    <div className="hero-finding hero-finding-high">
+                      <span>High impact</span>
+                      <p>Lead response time is the main conversion bottleneck.</p>
+                    </div>
+                    <div className="hero-finding">
+                      <span>Operational drag</span>
+                      <p>Delivery handoffs rely on manual context transfer.</p>
+                    </div>
+                    <div className="hero-finding hero-finding-sage">
+                      <span>Recommended next step</span>
+                      <p>Automate triage first, then tighten handoff visibility.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
     </section>

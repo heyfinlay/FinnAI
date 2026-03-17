@@ -49,6 +49,21 @@ export function BookingFlow() {
           </p>
         </div>
 
+        <div className="booking-trust-row" aria-label="What happens on the call">
+          <article className="booking-trust-item">
+            <span>What happens</span>
+            <p>We unpack the workflows, bottlenecks, and pressure points worth diagnosing.</p>
+          </article>
+          <article className="booking-trust-item">
+            <span>What you get</span>
+            <p>You leave with a clearer view of where an audit would create the most upside.</p>
+          </article>
+          <article className="booking-trust-item">
+            <span>Why it matters</span>
+            <p>In 30 minutes, you can see whether hidden inefficiency is already costing you time and margin.</p>
+          </article>
+        </div>
+
         <div className="schedule-panel">
           <div className="schedule-panel-top" aria-hidden="true">
             <span>Live scheduler</span>

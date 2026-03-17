@@ -2,7 +2,6 @@ import { BookingFlow } from "@/components/BookingFlow";
 import {
   DeliverablePreview,
   OperationalClarityVisualization,
-  ProofStrip,
   SectionHeader,
   SectionShell,
 } from "@/components/landing/AdvisoryBlocks";
@@ -32,12 +31,6 @@ const previewSections = [
     title: "Recommendation sequence",
     items: ["Priority order", "Quick wins vs deeper work", "Decision notes for implementation"],
   },
-];
-
-const topProofItems = [
-  { label: "Founder-led", detail: "Direct diagnostic work, not delegated delivery." },
-  { label: "Fixed-scope", detail: "A defined audit process with clear boundaries." },
-  { label: "Decision-ready", detail: "Practical priorities for what to fix first." },
 ];
 
 const workflowShowcases = [
@@ -102,13 +95,7 @@ export function LandingPage() {
       </header>
 
       <main id="main-content" className="site-main">
-        <HeroSection primaryHref={CALENDLY_URL} secondaryHref="#examples" />
-
-        <section className="top-proof-strip-shell" aria-label="Audit trust signals">
-          <div className="section-container">
-            <ProofStrip items={topProofItems} />
-          </div>
-        </section>
+        <HeroSection primaryHref={CALENDLY_URL} secondaryHref="#deliverables" />
 
         <SectionShell id="examples" tone="contrast">
           <SectionHeader
