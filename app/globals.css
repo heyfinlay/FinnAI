@@ -393,13 +393,17 @@ textarea:focus-visible {
   display: grid;
   gap: var(--space-48);
   align-items: center;
+  justify-items: center;
   min-height: min(72vh, 46rem);
   padding: 1.8rem 0 3.5rem;
+  text-align: center;
 }
 
 .hero-copy-column {
   min-width: 0;
-  max-width: 41rem;
+  max-width: 48rem;
+  display: grid;
+  justify-items: center;
 }
 
 .hero-kicker {
@@ -419,7 +423,7 @@ textarea:focus-visible {
 
 .hero-main-title {
   margin: 1.35rem 0 0;
-  max-width: 13.4ch;
+  max-width: 11.5ch;
   color: var(--ink);
   font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
   font-size: clamp(3rem, 4.8vw, 4rem);
@@ -430,7 +434,7 @@ textarea:focus-visible {
 
 .hero-subtitle {
   margin: 1.1rem 0 0;
-  max-width: 36rem;
+  max-width: 42rem;
   color: var(--mute-strong);
   font-size: clamp(1rem, 1.55vw, 1.12rem);
   line-height: 1.66;
@@ -442,7 +446,8 @@ textarea:focus-visible {
   margin-top: 1.3rem;
   display: grid;
   gap: 0.8rem;
-  max-width: 40rem;
+  width: 100%;
+  max-width: 48rem;
 }
 
 .hero-proof-card {
@@ -483,6 +488,7 @@ textarea:focus-visible {
 .hero-cta-row {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.9rem;
   margin-top: 1.4rem;
 }
@@ -490,6 +496,7 @@ textarea:focus-visible {
 .hero-trust {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.65rem;
   margin: 1rem 0 0;
 }
@@ -511,6 +518,18 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding-top: 1.6rem;
+  position: relative;
+}
+
+.hero-globe-column::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(157, 136, 106, 0.45), transparent);
 }
 
 .hero-globe-shell {
@@ -518,10 +537,10 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: min(100%, 32rem);
-  min-height: 22rem;
+  width: min(100%, 54rem);
+  min-height: 18rem;
   margin: 0 auto;
-  padding-bottom: 2rem;
+  padding-bottom: 0;
   overflow: visible;
   contain: layout paint;
 }
@@ -564,8 +583,8 @@ textarea:focus-visible {
 
 .hero-globe-canvas {
   position: relative;
-  width: 18.75rem;
-  height: 18.75rem;
+  width: 17rem;
+  height: 17rem;
 }
 
 .hero-globe-core-glow {
@@ -651,6 +670,11 @@ textarea:focus-visible {
 .workflow-showcase-head {
   display: grid;
   gap: 0.8rem;
+  align-items: start;
+}
+
+.workflow-showcase-head > div {
+  min-width: 0;
 }
 
 .workflow-showcase-kicker {
@@ -667,12 +691,14 @@ textarea:focus-visible {
   color: var(--ink);
   font-size: 1.35rem;
   line-height: 1.2;
+  max-width: 12ch;
 }
 
 .workflow-showcase-outcome {
   margin: 0;
   color: var(--mute-strong);
   line-height: 1.6;
+  max-width: 34rem;
 }
 
 .workflow-showcase-columns {
@@ -1870,10 +1896,13 @@ textarea:focus-visible {
   display: grid;
   gap: 1.25rem;
   justify-items: stretch;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .booking-shell .booking-column {
   width: 100%;
+  max-width: 54rem;
+  margin: 0 auto;
 }
 
 .schedule-panel {
@@ -2119,8 +2148,8 @@ textarea:focus-visible {
   }
 
   .hero-globe-canvas {
-    width: 22rem;
-    height: 22rem;
+    width: 20rem;
+    height: 20rem;
   }
 
   .proof-strip {
@@ -2150,9 +2179,7 @@ textarea:focus-visible {
   }
 
   .workflow-showcase-head {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: end;
-    column-gap: 1rem;
+    grid-template-columns: 1fr;
   }
 
   .workflow-showcase-columns {
@@ -2175,26 +2202,25 @@ textarea:focus-visible {
     padding: 0 1.5rem;
   }
 
-  .hero-grid,
   .editorial-grid,
   .two-column-balance,
   .founder-layout,
-  .booking-shell,
   .checklist-capture-shell {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .hero-grid {
     gap: var(--space-64);
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .hero-globe-shell {
-    min-height: 28rem;
+    min-height: 21rem;
   }
 
   .hero-globe-canvas {
-    width: 30rem;
-    height: 30rem;
+    width: 22rem;
+    height: 22rem;
   }
 
   .process-card-grid {
@@ -2242,7 +2268,7 @@ textarea:focus-visible {
   }
 
   .booking-shell {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .audit-grid {
@@ -2314,7 +2340,7 @@ textarea:focus-visible {
   }
 
   .hero-globe-shell {
-    min-height: 16rem;
+    min-height: 14rem;
     padding-bottom: 0.5rem;
   }
 
