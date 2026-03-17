@@ -63,31 +63,6 @@ export function HeroSection({ primaryHref, secondaryHref }: { primaryHref: strin
                   glowColor: [0.96, 0.82, 0.48],
                 }}
               />
-
-              <div className="hero-docket" aria-hidden="true">
-                <p className="hero-docket-kicker">Audit Day Flow</p>
-                <h3 className="hero-docket-title">What we cover in one day</h3>
-                <ul className="hero-docket-list">
-                  <li>
-                    <span>01</span>
-                    <div>Workflow mapping and operational walk‑through</div>
-                  </li>
-                  <li>
-                    <span>02</span>
-                    <div>AI fit review with constraints + guardrails</div>
-                  </li>
-                  <li>
-                    <span>03</span>
-                    <div>Prioritised roadmap and next‑step sequence</div>
-                  </li>
-                </ul>
-                <div className="hero-docket-foot">
-                  <div>Deliverable: Decision-ready report</div>
-                  <div>
-                    From <span className="hero-docket-amount">$1,000</span> · tailored to scope
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
