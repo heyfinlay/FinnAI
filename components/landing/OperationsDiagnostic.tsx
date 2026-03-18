@@ -10,21 +10,27 @@ type Stage = {
 const diagnosticStages: Stage[] = [
   {
     step: "Step 01",
-    title: "Find where money leaks",
-    description: "We map where enquiries stall, handoffs slow down, and admin quietly eats margin.",
+    title: "Audit and diagnosis",
+    description: "We review the workflows, repeated admin load, and follow-up gaps most likely to be slowing response, visibility, or profit.",
     icon: ScopeIcon,
   },
   {
     step: "Step 02",
-    title: "Spot the AI wins",
-    description: "We separate the tasks worth automating from the ones that only look exciting on paper.",
+    title: "Opportunity mapping",
+    description: "We separate the practical AI and systems opportunities from the ideas that look interesting but will not move the business.",
     icon: MappingIcon,
   },
   {
     step: "Step 03",
-    title: "See the next moves",
-    description: "You leave knowing which changes create the fastest upside and which ones will cost you if you wait.",
+    title: "Recommendations and roadmap",
+    description: "You get a clear report showing what to fix first, what can wait, and where the fastest operational upside sits.",
     icon: PriorityIcon,
+  },
+  {
+    step: "Step 04",
+    title: "Optional implementation support",
+    description: "If you want help turning the roadmap into working systems, the highest-priority pieces can be scoped and implemented next.",
+    icon: SupportIcon,
   },
 ];
 
@@ -35,8 +41,8 @@ export function OperationsDiagnostic() {
         <SectionHeader
           eyebrow="How the audit works"
           id="operations-diagnostic-title"
-          title="In one audit, you see what’s slowing growth and what to fix first."
-          description="Most teams already have enough tools. The opportunity is finding the few workflow changes that unlock time and profit fastest."
+          title="What happens after you book a call or request a snapshot."
+          description="The process is designed to feel practical and low-friction: diagnose the bottleneck, map the upside, then decide whether implementation is worth doing."
         />
 
         <div className="process-card-grid">
@@ -89,6 +95,16 @@ function PriorityIcon({ className = "" }: { className?: string }) {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}>
       <path d="M5 17.5 9.5 13l3 3L19 9.5" />
       <path d="M14 9.5H19v5" />
+      <path d="M5 20h14" />
+    </svg>
+  );
+}
+
+function SupportIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className={className}>
+      <path d="M7 9.75a5 5 0 1 1 10 0c0 4.25-5 8.25-5 8.25S7 14 7 9.75Z" />
+      <circle cx="12" cy="9.75" r="1.75" />
       <path d="M5 20h14" />
     </svg>
   );

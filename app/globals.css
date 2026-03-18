@@ -18,6 +18,7 @@
   --accent: #c96d42;
   --accent-strong: #a85732;
   --accent-soft: #2e7d6f;
+  --sage: #7f8b7a;
   --shadow: 0 24px 60px rgba(62, 43, 22, 0.12);
   --space-8: 0.5rem;
   --space-16: 1rem;
@@ -75,7 +76,8 @@ a {
 
 button,
 input,
-textarea {
+textarea,
+select {
   font: inherit;
 }
 
@@ -852,6 +854,129 @@ textarea:focus-visible {
 
 .visual-proof-shell {
   margin-top: clamp(2.5rem, 5vw, var(--space-48));
+}
+
+.report-preview-layout,
+.founder-note-layout,
+.snapshot-grid {
+  display: grid;
+  gap: var(--space-48);
+  align-items: start;
+}
+
+.report-card-grid,
+.faq-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.report-card {
+  border: 1px solid rgba(157, 136, 106, 0.32);
+  border-radius: 1.45rem;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 244, 0.96), rgba(247, 240, 229, 0.94)),
+    radial-gradient(circle at top right, rgba(221, 230, 236, 0.7), transparent 34%);
+  padding: 1.2rem;
+  box-shadow: 0 18px 40px rgba(77, 52, 28, 0.08);
+}
+
+.report-card-label,
+.report-proof-kicker,
+.calculator-kicker {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.report-card h3,
+.report-proof-card h3,
+.calculator-card h3,
+.snapshot-form-card h3,
+.faq-card h3 {
+  margin: 0.7rem 0 0;
+  color: var(--ink);
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+.report-card p:last-of-type,
+.report-proof-card li,
+.calculator-head p:last-child,
+.calculator-result-card p,
+.snapshot-form-head p:last-child,
+.faq-card p {
+  color: var(--mute-strong);
+  line-height: 1.65;
+}
+
+.report-card p:last-of-type {
+  margin: 0.7rem 0 0;
+}
+
+.report-card-metrics,
+.founder-note-signals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+.report-card-metrics span,
+.founder-note-signals span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(157, 136, 106, 0.26);
+  background: rgba(255, 255, 255, 0.64);
+  color: var(--text);
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.report-preview-rail {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+.report-proof-card {
+  border: 1px solid rgba(46, 125, 111, 0.22);
+  border-radius: 1.45rem;
+  background:
+    linear-gradient(180deg, rgba(239, 247, 243, 0.96), rgba(251, 252, 249, 0.94)),
+    radial-gradient(circle at top right, rgba(46, 125, 111, 0.08), transparent 30%);
+  padding: 1.3rem;
+  box-shadow: 0 18px 42px rgba(77, 52, 28, 0.08);
+}
+
+.report-proof-card ul {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.report-proof-card li {
+  position: relative;
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.report-proof-card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.68rem;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
 }
 
 .audit-diagram {
@@ -1668,6 +1793,66 @@ textarea:focus-visible {
   background: var(--accent-soft);
 }
 
+.founder-note-copy {
+  max-width: 42rem;
+}
+
+.founder-note-card {
+  border: 1px solid rgba(157, 136, 106, 0.32);
+  border-radius: 1.65rem;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 244, 0.98), rgba(246, 238, 227, 0.96)),
+    radial-gradient(circle at top right, rgba(201, 109, 66, 0.1), transparent 30%);
+  padding: clamp(1.35rem, 2.6vw, 1.8rem);
+  box-shadow: 0 22px 54px rgba(77, 52, 28, 0.1);
+}
+
+.founder-note-top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.founder-note-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1.2rem;
+  background: linear-gradient(180deg, rgba(201, 109, 66, 0.96), rgba(168, 87, 50, 0.92));
+  color: #fff7f1;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.founder-note-name {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.12rem;
+  font-weight: 700;
+}
+
+.founder-note-role {
+  margin: 0.25rem 0 0;
+  color: var(--mute);
+}
+
+.founder-note-quote {
+  margin: 1.25rem 0 0;
+  color: var(--text);
+  font-size: 1.08rem;
+  line-height: 1.75;
+}
+
+.founder-note-signature {
+  margin: 1.25rem 0 0;
+  color: var(--accent-strong);
+  font-family: "Fraunces", "Iowan Old Style", Georgia, serif;
+  font-size: 1.45rem;
+}
+
 .fit-grid {
   display: grid;
   gap: 1rem;
@@ -1676,14 +1861,19 @@ textarea:focus-visible {
 }
 
 .fit-card {
-  border: 1px solid rgba(84, 102, 125, 0.68);
+  border: 1px solid rgba(157, 136, 106, 0.32);
   border-radius: 1.35rem;
-  background: rgba(16, 22, 29, 0.86);
-  padding: 1.2rem;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 244, 0.94), rgba(246, 238, 227, 0.96)),
+    radial-gradient(circle at top right, rgba(221, 230, 236, 0.52), transparent 32%);
+  padding: 1.3rem;
+  box-shadow: 0 18px 40px rgba(77, 52, 28, 0.08);
 }
 
 .fit-card-muted {
-  background: rgba(14, 19, 26, 0.72);
+  background:
+    linear-gradient(180deg, rgba(248, 242, 234, 0.96), rgba(243, 233, 220, 0.94)),
+    radial-gradient(circle at top right, rgba(201, 109, 66, 0.08), transparent 32%);
 }
 
 .fit-card h3 {
@@ -1716,14 +1906,17 @@ textarea:focus-visible {
   width: 1.45rem;
   height: 1.45rem;
   border-radius: 999px;
-  background: rgba(25, 38, 51, 0.92);
+  background: rgba(46, 125, 111, 0.12);
+  border: 1px solid rgba(46, 125, 111, 0.18);
   color: var(--accent-soft);
   font-size: 0.95rem;
   font-weight: 800;
 }
 
 .fit-card-muted li span:first-child {
-  color: #ff9f9f;
+  border-color: rgba(201, 109, 66, 0.2);
+  background: rgba(201, 109, 66, 0.12);
+  color: var(--accent-strong);
 }
 
 .pricing-wrap {
@@ -2124,6 +2317,225 @@ textarea:focus-visible {
   color: var(--accent-soft);
 }
 
+.snapshot-section-shell {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+.snapshot-grid {
+  align-items: start;
+}
+
+.calculator-card,
+.snapshot-form-card,
+.faq-card,
+.final-cta-shell {
+  border: 1px solid rgba(157, 136, 106, 0.32);
+  border-radius: 1.6rem;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 244, 0.96), rgba(246, 238, 227, 0.96)),
+    radial-gradient(circle at top right, rgba(221, 230, 236, 0.66), transparent 32%);
+  box-shadow: 0 22px 56px rgba(77, 52, 28, 0.08);
+}
+
+.calculator-card,
+.snapshot-form-card {
+  padding: clamp(1.25rem, 2.4vw, 1.7rem);
+}
+
+.calculator-head p:last-child,
+.snapshot-form-head p:last-child {
+  margin: 0.8rem 0 0;
+}
+
+.calculator-input-grid,
+.snapshot-form-grid {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.calculator-input-grid {
+  margin-top: 1.35rem;
+}
+
+.calculator-field,
+.snapshot-field {
+  display: grid;
+  gap: 0.42rem;
+}
+
+.calculator-field span,
+.snapshot-field span {
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.calculator-field input,
+.snapshot-field input,
+.snapshot-field select,
+.snapshot-field textarea {
+  width: 100%;
+  min-height: 3.15rem;
+  border: 1px solid rgba(157, 136, 106, 0.34);
+  border-radius: 0.95rem;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--ink);
+  padding: 0.82rem 0.92rem;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.calculator-field input:focus,
+.snapshot-field input:focus,
+.snapshot-field select:focus,
+.snapshot-field textarea:focus {
+  border-color: rgba(201, 109, 66, 0.58);
+  background: rgba(255, 255, 255, 0.9);
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(201, 109, 66, 0.1);
+}
+
+.snapshot-field textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+.snapshot-field small {
+  color: var(--accent-strong);
+  font-size: 0.84rem;
+}
+
+.calculator-results {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 1.35rem;
+}
+
+.calculator-result-card {
+  border: 1px solid rgba(157, 136, 106, 0.28);
+  border-radius: 1.2rem;
+  background: rgba(255, 255, 255, 0.68);
+  padding: 1rem;
+}
+
+.calculator-result-card span {
+  display: block;
+  color: var(--mute);
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.calculator-result-card strong {
+  display: block;
+  margin-top: 0.45rem;
+  color: var(--ink);
+  font-size: 1.2rem;
+  line-height: 1.2;
+}
+
+.calculator-result-card p {
+  margin: 0.65rem 0 0;
+}
+
+.calculator-result-card-sage {
+  border-color: rgba(46, 125, 111, 0.22);
+  background: rgba(239, 247, 243, 0.82);
+}
+
+.calculator-result-card-highlight {
+  border-color: rgba(201, 109, 66, 0.24);
+  background:
+    linear-gradient(180deg, rgba(251, 243, 236, 0.94), rgba(255, 250, 244, 0.9)),
+    radial-gradient(circle at top right, rgba(201, 109, 66, 0.08), transparent 30%);
+}
+
+.snapshot-benefit-list {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.2rem;
+}
+
+.snapshot-benefit-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid rgba(157, 136, 106, 0.22);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.snapshot-benefit-item span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.45rem;
+  height: 1.45rem;
+  border-radius: 999px;
+  background: rgba(46, 125, 111, 0.12);
+  color: var(--accent-soft);
+  font-weight: 800;
+}
+
+.snapshot-benefit-item p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.58;
+}
+
+.snapshot-form {
+  margin-top: 1.25rem;
+}
+
+.snapshot-field-wide {
+  grid-column: 1 / -1;
+}
+
+.snapshot-form-note {
+  margin: 1rem 0 0;
+  color: var(--mute);
+  line-height: 1.55;
+}
+
+.snapshot-submit,
+.snapshot-success-action {
+  margin-top: 1.1rem;
+}
+
+.snapshot-success-panel {
+  margin-top: 1.25rem;
+  border: 1px solid rgba(46, 125, 111, 0.22);
+  border-radius: 1.25rem;
+  background:
+    linear-gradient(180deg, rgba(239, 247, 243, 0.94), rgba(250, 252, 250, 0.92)),
+    radial-gradient(circle at top, rgba(46, 125, 111, 0.08), transparent 34%);
+  padding: 1.2rem;
+}
+
+.snapshot-success-panel h3 {
+  margin: 0.7rem 0 0;
+}
+
+.snapshot-success-panel p:last-of-type {
+  margin: 0.8rem 0 0;
+  color: var(--mute-strong);
+  line-height: 1.65;
+}
+
+.faq-card {
+  padding: 1.25rem;
+}
+
+.faq-card p {
+  margin: 0.8rem 0 0;
+}
+
 .form-grid {
   display: grid;
   gap: 0.9rem;
@@ -2195,9 +2607,26 @@ textarea:focus-visible {
   line-height: 1.6;
 }
 
-.final-cta {
-  max-width: 48rem;
+.final-cta-shell {
+  max-width: 70rem;
   margin: 0 auto;
+  padding: clamp(1.5rem, 3vw, 2.1rem);
+}
+
+.final-cta-copy {
+  max-width: 38rem;
+}
+
+.final-cta-copy .section-title,
+.final-cta-copy .section-lead {
+  max-width: none;
+}
+
+.final-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 1.5rem;
 }
 
 .site-footer {
@@ -2271,6 +2700,10 @@ textarea:focus-visible {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .calculator-results {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .form-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2305,6 +2738,20 @@ textarea:focus-visible {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .report-card-grid,
+  .faq-grid,
+  .snapshot-form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calculator-input-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .process-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .audit-foot,
   .fit-grid,
   .value-grid {
@@ -2326,6 +2773,18 @@ textarea:focus-visible {
   .founder-layout,
   .checklist-capture-shell {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .report-preview-layout {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  }
+
+  .founder-note-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.84fr);
+  }
+
+  .snapshot-grid {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
   }
 
   .hero-grid {
@@ -2350,7 +2809,7 @@ textarea:focus-visible {
   }
 
   .process-card-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .workflow-showcase-grid {
@@ -2404,6 +2863,16 @@ textarea:focus-visible {
 
   .booking-column {
     padding: 1.35rem;
+  }
+
+  .final-cta-shell {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+
+  .final-cta-actions {
+    margin-top: 0;
+    justify-content: flex-end;
   }
 }
 
@@ -2490,6 +2959,18 @@ textarea:focus-visible {
   }
 
   .hero-cta-row a {
+    width: 100%;
+  }
+
+  .snapshot-form-grid,
+  .calculator-input-grid,
+  .calculator-results,
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .snapshot-submit,
+  .final-cta-actions a {
     width: 100%;
   }
 

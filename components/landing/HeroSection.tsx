@@ -1,4 +1,4 @@
-const trustItems = ["Founder-led audit", "Clear action roadmap", "30-minute strategy call"];
+const trustItems = ["Founder-led review", "Decision-ready report", "30-minute strategy call"];
 
 export function HeroSection({ primaryHref, secondaryHref }: { primaryHref: string; secondaryHref: string }) {
   return (
@@ -13,8 +13,8 @@ export function HeroSection({ primaryHref, secondaryHref }: { primaryHref: strin
             <h1 className="hero-main-title">Turn your business into a faster, more profitable system.</h1>
 
             <p className="hero-subtitle">
-              We pinpoint where AI can save time, reduce operational drag, and unlock margin, then give you a clear sequence
-              of what to fix first.
+              We pinpoint where admin drag, slow follow-up, and missed workflow opportunities are costing you time or profit,
+              then turn that into a clear AI Efficiency Report and roadmap.
             </p>
 
             <div className="hero-cta-row">

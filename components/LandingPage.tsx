@@ -1,68 +1,17 @@
 import { BookingFlow } from "@/components/BookingFlow";
 import {
-  DeliverablePreview,
-  OperationalClarityVisualization,
-  SectionHeader,
-  SectionShell,
-} from "@/components/landing/AdvisoryBlocks";
+  FAQSection,
+  FinalCtaSection,
+  FitSection,
+  FounderNoteSection,
+  ReportPreviewSection,
+} from "@/components/landing/PageSections";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { OperationsDiagnostic } from "@/components/landing/OperationsDiagnostic";
+import { SnapshotLeadSection } from "@/components/landing/SnapshotLeadSection";
+import { SectionHeader, SectionShell } from "@/components/landing/AdvisoryBlocks";
 
 const CALENDLY_URL = "https://calendly.com/finlay-temporaryutopia/30min";
-
-const deliverables = [
-  "Current-state workflow map",
-  "Bottleneck and friction diagnosis",
-  "AI opportunity and constraint map",
-  "Prioritised implementation sequence",
-  "Strategic readout and next-step recommendations",
-];
-
-const previewSections = [
-  {
-    title: "Current-state view",
-    items: ["Key workflows", "Operational bottlenecks", "Repeated admin load"],
-  },
-  {
-    title: "Opportunity map",
-    items: ["High-fit automation ideas", "Constraints and dependencies", "Readiness signals"],
-  },
-  {
-    title: "Recommendation sequence",
-    items: ["Priority order", "Quick wins vs deeper work", "Decision notes for implementation"],
-  },
-];
-
-const workflowShowcases = [
-  {
-    title: "Slow lead response",
-    before: [
-      "Enquiries land in a shared inbox and wait for manual triage",
-      "Replies get drafted from scratch with inconsistent context",
-      "Follow-up drops when delivery work gets busy",
-    ],
-    after: [
-      "Incoming leads are sorted by type and urgency immediately",
-      "Reply drafts pull the right service and context automatically",
-      "Follow-up has a clear owner and next action",
-    ],
-    outcome: "What looks like a small delay can quietly cost you revenue every week.",
-  },
-  {
-    title: "Messy delivery handoffs",
-    before: [
-      "Project notes live across email, chat, and personal memory",
-      "Handoffs depend on verbal context and repeated catch-ups",
-      "Status updates are rebuilt manually every time",
-    ],
-    after: [
-      "Key delivery context sits in one operational view",
-      "Next-owner handoff is explicit and visible",
-      "Status summaries are easier to generate and check",
-    ],
-    outcome: "This is where margin disappears while the business still feels 'busy.'",
-  },
-];
 
 export function LandingPage() {
   return (
@@ -81,9 +30,9 @@ export function LandingPage() {
             </a>
 
             <nav className="site-nav" aria-label="Primary">
-              <a href="#examples">Examples</a>
+              <a href="#report-preview">Report</a>
+              <a href="#snapshot">Snapshot</a>
               <a href="#how-it-works">Process</a>
-              <a href="#deliverables">Deliverable</a>
               <a href="#booking">Book</a>
             </nav>
 
@@ -95,99 +44,27 @@ export function LandingPage() {
       </header>
 
       <main id="main-content" className="site-main">
-        <HeroSection primaryHref={CALENDLY_URL} secondaryHref="#deliverables" />
-
-        <SectionShell id="examples" tone="contrast">
-          <SectionHeader
-            eyebrow="What You’re Missing"
-            title="The expensive bottlenecks are usually hiding in plain sight."
-            description="Most businesses are sitting on speed, margin, and follow-up gains they never see because the workflow looks 'fine' until it gets mapped properly."
-          />
-
-          <div className="workflow-showcase-grid">
-            {workflowShowcases.map((showcase, index) => (
-              <article key={showcase.title} className="workflow-showcase reveal-up" style={{ animationDelay: `${index * 80}ms` }}>
-                <div className="workflow-showcase-head">
-                  <div>
-                    <p className="workflow-showcase-kicker">Missed upside</p>
-                    <h3>{showcase.title}</h3>
-                  </div>
-                  <p className="workflow-showcase-outcome">{showcase.outcome}</p>
-                </div>
-
-                <div className="workflow-showcase-columns">
-                  <section className="workflow-showcase-state">
-                    <span className="workflow-showcase-label">Before</span>
-                    <ul>
-                      {showcase.before.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  </section>
-
-                  <section className="workflow-showcase-state workflow-showcase-state-after">
-                    <span className="workflow-showcase-label">After</span>
-                    <ul>
-                      {showcase.after.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  </section>
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <div className="visual-proof-shell">
-            <OperationalClarityVisualization />
-          </div>
-        </SectionShell>
-
+        <HeroSection primaryHref={CALENDLY_URL} secondaryHref="#report-preview" />
+        <ReportPreviewSection />
+        <FounderNoteSection />
+        <SnapshotLeadSection />
         <OperationsDiagnostic />
+        <FitSection />
+        <FAQSection />
 
-        <SectionShell id="deliverables">
-          <div className="two-column-balance deliverables-layout">
-            <div className="reveal-up">
-              <SectionHeader
-                eyebrow="What You Get"
-                title="You leave with the roadmap most businesses wish they had sooner."
-                description="Instead of guessing where to spend time or budget, you get a clear sequence of the changes most likely to increase speed, reduce waste, and lift profit."
-                className="section-header-left"
-              />
-
-              <ul className="deliverable-list">
-                {deliverables.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="deliverable-preview-column">
-              <div className="deliverable-stack">
-                <DeliverablePreview sections={previewSections} />
-                <aside className="pricing-inline-card reveal-up" aria-label="Pricing summary">
-                  <p className="pricing-inline-label">Starting from</p>
-                  <p className="pricing-inline-amount">$1,000</p>
-                  <p className="pricing-inline-copy">
-                    Final scope depends on workflow complexity, business context, and depth of review.
-                  </p>
-                </aside>
-              </div>
-            </div>
-          </div>
-        </SectionShell>
-
-        <SectionShell id="booking">
+        <SectionShell id="booking" tone="contrast">
           <SectionHeader
-            eyebrow="Next Step"
-            title="If there’s hidden money in your workflow, this is how you find it."
-            description="Book a short call and we’ll see whether the audit can uncover quick wins, missed margin, or AI opportunities you’re currently leaving on the table."
+            eyebrow="Book the call"
+            title="If you want to see whether an audit is worth doing, start here."
+            description="This call is the fastest way to pressure-test the bottleneck, understand what the report would focus on, and decide whether there is enough upside to move forward."
           />
 
           <div className="booking-wrap reveal-up">
             <BookingFlow />
           </div>
         </SectionShell>
+
+        <FinalCtaSection />
       </main>
 
       <footer className="site-footer">

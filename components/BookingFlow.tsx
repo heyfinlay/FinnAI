@@ -52,15 +52,15 @@ export function BookingFlow() {
         <div className="booking-trust-row" aria-label="What happens on the call">
           <article className="booking-trust-item">
             <span>What happens</span>
-            <p>We unpack the workflows, bottlenecks, and pressure points worth diagnosing.</p>
+            <p>We isolate the workflows, bottlenecks, and pressure points most worth diagnosing.</p>
           </article>
           <article className="booking-trust-item">
             <span>What you get</span>
-            <p>You leave with a clearer view of where an audit would create the most upside.</p>
+            <p>You leave knowing where an AI Efficiency Report is most likely to create real upside.</p>
           </article>
           <article className="booking-trust-item">
             <span>Why it matters</span>
-            <p>In 30 minutes, you can see whether hidden inefficiency is already costing you time and margin.</p>
+            <p>It is a fast way to decide whether hidden inefficiency is worth fixing before it costs more time and margin.</p>
           </article>
         </div>
 
