@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import {
   DeliverablePreview,
   FitChecklist,
@@ -184,6 +186,17 @@ export function FounderNoteSection() {
             starting point is understanding where work is already dragging.&rdquo;
           </p>
 
+          <div className="founder-note-photo-frame">
+            <Image
+              src="/finlay-portrait.png"
+              alt="Finlay Sturzaker"
+              width={840}
+              height={1260}
+              className="founder-note-photo"
+              sizes="(max-width: 1023px) 100vw, 420px"
+            />
+          </div>
+
           <div className="founder-note-signals" aria-label="Founder note signals">
             <span>Practical diagnosis first</span>
             <span>No generic tool pushing</span>
@@ -191,6 +204,15 @@ export function FounderNoteSection() {
           </div>
 
           <p className="founder-note-signature">Finlay</p>
+
+          <div className="founder-note-links" aria-label="Founder social links">
+            <a href="https://instagram.com/heyfinlay" target="_blank" rel="noreferrer">
+              Instagram
+            </a>
+            <a href="https://www.linkedin.com/in/finlaysturzaker/" target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
+          </div>
         </aside>
       </div>
     </SectionShell>
