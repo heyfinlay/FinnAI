@@ -279,7 +279,7 @@ textarea:focus-visible {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(2.5rem, 5vw, 5rem);
-  align-items: start;
+  align-items: stretch;
   --split-max: 34rem;
 }
 
@@ -289,6 +289,7 @@ textarea:focus-visible {
 .booking-section-grid > * {
   width: 100%;
   min-width: 0;
+  height: 100%;
   max-width: var(--split-max, 38rem);
 }
 
@@ -309,6 +310,7 @@ textarea:focus-visible {
 .hero-copy {
   display: grid;
   align-content: start;
+  align-self: stretch;
 }
 
 .eyebrow,
@@ -350,10 +352,10 @@ textarea:focus-visible {
 }
 
 .hero-title {
-  font-size: clamp(3.55rem, 6vw, 5.4rem);
+  font-size: clamp(3.05rem, 5.1vw, 4.8rem);
   line-height: 0.92;
   letter-spacing: -0.02em;
-  max-width: 7.6ch;
+  max-width: 9.6ch;
 }
 
 .hero-summary,
@@ -375,7 +377,7 @@ textarea:focus-visible {
 
 .hero-summary {
   margin: 1.2rem 0 0;
-  max-width: 24rem;
+  max-width: 28rem;
   font-size: 1rem;
   line-height: 1.6;
 }
@@ -400,10 +402,12 @@ textarea:focus-visible {
 
 .hero-stage {
   position: relative;
+  align-self: stretch;
 }
 
 .hero-stage-shell {
   position: relative;
+  height: 100%;
   min-height: 42rem;
   padding: 1.5rem;
   border-radius: 1.8rem;
@@ -637,7 +641,7 @@ textarea:focus-visible {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(2rem, 4vw, 4rem);
-  align-items: start;
+  align-items: stretch;
   --split-max: 38rem;
 }
 
@@ -776,7 +780,7 @@ textarea:focus-visible {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.2rem;
-  align-items: start;
+  align-items: stretch;
   --split-max: 36rem;
 }
 
@@ -821,7 +825,7 @@ textarea:focus-visible {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(1.8rem, 4vw, 3rem);
-  align-items: start;
+  align-items: stretch;
   --split-max: 40rem;
 }
 
