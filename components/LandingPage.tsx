@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import { BookingFlow } from "@/components/BookingFlow";
 
 const primaryCtaHref = "#booking";
@@ -16,21 +14,6 @@ const heroSignals = [
   "Independent recommendations",
   "Operator-led sequencing",
   "No vendor bias",
-];
-
-const heroLedger = [
-  {
-    label: "Primary lens",
-    value: "Decision quality before implementation momentum",
-  },
-  {
-    label: "What gets challenged",
-    value: "Tool sprawl, oversized rollouts, and premature automation scope",
-  },
-  {
-    label: "What gets clarified",
-    value: "The smallest move that would materially improve the business",
-  },
 ];
 
 const signalCards = [
@@ -215,52 +198,6 @@ export function LandingPage() {
                 {heroSignals.map((signal) => (
                   <span key={signal}>{signal}</span>
                 ))}
-              </div>
-            </div>
-
-            <div className="hero-stage">
-              <div className="hero-stage-shell">
-                <div className="hero-stage-noise" aria-hidden="true" />
-                <div className="hero-stage-beam" aria-hidden="true" />
-
-                <div className="hero-stage-topline">
-                  <p>Founder advisory protocol</p>
-                  <div className="hero-stage-tags">
-                    <span>Independent</span>
-                    <span>Selective</span>
-                  </div>
-                </div>
-
-                <article className="hero-stage-editorial-card">
-                  <p className="card-kicker">Advisory mode</p>
-                  <h2>Decisions before tooling.</h2>
-                  <p>Commercial judgment first. AI scope second.</p>
-                </article>
-
-                <div className="hero-portrait-frame">
-                  <Image
-                    src="/finlay-portrait.png"
-                    alt="Finlay Sturzaker"
-                    width={960}
-                    height={1200}
-                    className="hero-portrait-image"
-                    priority
-                    sizes="(max-width: 1023px) 100vw, 520px"
-                  />
-                </div>
-
-                <div className="hero-stage-ledger" aria-label="Hero ledger">
-                  {heroLedger.map((item) => (
-                    <article key={item.label} className="hero-ledger-row">
-                      <span>{item.label}</span>
-                      <strong>{item.value}</strong>
-                    </article>
-                  ))}
-                </div>
-
-                <div className="hero-stage-index" aria-hidden="true">
-                  <span>01</span>
-                </div>
               </div>
             </div>
           </div>
