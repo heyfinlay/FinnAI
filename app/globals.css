@@ -273,6 +273,9 @@ textarea:focus-visible {
 .hero-section {
   padding: clamp(3.25rem, 6vw, 5.5rem) 0 clamp(3.2rem, 6vw, 5rem);
   overflow: clip;
+  background:
+    radial-gradient(circle at 14% 18%, rgba(246, 211, 155, 0.22), transparent 22%),
+    radial-gradient(circle at 88% 22%, rgba(26, 38, 58, 0.08), transparent 28%);
 }
 
 .hero-grid {
@@ -280,7 +283,7 @@ textarea:focus-visible {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(2.5rem, 5vw, 5rem);
   align-items: stretch;
-  --split-max: 34rem;
+  --split-max: 35rem;
 }
 
 .hero-grid > *,
@@ -311,6 +314,7 @@ textarea:focus-visible {
   display: grid;
   align-content: start;
   align-self: stretch;
+  padding-top: clamp(1rem, 2vw, 2rem);
 }
 
 .eyebrow,
@@ -352,10 +356,10 @@ textarea:focus-visible {
 }
 
 .hero-title {
-  font-size: clamp(3.05rem, 5.1vw, 4.8rem);
-  line-height: 0.92;
+  font-size: clamp(3.25rem, 5.45vw, 5.05rem);
+  line-height: 0.9;
   letter-spacing: -0.02em;
-  max-width: 9.6ch;
+  max-width: 8.9ch;
 }
 
 .hero-summary,
@@ -377,9 +381,9 @@ textarea:focus-visible {
 
 .hero-summary {
   margin: 1.2rem 0 0;
-  max-width: 28rem;
-  font-size: 1rem;
-  line-height: 1.6;
+  max-width: 29rem;
+  font-size: 1.03rem;
+  line-height: 1.64;
 }
 
 .hero-actions {
@@ -389,15 +393,26 @@ textarea:focus-visible {
   margin-top: 1.7rem;
 }
 
-.hero-footnote,
-.hero-stage-topline p {
-  display: block;
-  margin: 1.2rem 0 0;
+.hero-signal-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.7rem;
+}
+
+.hero-signal-row span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.45rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.56);
   color: var(--text-muted);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  box-shadow: inset 0 0 0 1px rgba(17, 22, 29, 0.06);
 }
 
 .hero-stage {
@@ -408,16 +423,16 @@ textarea:focus-visible {
 .hero-stage-shell {
   position: relative;
   height: 100%;
-  min-height: 42rem;
-  padding: 1.5rem;
-  border-radius: 1.8rem;
+  min-height: 44rem;
+  padding: 1.45rem;
+  border-radius: 1.9rem;
   background:
-    radial-gradient(circle at 16% 16%, rgba(245, 198, 132, 0.22), transparent 18%),
-    radial-gradient(circle at 84% 18%, rgba(255, 233, 200, 0.16), transparent 26%),
-    linear-gradient(135deg, #f2e7d7 0%, #efe7db 34%, #e4ddd3 100%);
+    radial-gradient(circle at 18% 12%, rgba(246, 211, 155, 0.14), transparent 18%),
+    radial-gradient(circle at 86% 16%, rgba(120, 162, 255, 0.12), transparent 24%),
+    linear-gradient(145deg, rgba(12, 15, 20, 0.985), rgba(21, 29, 43, 0.985));
   box-shadow:
-    0 44px 90px rgba(41, 29, 14, 0.12),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.34);
+    0 44px 90px rgba(8, 11, 16, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 .hero-stage-shell::before {
@@ -426,11 +441,11 @@ textarea:focus-visible {
   inset: 0;
   border-radius: inherit;
   background-image:
-    linear-gradient(rgba(20, 24, 30, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(20, 24, 30, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
   background-size: 4rem 4rem;
   mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.52), transparent 86%);
-  opacity: 0.34;
+  opacity: 0.2;
   pointer-events: none;
 }
 
@@ -439,40 +454,99 @@ textarea:focus-visible {
   inset: 0;
   border-radius: inherit;
   background:
-    radial-gradient(rgba(17, 22, 29, 0.12) 0.8px, transparent 0.8px),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 24%, transparent 76%, rgba(17, 22, 29, 0.06));
-  background-size: 22px 22px, auto;
-  opacity: 0.1;
+    radial-gradient(rgba(255, 255, 255, 0.08) 0.8px, transparent 0.8px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 24%, transparent 76%, rgba(255, 255, 255, 0.03));
+  background-size: 20px 20px, auto;
+  opacity: 0.16;
   pointer-events: none;
+}
+
+.hero-stage-beam {
+  position: relative;
+  position: absolute;
+  inset: 5.8rem auto auto 1.5rem;
+  width: 11rem;
+  height: 11rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(246, 211, 155, 0.85) 0%, rgba(246, 211, 155, 0.28) 28%, rgba(246, 211, 155, 0.04) 60%, rgba(246, 211, 155, 0) 74%);
+  filter: blur(8px);
 }
 
 .hero-stage-topline {
   position: relative;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .hero-stage-topline p {
-  margin-top: 0;
+  display: block;
+  margin: 0;
+  color: rgba(244, 240, 232, 0.56);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
-.hero-stage-glow {
+.hero-stage-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.hero-stage-tags span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.42rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(244, 240, 232, 0.76);
+  font-size: 0.76rem;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.hero-stage-editorial-card {
   position: absolute;
-  right: 2rem;
-  top: 4.5rem;
-  width: 16rem;
-  height: 16rem;
-  border-radius: 50%;
+  left: 1.45rem;
+  top: 8.3rem;
+  z-index: 2;
+  width: min(17rem, calc(100% - 4rem));
+  padding: 1.3rem;
+  border-radius: 1rem;
   background:
-    radial-gradient(circle, rgba(255, 248, 236, 0.92) 0%, rgba(245, 209, 157, 0.5) 28%, rgba(245, 209, 157, 0.12) 54%, rgba(245, 209, 157, 0) 72%);
-  filter: blur(10px);
-  opacity: 0.9;
+    linear-gradient(145deg, rgba(245, 240, 232, 0.96), rgba(229, 223, 214, 0.92));
+  box-shadow:
+    inset 0 0 0 1px rgba(17, 22, 29, 0.06),
+    0 28px 48px rgba(6, 10, 16, 0.2);
+}
+
+.hero-stage-editorial-card h2 {
+  margin: 0.65rem 0 0;
+  font-family: var(--font-display), serif;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  color: #12161c;
+}
+
+.hero-stage-editorial-card p:last-child {
+  margin: 0.8rem 0 0;
+  color: #5b6168;
+  font-size: 0.96rem;
+  line-height: 1.55;
 }
 
 .hero-portrait-frame {
   position: relative;
   z-index: 1;
-  width: min(100%, 23rem);
-  margin: 3.5rem 2rem 0 auto;
+  width: min(100%, 23.5rem);
+  margin: 3.8rem 1.2rem 0 auto;
   overflow: hidden;
   border-radius: 1.6rem;
   background:
@@ -486,8 +560,8 @@ textarea:focus-visible {
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(90deg, rgba(12, 12, 12, 0.68), rgba(12, 12, 12, 0.22) 38%, rgba(255, 255, 255, 0.02)),
-    radial-gradient(circle at 70% 25%, rgba(255, 255, 255, 0.16), transparent 26%);
+    linear-gradient(90deg, rgba(8, 10, 12, 0.84), rgba(8, 10, 12, 0.28) 42%, rgba(255, 255, 255, 0.02)),
+    radial-gradient(circle at 68% 24%, rgba(255, 255, 255, 0.16), transparent 24%);
   pointer-events: none;
 }
 
@@ -496,12 +570,12 @@ textarea:focus-visible {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 18%, transparent 76%, rgba(0, 0, 0, 0.28)),
-    radial-gradient(circle at center, rgba(255, 255, 255, 0.16) 0.6px, transparent 0.7px);
-  background-size: auto, 8px 8px;
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 18%, transparent 76%, rgba(0, 0, 0, 0.36)),
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.17) 0.55px, transparent 0.7px);
+  background-size: auto, 7px 7px;
   mix-blend-mode: screen;
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.56;
 }
 
 .hero-portrait-image {
@@ -509,7 +583,7 @@ textarea:focus-visible {
   height: auto;
   object-fit: cover;
   object-position: 64% center;
-  filter: grayscale(1) contrast(1.16) brightness(0.9);
+  filter: grayscale(1) contrast(1.2) brightness(0.84);
 }
 
 .hero-stage-caption h2,
@@ -523,20 +597,34 @@ textarea:focus-visible {
 
 .hero-stage-caption {
   position: absolute;
-  left: 1.5rem;
-  bottom: 1.5rem;
+  left: 1.45rem;
+  right: 1.45rem;
+  bottom: 1.45rem;
   z-index: 2;
-  max-width: 17rem;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(244, 240, 232, 0.12);
 }
 
 .hero-stage-caption h2 {
   margin-top: 0.7rem;
   font-family: var(--font-display), serif;
-  font-size: 2rem;
+  font-size: 2.1rem;
   font-weight: 500;
   letter-spacing: -0.02em;
   line-height: 0.98;
   color: #f4efe7;
+}
+
+.hero-stage-caption::after {
+  content: "Operator-led";
+  color: rgba(244, 240, 232, 0.62);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .comparison-card ul,
@@ -1048,11 +1136,21 @@ textarea:focus-visible {
   }
 
   .hero-stage-shell {
-    min-height: 40rem;
+    min-height: 39rem;
   }
 
   .hero-portrait-frame {
     margin-right: 0;
+  }
+
+  .hero-stage-editorial-card {
+    width: min(15rem, calc(100% - 3rem));
+    top: 7rem;
+  }
+
+  .hero-stage-caption {
+    align-items: start;
+    flex-direction: column;
   }
 
   .signal-grid,
@@ -1113,6 +1211,15 @@ textarea:focus-visible {
     margin-top: 1rem;
   }
 
+  .hero-signal-row {
+    margin-top: 1.1rem;
+  }
+
+  .hero-signal-row span {
+    min-height: 2.2rem;
+    font-size: 0.72rem;
+  }
+
   .signal-card,
   .comparison-card,
   .outcome-card,
@@ -1130,22 +1237,31 @@ textarea:focus-visible {
     padding: 1rem;
   }
 
-  .hero-stage-glow {
-    right: 1rem;
-    top: 3.5rem;
-    width: 8rem;
-    height: 8rem;
+  .hero-stage-beam {
+    left: 1rem;
+    top: 4.25rem;
+    width: 7rem;
+    height: 7rem;
+    filter: blur(6px);
   }
 
   .hero-portrait-frame {
     width: 100%;
     max-width: none;
-    margin: 1.25rem 0 0;
+    margin: 7.5rem 0 0;
+  }
+
+  .hero-stage-editorial-card {
+    left: 1rem;
+    top: 4.8rem;
+    width: calc(100% - 2rem);
+    padding: 1.05rem;
   }
 
   .hero-stage-caption {
     position: relative;
     left: auto;
+    right: auto;
     bottom: auto;
     margin-top: 1rem;
   }

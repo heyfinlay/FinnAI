@@ -12,6 +12,27 @@ const navItems = [
   { href: "#booking", label: "Book" },
 ];
 
+const heroSignals = [
+  "Independent recommendations",
+  "Operator-led sequencing",
+  "No vendor bias",
+];
+
+const heroLedger = [
+  {
+    label: "Primary lens",
+    value: "Decision quality before implementation momentum",
+  },
+  {
+    label: "What gets challenged",
+    value: "Tool sprawl, oversized rollouts, and premature automation scope",
+  },
+  {
+    label: "What gets clarified",
+    value: "The smallest move that would materially improve the business",
+  },
+];
+
 const signalCards = [
   {
     label: "What this is",
@@ -185,20 +206,36 @@ export function LandingPage() {
                 <a href={primaryCtaHref} className="button-primary">
                   Talk it through with Finlay
                 </a>
+                <a href={secondaryCtaHref} className="button-secondary">
+                  See what you leave with
+                </a>
               </div>
 
-              <p className="hero-footnote">Independent recommendations. Practical sequencing. No vendor bias.</p>
+              <div className="hero-signal-row" aria-label="Hero signals">
+                {heroSignals.map((signal) => (
+                  <span key={signal}>{signal}</span>
+                ))}
+              </div>
             </div>
 
             <div className="hero-stage">
               <div className="hero-stage-shell">
                 <div className="hero-stage-noise" aria-hidden="true" />
+                <div className="hero-stage-beam" aria-hidden="true" />
 
                 <div className="hero-stage-topline">
-                  <p>Founder advisory system</p>
+                  <p>Founder advisory protocol</p>
+                  <div className="hero-stage-tags">
+                    <span>Independent</span>
+                    <span>Selective</span>
+                  </div>
                 </div>
 
-                <div className="hero-stage-glow" aria-hidden="true" />
+                <article className="hero-stage-editorial-card">
+                  <p className="card-kicker">Advisory mode</p>
+                  <h2>Decisions before tooling.</h2>
+                  <p>Commercial judgment first. AI scope second.</p>
+                </article>
 
                 <div className="hero-portrait-frame">
                   <Image
@@ -212,10 +249,18 @@ export function LandingPage() {
                   />
                 </div>
 
-                <article className="hero-stage-caption">
-                  <p className="card-kicker">Advisory mode</p>
-                  <h2>Minimal. Human. Decisive.</h2>
-                </article>
+                <div className="hero-stage-ledger" aria-label="Hero ledger">
+                  {heroLedger.map((item) => (
+                    <article key={item.label} className="hero-ledger-row">
+                      <span>{item.label}</span>
+                      <strong>{item.value}</strong>
+                    </article>
+                  ))}
+                </div>
+
+                <div className="hero-stage-index" aria-hidden="true">
+                  <span>01</span>
+                </div>
               </div>
             </div>
           </div>
