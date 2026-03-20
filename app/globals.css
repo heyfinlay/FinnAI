@@ -277,13 +277,36 @@ textarea:focus-visible {
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(2.5rem, 5vw, 5rem);
-  align-items: center;
+  align-items: start;
+  --split-max: 34rem;
+}
+
+.hero-grid > *,
+.editorial-grid > *,
+.advisory-note-grid > *,
+.booking-section-grid > * {
+  width: 100%;
+  min-width: 0;
+  max-width: var(--split-max, 38rem);
+}
+
+.hero-grid > :first-child,
+.editorial-grid > :first-child,
+.advisory-note-grid > :first-child,
+.booking-section-grid > :first-child {
+  justify-self: start;
+}
+
+.hero-grid > :last-child,
+.editorial-grid > :last-child,
+.advisory-note-grid > :last-child,
+.booking-section-grid > :last-child {
+  justify-self: end;
 }
 
 .hero-copy {
-  max-width: 34rem;
   display: grid;
   align-content: start;
 }
@@ -381,7 +404,7 @@ textarea:focus-visible {
 
 .hero-stage-shell {
   position: relative;
-  min-height: 44rem;
+  min-height: 42rem;
   padding: 1.5rem;
   border-radius: 1.8rem;
   background:
@@ -612,9 +635,10 @@ textarea:focus-visible {
 
 .editorial-grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(2rem, 4vw, 4rem);
   align-items: start;
+  --split-max: 38rem;
 }
 
 .section-intro {
@@ -750,8 +774,10 @@ textarea:focus-visible {
 
 .advisory-note-grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.2rem;
+  align-items: start;
+  --split-max: 36rem;
 }
 
 .advisory-note-card {
@@ -793,9 +819,10 @@ textarea:focus-visible {
 
 .booking-section-grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(1.8rem, 4vw, 3rem);
   align-items: start;
+  --split-max: 40rem;
 }
 
 .booking-shell {
@@ -975,6 +1002,14 @@ textarea:focus-visible {
   .booking-section-grid,
   .advisory-note-grid {
     grid-template-columns: 1fr;
+  }
+
+  .hero-grid > *,
+  .editorial-grid > *,
+  .booking-section-grid > *,
+  .advisory-note-grid > * {
+    max-width: none;
+    justify-self: stretch;
   }
 
   .hero-copy,
