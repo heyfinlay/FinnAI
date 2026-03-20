@@ -11,9 +11,27 @@ const navItems = [
 ];
 
 const heroSignals = [
+  "Direct with Finlay",
   "Independent recommendations",
-  "Operator-led sequencing",
   "No vendor bias",
+];
+
+const heroSupportItems = [
+  {
+    label: "Decision clarity",
+    title: "Know where AI is useful and where it is just noise.",
+    body: "Separate useful leverage from attractive distractions before software or automation decisions harden.",
+  },
+  {
+    label: "Sequence",
+    title: "Leave with the right next move, not a pile of options.",
+    body: "Get a clear order of operations on what to do now, what can wait, and what to avoid entirely.",
+  },
+  {
+    label: "Implementation scope",
+    title: "Only define build work if it earns the right.",
+    body: "If tooling or rollout is justified, scope the smallest sensible first intervention before money gets committed.",
+  },
 ];
 
 const signalCards = [
@@ -173,32 +191,78 @@ export function LandingPage() {
 
       <main id="main-content">
         <section id="top" className="hero-section">
-          <div className="page-shell hero-grid">
-            <div className="hero-copy">
-              <p className="eyebrow">The founder advisory angle</p>
-              <p className="hero-context">For owners who want clarity before buying software or commissioning a rollout.</p>
-              <h1 className="hero-title">
-                Before you buy more software, get an operator&apos;s view of what your business actually needs.
-              </h1>
-              <p className="hero-summary">
-                Independent AI advisory for founders who want clarity before tools, automation scope, or implementation
-                commitments start driving the decision.
-              </p>
+          <div className="page-shell">
+            <div className="hero-grid">
+              <div className="hero-copy">
+                <p className="eyebrow">Independent founder-led AI advisory</p>
+                <h1 className="hero-title">
+                  Before you buy software or scope a rollout, get clear on what your business actually needs.
+                </h1>
+                <p className="hero-summary">
+                  Independent AI advisory for owners weighing tools, automation, or implementation and wanting a
+                  commercially grounded view on what to fix first, what to ignore, and what the smallest sensible next move
+                  is.
+                </p>
 
-              <div className="hero-actions">
-                <a href={primaryCtaHref} className="button-primary">
-                  Talk it through with Finlay
-                </a>
-                <a href={secondaryCtaHref} className="button-secondary">
-                  See what you leave with
-                </a>
+                <div className="hero-actions">
+                  <a href={primaryCtaHref} className="button-primary">
+                    Book a founder advisory call
+                  </a>
+                  <a href={secondaryCtaHref} className="button-secondary">
+                    See what you leave with
+                  </a>
+                </div>
+
+                <div className="hero-signal-row" aria-label="Hero signals">
+                  {heroSignals.map((signal) => (
+                    <span key={signal}>{signal}</span>
+                  ))}
+                </div>
               </div>
 
-              <div className="hero-signal-row" aria-label="Hero signals">
-                {heroSignals.map((signal) => (
-                  <span key={signal}>{signal}</span>
-                ))}
-              </div>
+              <aside className="hero-support" aria-label="Advisory outcomes">
+                <article className="hero-support-card">
+                  <div className="hero-support-head">
+                    <p className="card-kicker">What you leave with</p>
+                    <h2 className="hero-support-title">
+                      A clear recommendation before software, automation, or rollout decisions lock in.
+                    </h2>
+                    <p className="hero-support-summary-text">
+                      For owners who want an independent read before new tooling, AI workflows, or implementation plans
+                      start driving the agenda.
+                    </p>
+                  </div>
+
+                  <div className="hero-support-meta" aria-label="Advisory format">
+                    <div>
+                      <span>Format</span>
+                      <strong>Private founder advisory</strong>
+                    </div>
+                    <div>
+                      <span>Focus</span>
+                      <strong>Tooling, sequencing, scope</strong>
+                    </div>
+                  </div>
+
+                  <ul className="hero-support-list">
+                    {heroSupportItems.map((item) => (
+                      <li key={item.label} className="hero-support-item">
+                        <span>{item.label}</span>
+                        <strong>{item.title}</strong>
+                        <p>{item.body}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+
+                <article className="hero-founder-card">
+                  <p className="card-kicker">Founder note</p>
+                  <blockquote>
+                    Good advisory slows the wrong decision down before it speeds the right one up.
+                  </blockquote>
+                  <p className="hero-founder-signature">Finlay Sturzaker · Direct, selective, independent</p>
+                </article>
+              </aside>
             </div>
           </div>
         </section>
