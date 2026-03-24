@@ -12,11 +12,54 @@ type SnapshotForm = {
   teamSize: string;
   biggestBottleneck: string;
   monthlyLeadVolume: string;
+  enquiryChannels: string[];
+  contactPreference: string;
   email: string;
   phone: string;
 };
 
 type FieldErrors = Partial<Record<keyof SnapshotForm, string>>;
+
+type StepDefinition = {
+  id: number;
+  eyebrow: string;
+  title: string;
+  description: string;
+  fields: (keyof SnapshotForm)[];
+};
+
+const enquiryChannelOptions = [
+  "Website form",
+  "Phone calls",
+  "Instagram / social",
+  "Referral enquiries",
+  "Email inbox",
+  "Paid ads / landing pages",
+];
+
+const stepDefinitions: StepDefinition[] = [
+  {
+    id: 1,
+    eyebrow: "Step 01",
+    title: "Business context",
+    description: "Start with the basics so the review is grounded in the kind of business you actually run.",
+    fields: ["name", "businessName", "website", "industry", "teamSize"],
+  },
+  {
+    id: 2,
+    eyebrow: "Step 02",
+    title: "Lead handling",
+    description: "Show where leads come in and where response, routing, or qualification may already be getting messy.",
+    fields: ["monthlyLeadVolume", "enquiryChannels", "biggestBottleneck"],
+  },
+  {
+    id: 3,
+    eyebrow: "Step 03",
+    title: "Delivery preferences",
+    description: "Choose the best way to send the tailored checklist and the next step if there is real upside.",
+    fields: ["contactPreference", "email", "phone"],
+  },
+];
 
 const initialForm: SnapshotForm = {
   name: "",
@@ -26,14 +69,16 @@ const initialForm: SnapshotForm = {
   teamSize: "",
   biggestBottleneck: "",
   monthlyLeadVolume: "",
+  enquiryChannels: [],
+  contactPreference: "Email me the checklist",
   email: "",
   phone: "",
 };
 
 const snapshotBenefits = [
-  "A tailored view of likely time and revenue leakage",
-  "The first AI opportunities worth investigating in your workflow",
-  "A practical recommendation on whether a full audit is worth doing next",
+  "A tailored view of where admin, follow-up, or handoff drag is likely hiding",
+  "The highest-probability quick wins before you spend money on more software",
+  "A clear recommendation on whether a deeper audit is worth doing next",
 ];
 
 function clamp(value: number, min: number, max: number) {
@@ -66,6 +111,8 @@ function validateForm(form: SnapshotForm): { errors: FieldErrors; payload: Snaps
     teamSize: form.teamSize.trim(),
     biggestBottleneck: form.biggestBottleneck.trim(),
     monthlyLeadVolume: form.monthlyLeadVolume.trim(),
+    enquiryChannels: form.enquiryChannels,
+    contactPreference: form.contactPreference.trim(),
     email: form.email.trim(),
     phone: form.phone.trim(),
   };
@@ -78,6 +125,8 @@ function validateForm(form: SnapshotForm): { errors: FieldErrors; payload: Snaps
   if (!payload.teamSize) errors.teamSize = "Select your team size.";
   if (!payload.biggestBottleneck) errors.biggestBottleneck = "Describe the main bottleneck.";
   if (!payload.monthlyLeadVolume) errors.monthlyLeadVolume = "Add your approximate monthly lead volume.";
+  if (payload.enquiryChannels.length === 0) errors.enquiryChannels = "Choose at least one enquiry channel.";
+  if (!payload.contactPreference) errors.contactPreference = "Select how you want the checklist delivered.";
   if (!payload.email) {
     errors.email = "Enter your email address.";
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
@@ -102,6 +151,7 @@ export function SnapshotLeadSection() {
   const [form, setForm] = useState<SnapshotForm>(initialForm);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [submitState, setSubmitState] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [currentStep, setCurrentStep] = useState(0);
 
   const calculator = useMemo(() => {
     const monthlyAdminHours = Math.round(adminHoursPerWeek * 4.3);
@@ -117,6 +167,9 @@ export function SnapshotLeadSection() {
       monthlyOpportunity,
     };
   }, [adminHoursPerWeek, averageCustomerValue, enquiriesPerMonth]);
+
+  const activeStep = stepDefinitions[currentStep];
+  const progressPercentage = ((currentStep + 1) / stepDefinitions.length) * 100;
 
   function updateNumber(setter: (value: number) => void, value: string, fallback: number) {
     const parsed = Number(value);
@@ -134,6 +187,53 @@ export function SnapshotLeadSection() {
       delete next[key];
       return next;
     });
+  }
+
+  function toggleEnquiryChannel(option: string) {
+    setForm((current) => {
+      const exists = current.enquiryChannels.includes(option);
+      const next = exists
+        ? current.enquiryChannels.filter((item) => item !== option)
+        : [...current.enquiryChannels, option];
+
+      return { ...current, enquiryChannels: next };
+    });
+
+    setFieldErrors((current) => {
+      if (!current.enquiryChannels) {
+        return current;
+      }
+
+      const next = { ...current };
+      delete next.enquiryChannels;
+      return next;
+    });
+  }
+
+  function getStepErrors(step: StepDefinition) {
+    return step.fields.filter((field) => Boolean(fieldErrors[field]));
+  }
+
+  function validateCurrentStep(): boolean {
+    const { errors } = validateForm(form);
+    const relevantErrors = activeStep.fields.reduce<FieldErrors>((accumulator, field) => {
+      if (errors[field]) {
+        accumulator[field] = errors[field];
+      }
+      return accumulator;
+    }, {});
+
+    setFieldErrors((current) => ({ ...current, ...relevantErrors }));
+    return Object.keys(relevantErrors).length === 0;
+  }
+
+  function handleNextStep() {
+    if (!validateCurrentStep()) return;
+    setCurrentStep((step) => Math.min(step + 1, stepDefinitions.length - 1));
+  }
+
+  function handlePreviousStep() {
+    setCurrentStep((step) => Math.max(step - 1, 0));
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -154,6 +254,7 @@ export function SnapshotLeadSection() {
       ...initialForm,
       monthlyLeadVolume: current.monthlyLeadVolume,
     }));
+    setCurrentStep(0);
   }
 
   return (
@@ -162,7 +263,7 @@ export function SnapshotLeadSection() {
         <SectionHeader
           eyebrow="AI efficiency snapshot"
           title="See what inefficiency could be costing your business"
-          description="Use the calculator to estimate where time and follow-up may be slipping, then request a tailored AI Efficiency Snapshot built around your business context."
+          description="Use the calculator to estimate where time and follow-up may be slipping, then move through the guided qualification flow to request a tailored AI Efficiency Snapshot."
         />
 
         <div className="snapshot-grid">
@@ -233,11 +334,41 @@ export function SnapshotLeadSection() {
 
           <section className="snapshot-form-card reveal-up" style={{ animationDelay: "90ms" }} aria-labelledby="snapshot-form-title">
             <div className="snapshot-form-head">
-              <p className="calculator-kicker">Tailored lead magnet</p>
-              <h3 id="snapshot-form-title">Request a tailored AI Efficiency Snapshot</h3>
+              <div className="snapshot-flow-headline">
+                <div>
+                  <p className="calculator-kicker">Guided qualification</p>
+                  <h3 id="snapshot-form-title">Request a tailored AI Efficiency Snapshot</h3>
+                </div>
+                <div className="snapshot-step-chip" aria-label={`Step ${activeStep.id} of ${stepDefinitions.length}`}>
+                  {activeStep.eyebrow}
+                </div>
+              </div>
+
               <p>
-                Share a few operational details and you will receive a sharper opportunity view than a generic checklist can give you.
+                Move through the same qualification flow I use to frame audit opportunities so the checklist is specific to your business, not generic AI fluff.
               </p>
+            </div>
+
+            <div className="snapshot-progress-shell" aria-label="Qualification flow progress">
+              <div className="snapshot-progress-track">
+                <span className="snapshot-progress-fill" style={{ width: `${progressPercentage}%` }} />
+              </div>
+
+              <div className="snapshot-steps-row">
+                {stepDefinitions.map((step, index) => {
+                  const isActive = index === currentStep;
+                  const isComplete = index < currentStep;
+                  return (
+                    <div
+                      key={step.id}
+                      className={`snapshot-step-marker${isActive ? " is-active" : ""}${isComplete ? " is-complete" : ""}`}
+                    >
+                      <span>{step.id}</span>
+                      <p>{step.title}</p>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             <div className="snapshot-benefit-list" aria-label="What the snapshot includes">
@@ -252,9 +383,9 @@ export function SnapshotLeadSection() {
             {submitState === "success" ? (
               <div className="snapshot-success-panel">
                 <p className="calculator-kicker">Request received</p>
-                <h3>Your details are in.</h3>
+                <h3>Your qualification flow is complete.</h3>
                 <p>
-                  The next step is a tailored review of your workflow context, lead volume, and biggest bottleneck so the snapshot can point at practical opportunities rather than generic AI advice.
+                  The next step is a tailored review of your workflow context, lead volume, and biggest bottleneck so the snapshot points at practical opportunities rather than generic AI advice.
                 </p>
                 <a href="#booking" className="btn-secondary snapshot-success-action">
                   Prefer to talk now? Book a call
@@ -262,83 +393,156 @@ export function SnapshotLeadSection() {
               </div>
             ) : (
               <form className="snapshot-form" onSubmit={handleSubmit} noValidate>
-                <div className="snapshot-form-grid">
-                  <label className="snapshot-field">
-                    <span>Name</span>
-                    <input value={form.name} onChange={(event) => updateField("name", event.target.value)} />
-                    {fieldErrors.name ? <small>{fieldErrors.name}</small> : null}
-                  </label>
+                <div className="snapshot-step-card">
+                  <div className="snapshot-step-copy">
+                    <p className="snapshot-step-eyebrow">{activeStep.eyebrow}</p>
+                    <h4>{activeStep.title}</h4>
+                    <p>{activeStep.description}</p>
+                  </div>
 
-                  <label className="snapshot-field">
-                    <span>Business name</span>
-                    <input value={form.businessName} onChange={(event) => updateField("businessName", event.target.value)} />
-                    {fieldErrors.businessName ? <small>{fieldErrors.businessName}</small> : null}
-                  </label>
+                  <div className="snapshot-form-grid">
+                    {currentStep === 0 ? (
+                      <>
+                        <label className="snapshot-field">
+                          <span>Name</span>
+                          <input value={form.name} onChange={(event) => updateField("name", event.target.value)} />
+                          {fieldErrors.name ? <small>{fieldErrors.name}</small> : null}
+                        </label>
 
-                  <label className="snapshot-field">
-                    <span>Website</span>
-                    <input value={form.website} onChange={(event) => updateField("website", event.target.value)} placeholder="example.com" />
-                    {fieldErrors.website ? <small>{fieldErrors.website}</small> : null}
-                  </label>
+                        <label className="snapshot-field">
+                          <span>Business name</span>
+                          <input value={form.businessName} onChange={(event) => updateField("businessName", event.target.value)} />
+                          {fieldErrors.businessName ? <small>{fieldErrors.businessName}</small> : null}
+                        </label>
 
-                  <label className="snapshot-field">
-                    <span>Industry</span>
-                    <input value={form.industry} onChange={(event) => updateField("industry", event.target.value)} placeholder="Accounting, agency, legal, etc." />
-                    {fieldErrors.industry ? <small>{fieldErrors.industry}</small> : null}
-                  </label>
+                        <label className="snapshot-field">
+                          <span>Website</span>
+                          <input value={form.website} onChange={(event) => updateField("website", event.target.value)} placeholder="example.com" />
+                          {fieldErrors.website ? <small>{fieldErrors.website}</small> : null}
+                        </label>
 
-                  <label className="snapshot-field">
-                    <span>Team size</span>
-                    <select value={form.teamSize} onChange={(event) => updateField("teamSize", event.target.value)}>
-                      <option value="">Select</option>
-                      <option value="Solo">Solo</option>
-                      <option value="2-5">2-5 people</option>
-                      <option value="6-15">6-15 people</option>
-                      <option value="16-30">16-30 people</option>
-                      <option value="30+">30+ people</option>
-                    </select>
-                    {fieldErrors.teamSize ? <small>{fieldErrors.teamSize}</small> : null}
-                  </label>
+                        <label className="snapshot-field">
+                          <span>Industry</span>
+                          <input value={form.industry} onChange={(event) => updateField("industry", event.target.value)} placeholder="Accounting, mortgage broking, electrical, agency..." />
+                          {fieldErrors.industry ? <small>{fieldErrors.industry}</small> : null}
+                        </label>
 
-                  <label className="snapshot-field">
-                    <span>Approx. monthly lead volume</span>
-                    <input
-                      value={form.monthlyLeadVolume}
-                      onChange={(event) => updateField("monthlyLeadVolume", event.target.value)}
-                      placeholder={String(enquiriesPerMonth)}
-                    />
-                    {fieldErrors.monthlyLeadVolume ? <small>{fieldErrors.monthlyLeadVolume}</small> : null}
-                  </label>
+                        <label className="snapshot-field snapshot-field-wide">
+                          <span>Team size</span>
+                          <select value={form.teamSize} onChange={(event) => updateField("teamSize", event.target.value)}>
+                            <option value="">Select</option>
+                            <option value="Solo">Solo</option>
+                            <option value="2-5">2-5 people</option>
+                            <option value="6-15">6-15 people</option>
+                            <option value="16-30">16-30 people</option>
+                            <option value="30+">30+ people</option>
+                          </select>
+                          {fieldErrors.teamSize ? <small>{fieldErrors.teamSize}</small> : null}
+                        </label>
+                      </>
+                    ) : null}
 
-                  <label className="snapshot-field snapshot-field-wide">
-                    <span>Biggest bottleneck</span>
-                    <textarea
-                      value={form.biggestBottleneck}
-                      onChange={(event) => updateField("biggestBottleneck", event.target.value)}
-                      placeholder="Slow response, quoting drag, handoff confusion, reporting admin, etc."
-                    />
-                    {fieldErrors.biggestBottleneck ? <small>{fieldErrors.biggestBottleneck}</small> : null}
-                  </label>
+                    {currentStep === 1 ? (
+                      <>
+                        <label className="snapshot-field">
+                          <span>Approx. monthly lead volume</span>
+                          <input
+                            value={form.monthlyLeadVolume}
+                            onChange={(event) => updateField("monthlyLeadVolume", event.target.value)}
+                            placeholder={String(enquiriesPerMonth)}
+                          />
+                          {fieldErrors.monthlyLeadVolume ? <small>{fieldErrors.monthlyLeadVolume}</small> : null}
+                        </label>
 
-                  <label className="snapshot-field">
-                    <span>Email</span>
-                    <input value={form.email} onChange={(event) => updateField("email", event.target.value)} />
-                    {fieldErrors.email ? <small>{fieldErrors.email}</small> : null}
-                  </label>
+                        <div className="snapshot-field snapshot-field-wide">
+                          <span>Main enquiry channels</span>
+                          <div className="snapshot-toggle-grid" role="group" aria-label="Main enquiry channels">
+                            {enquiryChannelOptions.map((option) => {
+                              const selected = form.enquiryChannels.includes(option);
+                              return (
+                                <button
+                                  key={option}
+                                  type="button"
+                                  className={`snapshot-toggle${selected ? " is-selected" : ""}`}
+                                  onClick={() => toggleEnquiryChannel(option)}
+                                  aria-pressed={selected}
+                                >
+                                  {option}
+                                </button>
+                              );
+                            })}
+                          </div>
+                          {fieldErrors.enquiryChannels ? <small>{fieldErrors.enquiryChannels}</small> : null}
+                        </div>
 
-                  <label className="snapshot-field">
-                    <span>Phone</span>
-                    <input value={form.phone} onChange={(event) => updateField("phone", event.target.value)} />
-                  </label>
+                        <label className="snapshot-field snapshot-field-wide">
+                          <span>Biggest bottleneck right now</span>
+                          <textarea
+                            value={form.biggestBottleneck}
+                            onChange={(event) => updateField("biggestBottleneck", event.target.value)}
+                            placeholder="Slow response, quote follow-up, onboarding admin, missed calls, handoff confusion..."
+                          />
+                          {fieldErrors.biggestBottleneck ? <small>{fieldErrors.biggestBottleneck}</small> : null}
+                        </label>
+                      </>
+                    ) : null}
+
+                    {currentStep === 2 ? (
+                      <>
+                        <label className="snapshot-field snapshot-field-wide">
+                          <span>How would you like this handled?</span>
+                          <select value={form.contactPreference} onChange={(event) => updateField("contactPreference", event.target.value)}>
+                            <option>Email me the checklist</option>
+                            <option>Send checklist + suggest a call time</option>
+                            <option>Prefer to book a call after review</option>
+                          </select>
+                          {fieldErrors.contactPreference ? <small>{fieldErrors.contactPreference}</small> : null}
+                        </label>
+
+                        <label className="snapshot-field">
+                          <span>Email</span>
+                          <input value={form.email} onChange={(event) => updateField("email", event.target.value)} placeholder="you@business.com" />
+                          {fieldErrors.email ? <small>{fieldErrors.email}</small> : null}
+                        </label>
+
+                        <label className="snapshot-field">
+                          <span>Phone (optional)</span>
+                          <input value={form.phone} onChange={(event) => updateField("phone", event.target.value)} placeholder="Best number if a quick call makes sense" />
+                        </label>
+                      </>
+                    ) : null}
+                  </div>
                 </div>
 
-                <p className="snapshot-form-note">
-                  You are requesting a tailored opportunity snapshot, not joining a generic newsletter.
-                </p>
+                <div className="snapshot-flow-footer">
+                  <p className="snapshot-form-note">
+                    {currentStep < stepDefinitions.length - 1
+                      ? "This is a qualification flow, not a bloated form dump. Keep it simple and practical."
+                      : "You are requesting a tailored opportunity snapshot, not joining a generic newsletter."}
+                  </p>
 
-                <button type="submit" className="btn-primary snapshot-submit" disabled={submitState === "loading"}>
-                  {submitState === "loading" ? "Preparing request..." : "Get my tailored snapshot"}
-                </button>
+                  <div className="snapshot-flow-actions">
+                    {currentStep > 0 ? (
+                      <button type="button" className="btn-secondary snapshot-back" onClick={handlePreviousStep}>
+                        Back
+                      </button>
+                    ) : null}
+
+                    {currentStep < stepDefinitions.length - 1 ? (
+                      <button type="button" className="btn-primary snapshot-submit" onClick={handleNextStep}>
+                        Continue
+                      </button>
+                    ) : (
+                      <button type="submit" className="btn-primary snapshot-submit" disabled={submitState === "loading"}>
+                        {submitState === "loading" ? "Preparing request..." : "Get my tailored snapshot"}
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {submitState === "error" && getStepErrors(activeStep).length === 0 ? (
+                  <p className="snapshot-global-error">A few fields still need attention before the snapshot can be requested.</p>
+                ) : null}
               </form>
             )}
           </section>
