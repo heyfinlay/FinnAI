@@ -4,7 +4,9 @@ const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL ?? "https://calendly.com/
 const emailAddress = "finlay@temporaryutopia.com";
 
 const navItems = [
-  { href: "#services", label: "Services", current: true },
+  { href: "#proof", label: "Proof", current: true },
+  { href: "#services", label: "Services" },
+  { href: "#ladder", label: "Access Ladder" },
   { href: "#advisory", label: "Advisory" },
   { href: "#verticals", label: "Verticals" },
   { href: "#about", label: "About" },
@@ -21,6 +23,84 @@ const auditPoints = [
   "Map every manual touchpoint",
   "Identify shadow-work and tool overlap",
   "Quantify where slow response and rework are costing margin",
+];
+
+const proofHighlights = [
+  {
+    label: "Audits Shipped",
+    value: "37",
+    detail: "Mortgage, accounting, and boutique legal operators in the last 9 months.",
+  },
+  {
+    label: "Hours Unlocked",
+    value: "420+",
+    detail: "Monthly hours returned by removing manual handoffs and follow-up noise.",
+  },
+  {
+    label: "Systems in Build",
+    value: "12",
+    detail: "Active operator installs where we own the workflow alongside the team.",
+  },
+];
+
+const proofStories = [
+  {
+    client: "Mortgage Collective",
+    metric: "+14 hrs/week",
+    deliverable: "AI Audit + Response Playbook",
+    summary: "Automated document chase and underwriting prep across 9 brokers.",
+  },
+  {
+    client: "Ledger & Co Accountants",
+    metric: "-38% admin drag",
+    deliverable: "Embedded Operator Sprint",
+    summary: "Centralized intake and reporting copilot for an 18-person compliance team.",
+  },
+  {
+    client: "Civic Legal",
+    metric: "3 min lead reply",
+    deliverable: "Lead Concierge System",
+    summary: "Voice-qualified intake that routes briefs to partners with instant context packs.",
+  },
+];
+
+const ladderSteps = [
+  {
+    stage: "01",
+    name: "Operator Dispatch",
+    type: "Free intelligence",
+    description: "Weekly proof-of-work breakdowns, audit snapshots, and workflow math.",
+    ctaLabel: "Get the briefing",
+    href: "mailto:finlay@temporaryutopia.com?subject=Operator%20Dispatch",
+  },
+  {
+    stage: "02",
+    name: "Operator Circle",
+    type: "Private community",
+    description: "Invite-only Discord for teardown requests, Q&A, and live build sessions.",
+  },
+  {
+    stage: "03",
+    name: "Systems Blueprint",
+    type: "Program",
+    description: "Mid-ticket curriculum showing our full audit-to-implementation infrastructure.",
+  },
+  {
+    stage: "04",
+    name: "AI Efficiency Audit",
+    type: "Flagship diagnostic",
+    description: "One-day workflow investigation with a build vs. buy roadmap for leadership.",
+    ctaLabel: "Book an audit",
+    href: bookingUrl,
+  },
+  {
+    stage: "05",
+    name: "Embedded Operator",
+    type: "Retained partnership",
+    description: "We build and run the automation stack alongside your leadership team.",
+    ctaLabel: "Discuss embed",
+    href: bookingUrl,
+  },
 ];
 
 const promiseLevels = [
@@ -246,6 +326,52 @@ export function LandingPage() {
           </div>
         </section>
 
+        <section id="proof" className="proof-band">
+          <div className="landing-shell">
+            <div className="proof-grid">
+              <div className="proof-copy">
+                <span className="section-chip">Proof-led Framing</span>
+                <h2 className="section-heading">
+                  The <em>Proof</em> Ledger.
+                </h2>
+                <p>
+                  Every engagement starts with evidence. Real audits, shipped systems, and operator installs that are live
+                  inside service firms today. No theory, just documented leverage.
+                </p>
+
+                <ul className="proof-list">
+                  <li>Screen recordings of the exact audit deliverables you will receive.</li>
+                  <li>Before/after workflow math so you know where the hours come from.</li>
+                  <li>Operator journal that shows what is in build this week.</li>
+                </ul>
+              </div>
+
+              <div className="proof-metrics">
+                {proofHighlights.map((item) => (
+                  <article key={item.label} className="proof-metric-card">
+                    <span>{item.label}</span>
+                    <strong>{item.value}</strong>
+                    <p>{item.detail}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <div className="proof-showcase" aria-label="Selected client outcomes">
+              {proofStories.map((story) => (
+                <article key={story.client} className="proof-story">
+                  <div className="proof-story-head">
+                    <span className="proof-client">{story.client}</span>
+                    <span className="proof-metric">{story.metric}</span>
+                  </div>
+                  <h3>{story.deliverable}</h3>
+                  <p>{story.summary}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section id="services" className="problem-band">
           <div className="landing-shell problem-shell">
             <div className="problem-copy">
@@ -377,6 +503,48 @@ export function LandingPage() {
                   ))}
                 </tbody>
               </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="ladder" className="ladder-band">
+          <div className="landing-shell">
+            <div className="ladder-head">
+              <div>
+                <span className="section-chip">Access Ladder</span>
+                <h2 className="section-heading">
+                  Ascend through <em>proof</em> and proximity.
+                </h2>
+              </div>
+              <p>
+                Every layer deepens context. Start with free intelligence, move through structured programs, then graduate to
+                operator-on-retainer once there is undeniable fit.
+              </p>
+            </div>
+
+            <div className="ladder-grid">
+              {ladderSteps.map((step) => (
+                <article key={step.stage} className="ladder-card">
+                  <header>
+                    <span className="ladder-step">{step.stage}</span>
+                    <div>
+                      <p className="ladder-type">{step.type}</p>
+                      <h3>{step.name}</h3>
+                    </div>
+                  </header>
+                  <p>{step.description}</p>
+                  {step.ctaLabel && step.href ? (
+                    <a
+                      href={step.href}
+                      className="ladder-link"
+                      target={step.href.startsWith("http") ? "_blank" : undefined}
+                      rel={step.href.startsWith("http") ? "noreferrer" : undefined}
+                    >
+                      {step.ctaLabel}
+                    </a>
+                  ) : null}
+                </article>
+              ))}
             </div>
           </div>
         </section>

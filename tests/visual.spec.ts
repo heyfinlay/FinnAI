@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 const base = process.env.PLAYWRIGHT_BASE_URL || "http://localhost:3000";
 
 test("landing page core sections render", async ({ page }) => {
-  await page.goto(base, { waitUntil: "networkidle" });
+  await page.goto(base, { waitUntil: "domcontentloaded" });
   await page.setViewportSize({ width: 1440, height: 960 });
 
   await expect(page.locator(".hero-display")).toContainText("Stop the");
