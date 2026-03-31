@@ -1,7 +1,9 @@
 import Image from "next/image";
+import { IntakeFormSection } from "@/components/IntakeFormSection";
 
 const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL ?? "https://calendly.com/finlay-temporaryutopia/30min";
 const emailAddress = "finlay@temporaryutopia.com";
+const intakeHref = "#intake";
 
 const navItems = [
   { href: "#services", label: "Services", current: true },
@@ -20,7 +22,7 @@ const trapCards = [
 const auditPoints = [
   "Map every manual touchpoint",
   "Identify shadow-work and tool overlap",
-  "Quantify cost of operational friction",
+  "Quantify where slow response and rework are costing margin",
 ];
 
 const promiseLevels = [
@@ -195,8 +197,8 @@ export function LandingPage() {
             ))}
           </nav>
 
-          <a href={bookingUrl} className="header-cta" target="_blank" rel="noreferrer">
-            Book Strategy Call
+          <a href={intakeHref} className="header-cta">
+            Request Audit Plan
           </a>
         </div>
       </header>
@@ -210,13 +212,13 @@ export function LandingPage() {
                 Stop the <em>software bloat.</em>
               </h1>
               <p className="hero-lead">
-                Get an operator&apos;s view before you buy more software. We provide independent AI diagnostics for service
-                businesses. Diagnose first, implement later.
+                Find where slow follow-up, duplicated admin, and messy handoffs are costing leads, time, and margin before
+                you buy another platform. Diagnose first, implement later.
               </p>
 
               <div className="hero-actions">
-                <a href={bookingUrl} className="primary-button" target="_blank" rel="noreferrer">
-                  <span>Book a Strategy Call with Finlay</span>
+                <a href={intakeHref} className="primary-button">
+                  <span>Request Your Audit Plan</span>
                   <ArrowIcon />
                 </a>
                 <a href="#methodology" className="secondary-button">
@@ -263,7 +265,8 @@ export function LandingPage() {
 
                 <div className="truth-callout">
                   <p>
-                    The Truth: 82% of AI implementations fail because they automate broken workflows instead of fixing them.
+                    Most firms do not have a tooling problem first. They have a visibility problem: no clear view of where
+                    leads, time, and margin are quietly leaking.
                   </p>
                 </div>
 
@@ -289,7 +292,8 @@ export function LandingPage() {
             <div className="section-intro is-centered">
               <h2 className="section-title">AI Efficiency Audit</h2>
               <p>
-                A one-day surgical diagnostic to find where time is actually lost across admin, follow-up, and handoffs.
+                A one-day diagnostic to show where slow response, admin rebuild, and workflow drag are actually costing the
+                business.
               </p>
             </div>
 
@@ -321,8 +325,8 @@ export function LandingPage() {
                   </p>
                 </div>
 
-                <a href={bookingUrl} className="accent-button" target="_blank" rel="noreferrer">
-                  Secure a Date
+                <a href={intakeHref} className="accent-button">
+                  Request your audit plan
                 </a>
               </article>
             </div>
@@ -424,39 +428,7 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="final-band">
-          <div className="final-glow final-glow-right" aria-hidden="true" />
-          <div className="final-glow final-glow-left" aria-hidden="true" />
-
-          <div className="landing-shell narrow-shell final-shell">
-            <span className="section-kicker on-dark">Final Call</span>
-            <h2 className="final-title">
-              Selective Advisory.
-              <br />
-              Not an agency.
-            </h2>
-            <p className="final-copy">
-              Finlay works with a maximum of a few firms each month to keep the work commercially sharp and operationally
-              useful. The first step is a 15-minute alignment call.
-            </p>
-
-            <div className="final-actions">
-              <a href={bookingUrl} className="accent-button is-large" target="_blank" rel="noreferrer">
-                Talk to the Founder
-              </a>
-
-              <div className="availability-note">
-                <div className="availability-avatar">
-                  <Image src="/finlay-portrait.png" alt="" fill sizes="3rem" />
-                </div>
-                <div>
-                  <strong>Now taking select calls</strong>
-                  <p>Independent diagnostic work, founder-led.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <IntakeFormSection bookingUrl={bookingUrl} emailAddress={emailAddress} />
       </main>
 
       <footer className="landing-footer">
