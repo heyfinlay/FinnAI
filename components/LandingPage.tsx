@@ -1,9 +1,7 @@
 import Image from "next/image";
-import { IntakeFormSection } from "@/components/IntakeFormSection";
 
 const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL ?? "https://calendly.com/finlay-temporaryutopia/30min";
 const emailAddress = "finlay@temporaryutopia.com";
-const intakeHref = "#intake";
 
 const navItems = [
   { href: "#services", label: "Services", current: true },
@@ -197,8 +195,8 @@ export function LandingPage() {
             ))}
           </nav>
 
-          <a href={intakeHref} className="header-cta">
-            Request Audit Plan
+          <a href={bookingUrl} className="header-cta" target="_blank" rel="noreferrer">
+            Book Strategy Call
           </a>
         </div>
       </header>
@@ -217,8 +215,8 @@ export function LandingPage() {
               </p>
 
               <div className="hero-actions">
-                <a href={intakeHref} className="primary-button">
-                  <span>Request Your Audit Plan</span>
+                <a href={bookingUrl} className="primary-button" target="_blank" rel="noreferrer">
+                  <span>Book a Strategy Call with Finlay</span>
                   <ArrowIcon />
                 </a>
                 <a href="#methodology" className="secondary-button">
@@ -325,8 +323,8 @@ export function LandingPage() {
                   </p>
                 </div>
 
-                <a href={intakeHref} className="accent-button">
-                  Request your audit plan
+                <a href={bookingUrl} className="accent-button" target="_blank" rel="noreferrer">
+                  Secure a Date
                 </a>
               </article>
             </div>
@@ -428,7 +426,39 @@ export function LandingPage() {
           </div>
         </section>
 
-        <IntakeFormSection bookingUrl={bookingUrl} emailAddress={emailAddress} />
+        <section className="final-band">
+          <div className="final-glow final-glow-right" aria-hidden="true" />
+          <div className="final-glow final-glow-left" aria-hidden="true" />
+
+          <div className="landing-shell narrow-shell final-shell">
+            <span className="section-kicker on-dark">Final Call</span>
+            <h2 className="final-title">
+              Selective Advisory.
+              <br />
+              Not an agency.
+            </h2>
+            <p className="final-copy">
+              Finlay works with a maximum of a few firms each month to keep the work commercially sharp and operationally
+              useful. The first step is a 15-minute alignment call.
+            </p>
+
+            <div className="final-actions">
+              <a href={bookingUrl} className="accent-button is-large" target="_blank" rel="noreferrer">
+                Talk to the Founder
+              </a>
+
+              <div className="availability-note">
+                <div className="availability-avatar">
+                  <Image src="/finlay-portrait.png" alt="" fill sizes="3rem" />
+                </div>
+                <div>
+                  <strong>Now taking select calls</strong>
+                  <p>Independent diagnostic work, founder-led.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer className="landing-footer">
