@@ -16,9 +16,11 @@ const LeadFlowContext = createContext<LeadFlowContextValue | null>(null);
 export function LeadFlowProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [source, setSource] = useState<string | undefined>(undefined);
+  const [flowInstanceKey, setFlowInstanceKey] = useState(0);
 
   const openLeadFlow = useCallback((nextSource?: string) => {
     setSource(nextSource);
+    setFlowInstanceKey((currentKey) => currentKey + 1);
     setIsOpen(true);
     // TODO: analytics.track("leadflow_opened", { source: nextSource });
   }, []);
@@ -45,7 +47,7 @@ export function LeadFlowProvider({ children }: { children: React.ReactNode }) {
         title="Get your next best AI move"
         description="Answer six quick questions and get a recommendation tailored to your current operating context."
       >
-        <MultiStepLeadFlow source={source} onComplete={closeLeadFlow} />
+        <MultiStepLeadFlow key={flowInstanceKey} source={source} onComplete={closeLeadFlow} />
       </LeadFlowPanel>
     </LeadFlowContext.Provider>
   );
