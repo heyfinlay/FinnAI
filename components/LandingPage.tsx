@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+
+import { useLeadFlow } from "@/components/lead-flow/LeadFlowProvider";
 
 const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL ?? "https://calendly.com/finlay-temporaryutopia/30min";
 const emailAddress = "finlay@temporaryutopia.com";
@@ -219,6 +223,8 @@ function SectionIcon({ icon }: { icon: string }) {
 }
 
 export function LandingPage() {
+  const { openLeadFlow } = useLeadFlow();
+
   return (
     <>
       <header className="landing-header">
@@ -255,10 +261,10 @@ export function LandingPage() {
               </p>
 
               <div className="hero-actions">
-                <a href={bookingUrl} className="primary-button" target="_blank" rel="noreferrer">
-                  <span>Book a Strategy Call with Finlay</span>
+                <button type="button" className="primary-button" onClick={() => openLeadFlow("hero_primary_cta")}>
+                  <span>Get My AI Recommendation</span>
                   <ArrowIcon />
-                </a>
+                </button>
                 <a href="#methodology" className="secondary-button">
                   View Methodology
                 </a>

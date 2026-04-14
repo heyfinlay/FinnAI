@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { LeadFlowProvider } from "@/components/lead-flow/LeadFlowProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -26,7 +27,7 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
-        {children}
+        <LeadFlowProvider>{children}</LeadFlowProvider>
       </body>
     </html>
   );
