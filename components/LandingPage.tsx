@@ -11,10 +11,19 @@ const navItems = [
   { href: "#founder", label: "Founder" },
 ];
 
-const heroSignals = [
-  "Founder-led full-day review",
-  "Digital presence and workflow diagnosis",
-  "Selective AI recommendations",
+const auditSummaryCards = [
+  {
+    title: "A full audit of your business",
+    items: ["Workflows and operations", "Marketing systems", "Website, funnels, and lead capture"],
+  },
+  {
+    title: "Identifying what’s working and what isn’t",
+    items: ["Where time and money are being lost", "Where AI creates real leverage", "Where it should not be used"],
+  },
+  {
+    title: "A clear path forward",
+    items: ["System-level improvements", "Priority implementation plan", "Practical next steps you can act on immediately"],
+  },
 ];
 
 const problemPoints = [
@@ -134,6 +143,64 @@ function ArrowIcon() {
   );
 }
 
+function SystemVisual() {
+  return (
+    <aside className="hero-system-card" aria-label="Abstract system view before optimisation">
+      <div className="hero-system-head">
+        <span>System view — pre optimisation</span>
+        <strong>Structure Map</strong>
+      </div>
+
+      <svg viewBox="0 0 640 560" className="hero-system-svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="systemLine" x1="8%" y1="10%" x2="92%" y2="90%">
+            <stop offset="0%" stopColor="rgba(244,207,130,0.18)" />
+            <stop offset="52%" stopColor="rgba(255,255,255,0.48)" />
+            <stop offset="100%" stopColor="rgba(244,207,130,0.2)" />
+          </linearGradient>
+          <radialGradient id="systemNode" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="rgba(244,207,130,0.9)" />
+            <stop offset="100%" stopColor="rgba(244,207,130,0.12)" />
+          </radialGradient>
+        </defs>
+
+        <path className="system-grid-line" d="M118 88v380M272 52v430M438 92v372" />
+        <path className="system-grid-line" d="M70 154h492M94 286h430M122 412h398" />
+
+        <path className="system-link system-link-muted" d="M118 154C190 122 230 206 272 286S380 372 438 286 498 170 562 154" />
+        <path className="system-link" d="M78 412C170 408 190 286 272 286S354 154 438 154s76 70 102 132" />
+        <path className="system-link system-link-soft" d="M118 88C142 186 212 214 272 154s122-82 166-62 72 104 102 194" />
+        <path className="system-link system-link-muted" d="M122 286c74 60 114 128 202 126s130-90 216-126" />
+
+        <g className="system-nodes">
+          <circle cx="118" cy="88" r="5" />
+          <circle cx="118" cy="154" r="8" />
+          <circle cx="122" cy="286" r="6" />
+          <circle cx="78" cy="412" r="5" />
+          <circle cx="272" cy="154" r="7" />
+          <circle cx="272" cy="286" r="12" className="system-node-prime" />
+          <circle cx="324" cy="412" r="7" />
+          <circle cx="438" cy="92" r="5" />
+          <circle cx="438" cy="154" r="8" />
+          <circle cx="438" cy="286" r="9" />
+          <circle cx="540" cy="286" r="6" />
+          <circle cx="562" cy="154" r="5" />
+        </g>
+
+        <rect x="232" y="244" width="124" height="84" rx="18" className="system-focus-ring" />
+        <rect x="396" y="116" width="104" height="76" rx="16" className="system-focus-ring system-focus-ring-muted" />
+      </svg>
+
+      <div className="hero-system-foot" aria-label="System areas shown">
+        <span>Workflows</span>
+        <span>Marketing</span>
+        <span>Lead capture</span>
+        <span>AI fit</span>
+      </div>
+    </aside>
+  );
+}
+
 export function LandingPage() {
   return (
     <>
@@ -161,49 +228,56 @@ export function LandingPage() {
         <section id="top" className="hero-band">
           <div className="landing-shell hero-shell">
             <div className="hero-copy-block">
-              <span className="section-chip">AI Efficiency Audit</span>
+              <span className="section-chip hero-micro-line">
+                Most businesses don’t have an AI problem. They have a structure problem.
+              </span>
               <h1 className="hero-display hero-display-wide">
-                Find where your business actually needs leverage.
+                Diagnose where AI, content, and better systems should improve your business
               </h1>
               <p className="hero-lead hero-lead-wide">
-                A founder-led audit of your workflows, marketing systems, content, digital presence, lead capture, and AI
-                opportunities before you waste money on tools, agencies, or disconnected experiments.
+                I run a founder-led audit of your workflows, marketing, and digital presence to show exactly where AI
+                creates leverage, where it doesn’t, and how to modernise your business properly in 2026.
               </p>
 
               <div className="hero-actions">
                 <a href={bookingUrl} className="primary-button" target="_blank" rel="noreferrer">
-                  <span>Book a Strategy Call</span>
+                  <span>Book Your AI Efficiency Audit</span>
                   <ArrowIcon />
                 </a>
-                <a href="#audit" className="secondary-button">
-                  See What Gets Audited
+                <a href="#audit-summary" className="secondary-button">
+                  See what gets audited
                 </a>
               </div>
 
-              <div className="hero-signal-row" aria-label="Audit signals">
-                {heroSignals.map((signal) => (
-                  <span key={signal}>{signal}</span>
-                ))}
-              </div>
+              <p className="hero-trust-line">
+                No hype. No tool selling. Just clear systems, practical improvements, and honest recommendations.
+              </p>
             </div>
 
-            <div className="hero-portrait-column">
-              <div className="hero-portrait-glow" aria-hidden="true" />
-              <figure className="hero-portrait-card">
-                <div className="hero-portrait-media">
-                  <Image
-                    src="/finlay-portrait.png"
-                    alt="Portrait of Finlay Sturzaker"
-                    fill
-                    priority
-                    sizes="(max-width: 980px) 100vw, 34rem"
-                  />
-                </div>
-                <figcaption className="hero-portrait-caption">
-                  <p>&ldquo;AI should create leverage, not another layer of noise.&rdquo;</p>
-                  <span>Finlay Sturzaker, Founder</span>
-                </figcaption>
-              </figure>
+            <div className="hero-visual-column">
+              <SystemVisual />
+            </div>
+          </div>
+        </section>
+
+        <section id="audit-summary" className="audit-summary-band">
+          <div className="landing-shell">
+            <div className="audit-summary-head">
+              <span className="section-chip">What this actually is</span>
+              <h2 className="section-title is-medium">What this actually is</h2>
+            </div>
+
+            <div className="audit-summary-grid">
+              {auditSummaryCards.map((card) => (
+                <article key={card.title} className="audit-summary-card">
+                  <h3>{card.title}</h3>
+                  <ul>
+                    {card.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
             </div>
           </div>
         </section>
