@@ -6,8 +6,8 @@ test("landing page core sections render", async ({ page }) => {
   await page.goto(base, { waitUntil: "domcontentloaded" });
   await page.setViewportSize({ width: 1440, height: 960 });
 
-  await expect(page.locator(".hero-display")).toContainText("Find where your business actually needs leverage.");
-  await expect(page.locator(".hero-portrait-card")).toBeVisible();
+  await expect(page.locator(".hero-display")).toContainText("Find where your business actually needs AI, content, and better systems.");
+  await expect(page.locator(".hero-system-card")).toBeVisible();
   await expect(page.locator(".audit-area-card")).toHaveCount(5);
   await expect(page.locator(".use-case-card")).toHaveCount(5);
   await expect(page.locator(".difference-card")).toHaveCount(4);

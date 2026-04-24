@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">AI Efficiency Audit system visual</title>
+  <desc id="desc">An abstract premium system map showing scattered business signals becoming clearer through diagnosis.</desc>
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="45%" r="58%">
+      <stop offset="0%" stop-color="#e6c16f" stop-opacity="0.24"/>
+      <stop offset="45%" stop-color="#172033" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#08090b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="lineGold" x1="16%" y1="50%" x2="84%" y2="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="48%" stop-color="#f4cf82" stop-opacity="0.82"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.2"/>
+    </linearGradient>
+    <radialGradient id="nodeGold" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff2be"/>
+      <stop offset="38%" stop-color="#e6c16f" stop-opacity="0.82"/>
+      <stop offset="100%" stop-color="#e6c16f" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="14" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="900" rx="32" fill="#08090b"/>
+  <rect width="1200" height="900" rx="32" fill="url(#bgGlow)"/>
+  <g opacity="0.2" stroke="#ffffff" stroke-width="1">
+    <path d="M160 160H1040M160 300H1040M160 450H1040M160 600H1040M160 740H1040"/>
+    <path d="M220 110V790M400 110V790M600 110V790M800 110V790M980 110V790"/>
+  </g>
+
+  <g fill="none" stroke-linecap="round" stroke-width="4">
+    <path d="M188 238C314 186 418 204 520 366" stroke="#ffffff" opacity="0.24"/>
+    <path d="M170 458C300 458 394 450 520 450" stroke="#ffffff" opacity="0.22"/>
+    <path d="M210 662C326 684 424 626 520 536" stroke="#ffffff" opacity="0.24"/>
+    <path d="M680 366C774 244 838 220 1000 220" stroke="url(#lineGold)" opacity="0.88"/>
+    <path d="M680 450C792 450 868 450 1026 450" stroke="url(#lineGold)" opacity="0.86"/>
+    <path d="M680 536C782 642 868 686 1004 686" stroke="url(#lineGold)" opacity="0.86"/>
+  </g>
+
+  <g opacity="0.8">
+    <circle cx="188" cy="238" r="18" fill="#9aa9bd"/>
+    <circle cx="170" cy="458" r="14" fill="#8392a6"/>
+    <circle cx="210" cy="662" r="17" fill="#9aa9bd"/>
+    <circle cx="334" cy="330" r="10" fill="#7c899b"/>
+    <circle cx="370" cy="574" r="11" fill="#7c899b"/>
+    <circle cx="1000" cy="220" r="17" fill="#aeb9c8"/>
+    <circle cx="1026" cy="450" r="17" fill="#aeb9c8"/>
+    <circle cx="1004" cy="686" r="17" fill="#aeb9c8"/>
+  </g>
+
+  <g filter="url(#softGlow)">
+    <circle cx="600" cy="450" r="132" fill="#e6c16f" opacity="0.08" stroke="#f4cf82" stroke-opacity="0.26" stroke-width="2"/>
+    <circle cx="600" cy="450" r="82" fill="#e6c16f" opacity="0.12" stroke="#f4cf82" stroke-opacity="0.42" stroke-width="2"/>
+    <circle cx="600" cy="450" r="26" fill="url(#nodeGold)"/>
+  </g>
+
+  <g fill="#ffffff" opacity="0.92">
+    <circle cx="600" cy="450" r="5"/>
+    <circle cx="548" cy="398" r="4" opacity="0.48"/>
+    <circle cx="652" cy="398" r="4" opacity="0.48"/>
+    <circle cx="548" cy="502" r="4" opacity="0.48"/>
+    <circle cx="652" cy="502" r="4" opacity="0.48"/>
+  </g>
+
+  <g fill="none" stroke="#ffffff" stroke-opacity="0.16" stroke-width="2">
+    <rect x="858" y="174" width="202" height="92" rx="22"/>
+    <rect x="858" y="404" width="202" height="92" rx="22"/>
+    <rect x="858" y="640" width="202" height="92" rx="22"/>
+  </g>
+
+  <g fill="#ffffff" opacity="0.16">
+    <rect x="890" y="210" width="104" height="10" rx="5"/>
+    <rect x="890" y="440" width="118" height="10" rx="5"/>
+    <rect x="890" y="676" width="76" height="10" rx="5"/>
+  </g>
+</svg>

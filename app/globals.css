@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --font-body: "Inter", "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
-  --font-display: "Newsreader", "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-body: var(--font-inter), "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
+  --font-display: var(--font-newsreader), "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
   --page: #f5f4ef;
   --page-warm: #f0eeea;
   --panel: #ffffff;
@@ -490,8 +490,8 @@ textarea:focus-visible {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 0.8rem;
   background:
-    radial-gradient(circle at 72% 24%, rgba(230, 193, 111, 0.13), transparent 28%),
-    radial-gradient(circle at 18% 82%, rgba(255, 255, 255, 0.07), transparent 30%),
+    radial-gradient(circle at 50% 48%, rgba(230, 193, 111, 0.18), transparent 25%),
+    radial-gradient(circle at 82% 28%, rgba(255, 255, 255, 0.07), transparent 26%),
     linear-gradient(145deg, #090909 0%, #111319 58%, #08090b 100%);
   box-shadow: var(--shadow-card);
   color: #fff;
@@ -544,6 +544,23 @@ textarea:focus-visible {
   padding: 1rem;
 }
 
+.hero-system-image {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 0;
+}
+
+.system-label {
+  fill: rgba(255, 255, 255, 0.48);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
 .system-grid-line {
   fill: none;
   stroke: rgba(255, 255, 255, 0.055);
@@ -553,7 +570,7 @@ textarea:focus-visible {
 .system-link {
   fill: none;
   stroke: url("#systemLine");
-  stroke-width: 1.6;
+  stroke-width: 2;
   stroke-linecap: round;
 }
 
@@ -575,6 +592,37 @@ textarea:focus-visible {
 .system-nodes .system-node-prime {
   fill: url("#systemNode");
   stroke: rgba(244, 207, 130, 0.8);
+}
+
+.system-core circle {
+  fill: rgba(230, 193, 111, 0.045);
+  stroke: rgba(244, 207, 130, 0.28);
+  stroke-width: 1;
+}
+
+.system-core .system-core-inner {
+  fill: rgba(230, 193, 111, 0.08);
+  stroke: rgba(244, 207, 130, 0.42);
+}
+
+.system-core text {
+  fill: rgba(255, 255, 255, 0.9);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.system-output-cards rect {
+  fill: rgba(255, 255, 255, 0.07);
+  stroke: rgba(255, 255, 255, 0.14);
+  stroke-width: 1;
+}
+
+.system-output-cards text {
+  fill: rgba(255, 255, 255, 0.78);
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .system-focus-ring {
@@ -1342,7 +1390,10 @@ textarea:focus-visible {
 }
 
 .founder-card-photo img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  object-position: center;
   filter: grayscale(1) contrast(1.08);
 }
 
@@ -1473,6 +1524,8 @@ textarea:focus-visible {
 }
 
 .availability-avatar img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   filter: grayscale(1) contrast(1.08);
 }
@@ -1851,6 +1904,11 @@ button:disabled {
     max-width: 34rem;
   }
 
+  .hero-visual-column {
+    width: 100%;
+    max-width: none;
+  }
+
   .problem-shell,
   .verticals-head {
     display: grid;
@@ -1947,8 +2005,13 @@ button:disabled {
   }
 
   .hero-display {
-    font-size: clamp(4.15rem, 18vw, 5.4rem);
+    font-size: clamp(2.7rem, 9.2vw, 3.8rem);
     max-width: none;
+  }
+
+  .hero-display-wide {
+    font-size: clamp(2.7rem, 9.2vw, 3.8rem);
+    line-height: 0.98;
   }
 
   .hero-actions,

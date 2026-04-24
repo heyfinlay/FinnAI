@@ -1,4 +1,4 @@
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 
 const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL ?? "https://calendly.com/finlay-temporaryutopia/30min";
 const emailAddress = "finlay@temporaryutopia.com";
@@ -145,57 +145,17 @@ function ArrowIcon() {
 
 function SystemVisual() {
   return (
-    <aside className="hero-system-card" aria-label="Abstract system view before optimisation">
+    <aside className="hero-system-card" aria-label="AI Efficiency Audit system diagnosis visual">
       <div className="hero-system-head">
-        <span>System view — pre optimisation</span>
-        <strong>Structure Map</strong>
+        <span>Diagnostic view</span>
+        <strong>AI Efficiency Audit</strong>
       </div>
 
-      <svg viewBox="0 0 640 560" className="hero-system-svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="systemLine" x1="8%" y1="10%" x2="92%" y2="90%">
-            <stop offset="0%" stopColor="rgba(244,207,130,0.18)" />
-            <stop offset="52%" stopColor="rgba(255,255,255,0.48)" />
-            <stop offset="100%" stopColor="rgba(244,207,130,0.2)" />
-          </linearGradient>
-          <radialGradient id="systemNode" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="rgba(244,207,130,0.9)" />
-            <stop offset="100%" stopColor="rgba(244,207,130,0.12)" />
-          </radialGradient>
-        </defs>
-
-        <path className="system-grid-line" d="M118 88v380M272 52v430M438 92v372" />
-        <path className="system-grid-line" d="M70 154h492M94 286h430M122 412h398" />
-
-        <path className="system-link system-link-muted" d="M118 154C190 122 230 206 272 286S380 372 438 286 498 170 562 154" />
-        <path className="system-link" d="M78 412C170 408 190 286 272 286S354 154 438 154s76 70 102 132" />
-        <path className="system-link system-link-soft" d="M118 88C142 186 212 214 272 154s122-82 166-62 72 104 102 194" />
-        <path className="system-link system-link-muted" d="M122 286c74 60 114 128 202 126s130-90 216-126" />
-
-        <g className="system-nodes">
-          <circle cx="118" cy="88" r="5" />
-          <circle cx="118" cy="154" r="8" />
-          <circle cx="122" cy="286" r="6" />
-          <circle cx="78" cy="412" r="5" />
-          <circle cx="272" cy="154" r="7" />
-          <circle cx="272" cy="286" r="12" className="system-node-prime" />
-          <circle cx="324" cy="412" r="7" />
-          <circle cx="438" cy="92" r="5" />
-          <circle cx="438" cy="154" r="8" />
-          <circle cx="438" cy="286" r="9" />
-          <circle cx="540" cy="286" r="6" />
-          <circle cx="562" cy="154" r="5" />
-        </g>
-
-        <rect x="232" y="244" width="124" height="84" rx="18" className="system-focus-ring" />
-        <rect x="396" y="116" width="104" height="76" rx="16" className="system-focus-ring system-focus-ring-muted" />
-      </svg>
+      <img className="hero-system-image" src="/audit-system-visual.svg" alt="" aria-hidden="true" />
 
       <div className="hero-system-foot" aria-label="System areas shown">
-        <span>Workflows</span>
-        <span>Marketing</span>
-        <span>Lead capture</span>
-        <span>AI fit</span>
+        <span>Before: scattered effort</span>
+        <span>After: ranked priorities</span>
       </div>
     </aside>
   );
@@ -232,7 +192,7 @@ export function LandingPage() {
                 Most businesses don’t have an AI problem. They have a structure problem.
               </span>
               <h1 className="hero-display hero-display-wide">
-                Diagnose where AI, content, and better systems should improve your business
+                Find where your business actually needs AI, content, and better systems.
               </h1>
               <p className="hero-lead hero-lead-wide">
                 I run a founder-led audit of your workflows, marketing, and digital presence to show exactly where AI
@@ -321,7 +281,7 @@ export function LandingPage() {
           <div className="landing-shell">
             <div className="section-intro is-centered">
               <span className="section-chip">What The Audit Reviews</span>
-              <h2 className="section-title">A productised diagnosis of your digital and operational leverage.</h2>
+              <h2 className="section-title">Receive a clear diagnosis of your digital and operational leverage.</h2>
               <p>
                 The AI Efficiency Audit reviews how the business presents itself, attracts trust, captures demand, follows
                 up, reports, and decides where AI should or should not be used.
@@ -459,11 +419,11 @@ export function LandingPage() {
 
             <aside className="founder-card">
               <div className="founder-card-photo">
-                <Image
-                  src="/finlay-portrait.png"
+                <img
+                  src="/finlay-portrait-900.jpg"
                   alt="Finlay Sturzaker"
-                  fill
-                  sizes="(max-width: 980px) 100vw, 28rem"
+                  loading="eager"
+                  decoding="async"
                 />
               </div>
               <div className="founder-card-body">
@@ -503,7 +463,7 @@ export function LandingPage() {
 
               <div className="availability-note">
                 <div className="availability-avatar">
-                  <Image src="/finlay-portrait.png" alt="" fill sizes="3rem" />
+                  <img src="/finlay-avatar-180.jpg" alt="" loading="lazy" decoding="async" />
                 </div>
                 <div>
                   <strong>Founder-led audit</strong>
