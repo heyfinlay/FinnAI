@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "FinnAI | Independent AI Strategy & Advisory",
+  title: "Temporary Utopia | AI Efficiency Audit",
   description:
-    "Independent AI diagnostics and founder-led advisory for service businesses that want workflow clarity before buying more software.",
+    "Founder-led AI Efficiency Audit for service businesses that want clearer digital strategy, marketing systems, workflow diagnosis, and selective AI implementation.",
 };
 
 export default function RootLayout({

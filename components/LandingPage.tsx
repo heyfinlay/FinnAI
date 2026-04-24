@@ -4,141 +4,124 @@ const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL ?? "https://calendly.com/
 const emailAddress = "finlay@temporaryutopia.com";
 
 const navItems = [
-  { href: "#services", label: "Services", current: true },
-  { href: "#ladder", label: "Access Ladder" },
-  { href: "#advisory", label: "Advisory" },
-  { href: "#verticals", label: "Verticals" },
-  { href: "#about", label: "About" },
+  { href: "#audit", label: "Audit", current: true },
+  { href: "#use-cases", label: "Use Cases" },
+  { href: "#difference", label: "Difference" },
+  { href: "#process", label: "Process" },
+  { href: "#founder", label: "Founder" },
 ];
 
-const trapCards = [
-  { title: "Workflow Chaos", icon: "workflow", tone: "mist" },
-  { title: "Tool Bloat", icon: "warning", tone: "dark" },
-  { title: "Time Leakage", icon: "hourglass", tone: "gold" },
-  { title: "Vendor Bias", icon: "bias", tone: "mist" },
+const heroSignals = [
+  "Founder-led full-day review",
+  "Digital presence and workflow diagnosis",
+  "Selective AI recommendations",
 ];
 
-const auditPoints = [
-  "Map every manual touchpoint",
-  "Identify shadow-work and tool overlap",
-  "Quantify where slow response and rework are costing margin",
+const problemPoints = [
+  "The website explains the business, but does not convert enough visitors into useful enquiries.",
+  "Content is inconsistent, disconnected from sales, or too generic to build trust.",
+  "Lead capture, follow-up, reporting, and handoffs depend on memory and manual effort.",
+  "AI tools get added before anyone has decided where AI should actually belong.",
 ];
 
-const ladderSteps = [
+const auditAreas = [
   {
-    stage: "01",
-    name: "Operator Dispatch",
-    type: "Free intelligence",
-    description: "Weekly proof-of-work breakdowns, audit snapshots, and workflow math.",
-    ctaLabel: "Get the briefing",
-    href: "mailto:finlay@temporaryutopia.com?subject=Operator%20Dispatch",
+    eyebrow: "01",
+    title: "Client-facing digital presence",
+    body: "Website, landing pages, offer clarity, proof, enquiry paths, sales funnels, booking flow, and the points where trust or conversion breaks down.",
   },
   {
-    stage: "02",
-    name: "Operator Circle",
-    type: "Private community",
-    description: "Invite-only Discord for teardown requests, Q&A, and live build sessions.",
+    eyebrow: "02",
+    title: "Marketing and content strategy",
+    body: "Positioning, useful industry content, educational assets, email ideas, trust-building material, and repeatable ways to turn expertise into demand.",
   },
   {
-    stage: "03",
-    name: "Systems Blueprint",
-    type: "Program",
-    description: "Mid-ticket curriculum showing our full audit-to-implementation infrastructure.",
+    eyebrow: "03",
+    title: "AI agent opportunities",
+    body: "Reporting agents, campaign monitoring, lead follow-up support, knowledge retrieval, admin assistance, and areas where automation can reduce repeated work.",
   },
   {
-    stage: "04",
-    name: "AI Efficiency Audit",
-    type: "Flagship diagnostic",
-    description: "One-day workflow investigation with a build vs. buy roadmap for leadership.",
-    ctaLabel: "Book an audit",
-    href: bookingUrl,
+    eyebrow: "04",
+    title: "Operational workflows",
+    body: "Handoffs, repeated admin, communication loops, owner bottlenecks, manual reporting, tool overlap, and friction between sales, delivery, and follow-up.",
   },
   {
-    stage: "05",
-    name: "Embedded Operator",
-    type: "Retained partnership",
-    description: "We build and run the automation stack alongside your leadership team.",
-    ctaLabel: "Discuss embed",
-    href: bookingUrl,
+    eyebrow: "05",
+    title: "Human judgment zones",
+    body: "The decisions where AI should assist, not replace: strategy, taste, compliance, relationship management, final approvals, and commercially sensitive judgement.",
   },
 ];
 
-const promiseLevels = [
+const useCases = [
   {
-    level: "Level 1",
-    title: "See Time Loss",
-    body: "Total visibility into where your team's energy is being drained by admin friction.",
+    title: "Weekly industry report agent",
+    body: "Monitors relevant changes, competitor signals, search trends, or market updates, then drafts useful client-facing insights for review.",
   },
   {
-    level: "Level 2",
-    title: "Identify Fit",
-    body: "Determine which AI models actually solve your specific vertical bottlenecks.",
+    title: "Campaign analysis assistant",
+    body: "Summarises ad performance, flags waste, highlights anomalies, and suggests the next questions a human should ask before changing spend.",
   },
   {
-    level: "Level 3",
-    title: "Prioritize",
-    body: "Stop doing everything. Start doing the 20% of automation that yields 80% of the result.",
+    title: "Lead capture and follow-up system",
+    body: "Tightens forms, routing, reminders, qualification, and response templates so enquiries do not quietly disappear between inboxes and calendars.",
   },
   {
-    level: "Level 4",
-    title: "Reduce Chaos",
-    body: "Move toward quiet efficiency: calmer systems, cleaner handoffs, and less owner drag.",
-  },
-];
-
-const comparisonRows = [
-  {
-    category: "Primary Goal",
-    agency: "Billing for setups",
-    reseller: "Software commissions",
-    advisory: "Workflow optimization",
+    title: "Website and funnel renovation plan",
+    body: "Clarifies offers, improves page hierarchy, strengthens proof, and turns traffic into a cleaner path from attention to enquiry.",
   },
   {
-    category: "Bias",
-    agency: "Specific stack preference",
-    reseller: "Highly biased to one tool",
-    advisory: "Zero vendor bias",
-  },
-  {
-    category: "Focus",
-    agency: 'Technical "plumbing"',
-    reseller: "Feature adoption",
-    advisory: "Strategic outcomes",
+    title: "Expertise-to-content engine",
+    body: "Turns founder or team knowledge into practical posts, emails, landing page sections, FAQs, and sales support assets.",
   },
 ];
 
-const verticals = [
+const differences = [
   {
-    title: "Mortgage Brokers",
-    body: "Automate the data-gathering and client update loop without losing the personal touch that closes deals.",
-    icon: "mortgage",
+    title: "Diagnostic-first, not tool-first",
+    body: "The audit starts with the business system, not a preferred app stack or automation recipe.",
   },
   {
-    title: "Accountants",
-    body: "Remove manual reconciliation and data entry so compliance work creates more advisory margin.",
-    icon: "accounting",
+    title: "Honest about AI fit",
+    body: "Some work should be automated, some should be redesigned, and some should stay deliberately human.",
   },
   {
-    title: "Legal & Admin",
-    body: "Design high-precision document and contract workflows for boutique firms where errors are expensive.",
-    icon: "legal",
+    title: "Independent recommendations",
+    body: "Advice is based on leverage, readiness, risk, and practicality. Not software commissions.",
+  },
+  {
+    title: "Marketing and systems together",
+    body: "Digital presence, content, lead capture, reporting, and AI are reviewed as one connected operating picture.",
   },
 ];
 
-const concerns = [
+const deliverables = [
+  "Current-state digital and workflow map",
+  "AI opportunity map with impact and readiness notes",
+  "Website, funnel, and lead capture review",
+  "Content and marketing system recommendations",
+  "Priority implementation roadmap",
+  "Risk notes and what not to automate",
+  "Founder-led readout session",
+];
+
+const processSteps = [
   {
-    quote: "We're already using several AI tools.",
-    body: "That is precisely why you need an audit. Most firms end up with a Frankenstein stack where tools do not talk, data is fragmented, and team adoption stays low. The job is to fix the system, not add another subscription.",
+    title: "Scope the business and digital presence",
+    body: "We review the business model, offers, website, lead paths, current content, tools, and the areas where the owner already suspects friction.",
   },
   {
-    quote: "Are we too small for this level of advisory?",
-    body: "If you have more than five employees, manual friction is already costing real money. The earlier you architect cleaner workflows, the easier the next stage of growth becomes.",
+    title: "Audit workflows, marketing systems, and AI fit",
+    body: "Finlay maps the points where content, follow-up, reporting, handoffs, and repeated admin can be improved, then separates genuine AI use cases from distractions.",
+  },
+  {
+    title: "Deliver the roadmap",
+    body: "You receive practical quick wins, deeper improvements, implementation priorities, and a clear view of what should not be automated yet.",
   },
 ];
 
 const footerLinks = [
-  { href: "#advisory", label: "Method" },
-  { href: "#verticals", label: "Verticals" },
+  { href: "#audit", label: "Audit" },
+  { href: "#difference", label: "Difference" },
   { href: `mailto:${emailAddress}`, label: "Contact" },
 ];
 
@@ -151,80 +134,13 @@ function ArrowIcon() {
   );
 }
 
-function SectionIcon({ icon }: { icon: string }) {
-  switch (icon) {
-    case "workflow":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M6 6h4v4H6z" />
-          <path d="M14 6h4v4h-4z" />
-          <path d="M6 14h4v4H6z" />
-          <path d="M12 8h2m-4 8h4m4-6v6h-4" />
-        </svg>
-      );
-    case "warning":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 4 4.5 19h15L12 4Z" />
-          <path d="M12 9v4.5" />
-          <path d="M12 16.5h.01" />
-        </svg>
-      );
-    case "hourglass":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M7 4h10" />
-          <path d="M7 20h10" />
-          <path d="M8 4c0 3 2 4.5 4 6 2-1.5 4-3 4-6" />
-          <path d="M8 20c0-3 2-4.5 4-6 2 1.5 4 3 4 6" />
-        </svg>
-      );
-    case "bias":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M5 16c0-2.5 2-4.5 4.5-4.5H19" />
-          <path d="m14 7 5 4.5-5 4.5" />
-          <path d="M5 7h4" />
-        </svg>
-      );
-    case "mortgage":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="m4 11 8-6 8 6" />
-          <path d="M7 10.5V19h10v-8.5" />
-          <path d="M10.5 19v-4h3v4" />
-        </svg>
-      );
-    case "accounting":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M7 4h10v16H7z" />
-          <path d="M10 8h4" />
-          <path d="M10 12h4" />
-          <path d="M10 16h2" />
-        </svg>
-      );
-    case "legal":
-      return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 5v14" />
-          <path d="M7 8h10" />
-          <path d="m9 8-3 5h6l-3-5Zm9 0-3 5h6l-3-5Z" />
-          <path d="M9 20h6" />
-        </svg>
-      );
-    default:
-      return null;
-  }
-}
-
 export function LandingPage() {
   return (
     <>
       <header className="landing-header">
         <div className="landing-shell header-shell">
           <a href="#top" className="brand-wordmark">
-            FinnAI
+            Temporary Utopia
           </a>
 
           <nav className="header-nav" aria-label="Primary">
@@ -245,23 +161,29 @@ export function LandingPage() {
         <section id="top" className="hero-band">
           <div className="landing-shell hero-shell">
             <div className="hero-copy-block">
-              <span className="section-chip">Independent AI Advisory</span>
-              <h1 className="hero-display">
-                Stop the <em>software bloat.</em>
+              <span className="section-chip">AI Efficiency Audit</span>
+              <h1 className="hero-display hero-display-wide">
+                Find where your business actually needs leverage.
               </h1>
-              <p className="hero-lead">
-                Find where slow follow-up, duplicated admin, and messy handoffs are costing leads, time, and margin before
-                you buy another platform. Diagnose first, implement later.
+              <p className="hero-lead hero-lead-wide">
+                A founder-led audit of your workflows, marketing systems, content, digital presence, lead capture, and AI
+                opportunities before you waste money on tools, agencies, or disconnected experiments.
               </p>
 
               <div className="hero-actions">
                 <a href={bookingUrl} className="primary-button" target="_blank" rel="noreferrer">
-                  <span>Book a Strategy Call with Finlay</span>
+                  <span>Book a Strategy Call</span>
                   <ArrowIcon />
                 </a>
-                <a href="#methodology" className="secondary-button">
-                  View Methodology
+                <a href="#audit" className="secondary-button">
+                  See What Gets Audited
                 </a>
+              </div>
+
+              <div className="hero-signal-row" aria-label="Audit signals">
+                {heroSignals.map((signal) => (
+                  <span key={signal}>{signal}</span>
+                ))}
               </div>
             </div>
 
@@ -278,7 +200,7 @@ export function LandingPage() {
                   />
                 </div>
                 <figcaption className="hero-portrait-caption">
-                  <p>&ldquo;Efficiency isn&apos;t about the tool. It&apos;s about the workflow.&rdquo;</p>
+                  <p>&ldquo;AI should create leverage, not another layer of noise.&rdquo;</p>
                   <span>Finlay Sturzaker, Founder</span>
                 </figcaption>
               </figure>
@@ -286,225 +208,203 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section id="services" className="problem-band">
+        <section id="problem" className="problem-band">
           <div className="landing-shell problem-shell">
             <div className="problem-copy">
+              <span className="section-chip">The Problem</span>
               <h2 className="section-heading">
-                The &quot;More Tools&quot;
-                <br />
-                <em>Trap.</em>
+                Most businesses are not behind because they lack tools.
               </h2>
 
               <div className="problem-copy-stack">
                 <p>
-                  Most businesses are adding complexity, not efficiency. Every new subscription promises a revolution but
-                  usually results in more tabs, more notifications, and more friction.
+                  They are behind because their digital strategy, content, lead capture, reporting, follow-up, and internal
+                  systems have grown in fragments.
                 </p>
 
                 <div className="truth-callout">
                   <p>
-                    Most firms do not have a tooling problem first. They have a visibility problem: no clear view of where
-                    leads, time, and margin are quietly leaking.
+                    AI often makes messy systems messier when it is applied without diagnosis. The right question is not
+                    &ldquo;what can we automate?&rdquo; It is &ldquo;where would better judgement, content, systems, or selective AI
+                    create commercial leverage?&rdquo;
                   </p>
                 </div>
-
-                <p>We help you cut through the noise. We don&apos;t sell software. We sell clarity.</p>
               </div>
             </div>
 
-            <div className="trap-grid" aria-label="Operational problems">
-              {trapCards.map((card) => (
-                <article key={card.title} className={`trap-card tone-${card.tone}`}>
-                  <span className="tile-icon">
-                    <SectionIcon icon={card.icon} />
-                  </span>
-                  <h3>{card.title}</h3>
+            <div className="problem-list-card" aria-label="Common business symptoms">
+              {problemPoints.map((point) => (
+                <div key={point} className="problem-list-item">
+                  <span aria-hidden="true" />
+                  <p>{point}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="audit" className="offer-band">
+          <div className="landing-shell">
+            <div className="section-intro is-centered">
+              <span className="section-chip">What The Audit Reviews</span>
+              <h2 className="section-title">A productised diagnosis of your digital and operational leverage.</h2>
+              <p>
+                The AI Efficiency Audit reviews how the business presents itself, attracts trust, captures demand, follows
+                up, reports, and decides where AI should or should not be used.
+              </p>
+            </div>
+
+            <div className="audit-area-grid">
+              {auditAreas.map((area) => (
+                <article key={area.title} className="audit-area-card">
+                  <span>{area.eyebrow}</span>
+                  <h3>{area.title}</h3>
+                  <p>{area.body}</p>
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="methodology" className="offer-band">
+        <section id="use-cases" className="promise-band">
           <div className="landing-shell">
-            <div className="section-intro is-centered">
-              <h2 className="section-title">AI Efficiency Audit</h2>
+            <div className="section-intro on-dark use-case-intro">
+              <span className="section-kicker on-dark">Practical Use Cases</span>
+              <h2 className="section-title">Grounded AI and digital improvements, chosen for the business in front of us.</h2>
               <p>
-                A one-day diagnostic to show where slow response, admin rebuild, and workflow drag are actually costing the
-                business.
+                These are examples, not packages. The audit decides what is worth doing based on your offers, team, data,
+                client expectations, and current systems.
               </p>
             </div>
 
-            <div className="offer-grid">
-              <article className="offer-card is-primary">
-                <span className="offer-card-number">01</span>
+            <div className="use-case-grid">
+              {useCases.map((useCase) => (
+                <article key={useCase.title} className="use-case-card">
+                  <h3>{useCase.title}</h3>
+                  <p>{useCase.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
 
-                <div>
-                  <h3>Full Workflow Diagnostic</h3>
-                  <ul className="offer-points">
-                    {auditPoints.map((point) => (
-                      <li key={point}>{point}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="offer-price">
-                  <p>Investment</p>
-                  <strong>From $1,000</strong>
-                </div>
-              </article>
-
-              <article className="offer-card is-accent">
-                <div>
-                  <h3>The Outcome</h3>
-                  <p>
-                    You receive a Build vs. Buy blueprint. No generic advice. Just specific actions to reclaim 10+ hours per
-                    week per staff member.
-                  </p>
-                </div>
-
-                <a href={bookingUrl} className="accent-button" target="_blank" rel="noreferrer">
-                  Secure a Date
+        <section id="difference" className="comparison-band">
+          <div className="landing-shell">
+            <div className="difference-layout">
+              <div className="difference-copy">
+                <span className="section-chip">Why Temporary Utopia</span>
+                <h2 className="section-title is-medium">Most AI experts sell automation. Temporary Utopia sells clarity first.</h2>
+                <p>
+                  This is not an AI hype agency or a generic marketing agency. It is diagnostic-first advisory for businesses
+                  that need to modernise their digital presence without replacing human judgement.
+                </p>
+                <a href={bookingUrl} className="primary-button difference-cta" target="_blank" rel="noreferrer">
+                  <span>Book a Strategy Call</span>
+                  <ArrowIcon />
                 </a>
-              </article>
+              </div>
+
+              <div className="difference-grid">
+                {differences.map((item) => (
+                  <article key={item.title} className="difference-card">
+                    <h3>{item.title}</h3>
+                    <p>{item.body}</p>
+                  </article>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="promise-band">
+        <section id="deliverables" className="verticals-band">
           <div className="landing-shell">
-            <div className="section-intro on-dark">
-              <h2 className="section-title">The Promise Ladder</h2>
-              <p>Our four-stage evolution from chaos to automated calm.</p>
-            </div>
-
-            <div className="promise-grid">
-              {promiseLevels.map((item) => (
-                <article key={item.level} className="promise-card">
-                  <span>{item.level}</span>
-                  <h3>{item.title}</h3>
-                  <p>{item.body}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="advisory" className="comparison-band">
-          <div className="landing-shell narrow-shell">
-            <div className="section-intro is-centered">
-              <h2 className="section-title is-medium">Why Independent Advisory?</h2>
-            </div>
-
-            <div className="comparison-wrap">
-              <table className="comparison-table">
-                <thead>
-                  <tr>
-                    <th>Category</th>
-                    <th>Automation Agencies</th>
-                    <th>Software Resellers</th>
-                    <th>FinnAI Advisory</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {comparisonRows.map((row) => (
-                    <tr key={row.category}>
-                      <th>{row.category}</th>
-                      <td>{row.agency}</td>
-                      <td>{row.reseller}</td>
-                      <td className="is-highlight">{row.advisory}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-
-        <section id="ladder" className="ladder-band">
-          <div className="landing-shell">
-            <div className="ladder-head">
+            <div className="deliverables-layout">
               <div>
-                <span className="section-chip">Access Ladder</span>
+                <span className="section-chip">What You Receive</span>
                 <h2 className="section-heading">
-                  Ascend through <em>proof</em> and proximity.
+                  A clear roadmap before you spend on implementation.
                 </h2>
               </div>
+
+              <div className="deliverable-card">
+                <p>
+                  The output is designed for decisions: what to fix first, what to leave alone, what AI can support, and how
+                  your website, funnels, content, reporting, and follow-up should work together.
+                </p>
+                <ul>
+                  {deliverables.map((deliverable) => (
+                    <li key={deliverable}>{deliverable}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="process" className="offer-band process-band">
+          <div className="landing-shell">
+            <div className="section-intro is-centered">
+              <span className="section-chip">The Process</span>
+              <h2 className="section-title">Simple enough to book. Substantial enough to change the next decision.</h2>
               <p>
-                Every layer deepens context. Start with free intelligence, move through structured programs, then graduate to
-                operator-on-retainer once there is undeniable fit.
+                The strategy call confirms fit, then the audit turns scattered context into an implementation roadmap with
+                quick wins, deeper improvements, and clear no-go areas.
               </p>
             </div>
 
-            <div className="ladder-grid">
-              {ladderSteps.map((step) => (
-                <article key={step.stage} className="ladder-card">
-                  <header>
-                    <span className="ladder-step">{step.stage}</span>
-                    <div>
-                      <p className="ladder-type">{step.type}</p>
-                      <h3>{step.name}</h3>
-                    </div>
-                  </header>
-                  <p>{step.description}</p>
-                  {step.ctaLabel && step.href ? (
-                    <a
-                      href={step.href}
-                      className="ladder-link"
-                      target={step.href.startsWith("http") ? "_blank" : undefined}
-                      rel={step.href.startsWith("http") ? "noreferrer" : undefined}
-                    >
-                      {step.ctaLabel}
-                    </a>
-                  ) : null}
-                </article>
+            <ol className="process-grid">
+              {processSteps.map((step, index) => (
+                <li key={step.title} className="process-item">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <h3>{step.title}</h3>
+                  <p>{step.body}</p>
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
         </section>
 
-        <section id="verticals" className="verticals-band">
-          <div className="landing-shell">
-            <div className="verticals-head">
-              <div>
-                <h2 className="section-heading">
-                  Tailored for High-Value
-                  <br />
-                  <em>Service Firms.</em>
-                </h2>
+        <section id="founder" className="concerns-band">
+          <div className="landing-shell founder-layout">
+            <div className="founder-copy">
+              <span className="section-chip">Founder Perspective</span>
+              <h2 className="section-title is-medium">
+                Founder-led, practical, and clear about the real state of AI in 2026.
+              </h2>
+              <p>
+                Finlay leads the audit personally. The work is built around a practical belief: content, websites, funnels,
+                reporting, automation, and AI cannot be treated as separate experiments if the business owner needs better
+                commercial outcomes.
+              </p>
+              <p>
+                Temporary Utopia does not pretend AI replaces everything. It helps identify where AI can support experienced
+                humans, where better digital systems matter more, and where trust, taste, compliance, and final judgement
+                should stay with people.
+              </p>
+            </div>
+
+            <aside className="founder-card">
+              <div className="founder-card-photo">
+                <Image
+                  src="/finlay-portrait.png"
+                  alt="Finlay Sturzaker"
+                  fill
+                  sizes="(max-width: 980px) 100vw, 28rem"
+                />
               </div>
-
-              <p>We don&apos;t do e-commerce or SaaS. We do high-trust professional services.</p>
-            </div>
-
-            <div className="vertical-grid">
-              {verticals.map((item) => (
-                <article key={item.title} className="vertical-card">
-                  <span className="tile-icon">
-                    <SectionIcon icon={item.icon} />
-                  </span>
-                  <h3>{item.title}</h3>
-                  <p>{item.body}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="about" className="concerns-band">
-          <div className="landing-shell narrow-shell">
-            <div className="section-intro is-centered">
-              <h2 className="section-title is-medium">Operational Concerns</h2>
-            </div>
-
-            <div className="concerns-stack">
-              {concerns.map((item) => (
-                <article key={item.quote} className="concern-card">
-                  <h3>&ldquo;{item.quote}&rdquo;</h3>
-                  <p>{item.body}</p>
-                </article>
-              ))}
-            </div>
+              <div className="founder-card-body">
+                <h3>Finlay Sturzaker</h3>
+                <p>Founder, Temporary Utopia</p>
+                <div className="founder-links">
+                  <a href="https://instagram.com/heyfinlay" target="_blank" rel="noreferrer">
+                    Instagram
+                  </a>
+                  <a href="https://www.linkedin.com/in/finlaysturzaker/" target="_blank" rel="noreferrer">
+                    LinkedIn
+                  </a>
+                </div>
+              </div>
+            </aside>
           </div>
         </section>
 
@@ -513,20 +413,18 @@ export function LandingPage() {
           <div className="final-glow final-glow-left" aria-hidden="true" />
 
           <div className="landing-shell narrow-shell final-shell">
-            <span className="section-kicker on-dark">Final Call</span>
+            <span className="section-kicker on-dark">Next Step</span>
             <h2 className="final-title">
-              Selective Advisory.
-              <br />
-              Not an agency.
+              Before you automate, diagnose.
             </h2>
             <p className="final-copy">
-              Finlay works with a maximum of a few firms each month to keep the work commercially sharp and operationally
-              useful. The first step is a 15-minute alignment call.
+              Book a strategy call to confirm whether the AI Efficiency Audit is the right fit. If it is, the next step is a
+              founder-led review of the systems, content, funnels, and AI opportunities most likely to improve the business.
             </p>
 
             <div className="final-actions">
               <a href={bookingUrl} className="accent-button is-large" target="_blank" rel="noreferrer">
-                Talk to the Founder
+                Book a Strategy Call
               </a>
 
               <div className="availability-note">
@@ -534,8 +432,8 @@ export function LandingPage() {
                   <Image src="/finlay-portrait.png" alt="" fill sizes="3rem" />
                 </div>
                 <div>
-                  <strong>Now taking select calls</strong>
-                  <p>Independent diagnostic work, founder-led.</p>
+                  <strong>Founder-led audit</strong>
+                  <p>Practical recommendations before implementation spend.</p>
                 </div>
               </div>
             </div>
@@ -546,7 +444,7 @@ export function LandingPage() {
       <footer className="landing-footer">
         <div className="landing-shell footer-shell">
           <a href="#top" className="brand-wordmark">
-            FinnAI
+            Temporary Utopia
           </a>
 
           <div className="footer-links">
@@ -557,7 +455,7 @@ export function LandingPage() {
             ))}
           </div>
 
-          <p>© 2026 FinnAI Advisory. Independent. Selective. Impactful.</p>
+          <p>© 2026 Temporary Utopia. Diagnostic-first AI advisory.</p>
         </div>
       </footer>
     </>
