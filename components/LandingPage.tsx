@@ -1,137 +1,61 @@
-/* eslint-disable @next/next/no-img-element */
-
 const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL ?? "https://calendly.com/finlay-temporaryutopia/30min";
-const emailAddress = "finlay@temporaryutopia.com";
 
 const navItems = [
-  { href: "#audit", label: "Audit", current: true },
-  { href: "#use-cases", label: "Use Cases" },
-  { href: "#difference", label: "Difference" },
-  { href: "#process", label: "Process" },
-  { href: "#founder", label: "Founder" },
+  { href: "#pain", label: "Pain Signals" },
+  { href: "#leakage-map", label: "Leakage Map" },
+  { href: "#audit-finds", label: "What We Find" },
+  { href: "#field-notes", label: "Field Notes" },
+  { href: "#faq", label: "FAQ" },
 ];
 
-const auditSummaryCards = [
-  {
-    title: "A full audit of your business",
-    items: ["Workflows and operations", "Marketing systems", "Website, funnels, and lead capture"],
-  },
-  {
-    title: "Identifying what’s working and what isn’t",
-    items: ["Where time and money are being lost", "Where AI creates real leverage", "Where it should not be used"],
-  },
-  {
-    title: "A clear path forward",
-    items: ["System-level improvements", "Priority implementation plan", "Practical next steps you can act on immediately"],
-  },
+const painPoints = [
+  "Enquiries sit too long before a meaningful first response.",
+  "Follow-up depends on memory, not a reliable system.",
+  "Admin is repeated across tools and people.",
+  "Client updates are inconsistent or reactive.",
+  "Handover between sales and delivery is patchy.",
+  "Reporting is slow, manual, and unclear.",
 ];
 
-const problemPoints = [
-  "The website explains the business, but does not convert enough visitors into useful enquiries.",
-  "Content is inconsistent, disconnected from sales, or too generic to build trust.",
-  "Lead capture, follow-up, reporting, and handoffs depend on memory and manual effort.",
-  "AI tools get added before anyone has decided where AI should actually belong.",
-];
-
-const auditAreas = [
-  {
-    eyebrow: "01",
-    title: "Client-facing digital presence",
-    body: "Website, landing pages, offer clarity, proof, enquiry paths, sales funnels, booking flow, and the points where trust or conversion breaks down.",
-  },
-  {
-    eyebrow: "02",
-    title: "Marketing and content strategy",
-    body: "Positioning, useful industry content, educational assets, email ideas, trust-building material, and repeatable ways to turn expertise into demand.",
-  },
-  {
-    eyebrow: "03",
-    title: "AI agent opportunities",
-    body: "Reporting agents, campaign monitoring, lead follow-up support, knowledge retrieval, admin assistance, and areas where automation can reduce repeated work.",
-  },
-  {
-    eyebrow: "04",
-    title: "Operational workflows",
-    body: "Handoffs, repeated admin, communication loops, owner bottlenecks, manual reporting, tool overlap, and friction between sales, delivery, and follow-up.",
-  },
-  {
-    eyebrow: "05",
-    title: "Human judgment zones",
-    body: "The decisions where AI should assist, not replace: strategy, taste, compliance, relationship management, final approvals, and commercially sensitive judgement.",
-  },
-];
-
-const useCases = [
-  {
-    title: "Weekly industry report agent",
-    body: "Monitors relevant changes, competitor signals, search trends, or market updates, then drafts useful client-facing insights for review.",
-  },
-  {
-    title: "Campaign analysis assistant",
-    body: "Summarises ad performance, flags waste, highlights anomalies, and suggests the next questions a human should ask before changing spend.",
-  },
-  {
-    title: "Lead capture and follow-up system",
-    body: "Tightens forms, routing, reminders, qualification, and response templates so enquiries do not quietly disappear between inboxes and calendars.",
-  },
-  {
-    title: "Website and funnel renovation plan",
-    body: "Clarifies offers, improves page hierarchy, strengthens proof, and turns traffic into a cleaner path from attention to enquiry.",
-  },
-  {
-    title: "Expertise-to-content engine",
-    body: "Turns founder or team knowledge into practical posts, emails, landing page sections, FAQs, and sales support assets.",
-  },
-];
-
-const differences = [
-  {
-    title: "Diagnostic-first, not tool-first",
-    body: "The audit starts with the business system, not a preferred app stack or automation recipe.",
-  },
-  {
-    title: "Honest about AI fit",
-    body: "Some work should be automated, some should be redesigned, and some should stay deliberately human.",
-  },
-  {
-    title: "Independent recommendations",
-    body: "Advice is based on leverage, readiness, risk, and practicality. Not software commissions.",
-  },
-  {
-    title: "Marketing and systems together",
-    body: "Digital presence, content, lead capture, reporting, and AI are reviewed as one connected operating picture.",
-  },
+const auditFinds = [
+  "Lead response speed and consistency",
+  "Sales workflow gaps from enquiry to quote",
+  "Repeated admin and avoidable internal drag",
+  "Client communication rhythm and quality",
+  "Handover reliability between team members",
+  "Reporting clarity and decision visibility",
 ];
 
 const deliverables = [
-  "Current-state digital and workflow map",
-  "AI opportunity map with impact and readiness notes",
-  "Website, funnel, and lead capture review",
-  "Content and marketing system recommendations",
-  "Priority implementation roadmap",
-  "Risk notes and what not to automate",
-  "Founder-led readout session",
+  "Discovery call to define goals and constraints",
+  "Workflow review across lead, sales, admin, and delivery",
+  "Leakage opportunity map with high-friction bottlenecks",
+  "Commercial impact estimate by priority area",
+  "Prioritised action plan: what to fix first, next, later",
+  "Debrief call with practical recommendations",
 ];
 
-const processSteps = [
+const faqs = [
   {
-    title: "Scope the business and digital presence",
-    body: "We review the business model, offers, website, lead paths, current content, tools, and the areas where the owner already suspects friction.",
+    q: "Do I need to understand AI before this?",
+    a: "No. The audit is business-first. We translate technical options into operational decisions and practical next steps.",
   },
   {
-    title: "Audit workflows, marketing systems, and AI fit",
-    body: "Finlay maps the points where content, follow-up, reporting, handoffs, and repeated admin can be improved, then separates genuine AI use cases from distractions.",
+    q: "Is this about replacing staff?",
+    a: "No. The goal is to remove avoidable friction and repeated admin, so your team can focus on higher-value work.",
   },
   {
-    title: "Deliver the roadmap",
-    body: "You receive practical quick wins, deeper improvements, implementation priorities, and a clear view of what should not be automated yet.",
+    q: "What if automation is not the right answer?",
+    a: "That is a valid outcome. Some issues are solved with better process design before introducing any automation.",
   },
-];
-
-const footerLinks = [
-  { href: "#audit", label: "Audit" },
-  { href: "#difference", label: "Difference" },
-  { href: `mailto:${emailAddress}`, label: "Contact" },
+  {
+    q: "Could I just ask ChatGPT to suggest automations?",
+    a: "You can get ideas, but not a grounded diagnosis of your real workflows, constraints, and commercial priorities.",
+  },
+  {
+    q: "What happens after the audit?",
+    a: "You receive a prioritised roadmap. Then you can implement internally, with your existing partners, or with Temporary Utopia.",
+  },
 ];
 
 function ArrowIcon() {
@@ -143,21 +67,31 @@ function ArrowIcon() {
   );
 }
 
-function SystemVisual() {
+function WorkflowDiagram() {
   return (
-    <aside className="hero-system-card" aria-label="AI Efficiency Audit system diagnosis visual">
-      <div className="hero-system-head">
-        <span>Diagnostic view</span>
-        <strong>AI Efficiency Audit</strong>
+    <div className="workflow-diagram" role="img" aria-label="Operational leakage workflow before and after">
+      <div className="workflow-column">
+        <h3>Where value leaks</h3>
+        <ol>
+          <li>Enquiry comes in</li>
+          <li>Delayed response</li>
+          <li>Weak follow-up</li>
+          <li>Quote not sent</li>
+          <li>Opportunity lost</li>
+        </ol>
       </div>
-
-      <img className="hero-system-image" src="/audit-system-visual.svg" alt="" aria-hidden="true" />
-
-      <div className="hero-system-foot" aria-label="System areas shown">
-        <span>Before: scattered effort</span>
-        <span>After: ranked priorities</span>
+      <div className="workflow-divider" aria-hidden="true">→</div>
+      <div className="workflow-column is-improved">
+        <h3>Improved system</h3>
+        <ol>
+          <li>Capture</li>
+          <li>Fast response</li>
+          <li>Structured follow-up</li>
+          <li>Quote tracking</li>
+          <li>Reporting visibility</li>
+        </ol>
       </div>
-    </aside>
+    </div>
   );
 }
 
@@ -166,332 +100,102 @@ export function LandingPage() {
     <>
       <header className="landing-header">
         <div className="landing-shell header-shell">
-          <a href="#top" className="brand-wordmark">
-            Temporary Utopia
-          </a>
-
+          <a href="#top" className="brand-wordmark">Temporary Utopia</a>
           <nav className="header-nav" aria-label="Primary">
             {navItems.map((item) => (
-              <a key={item.label} href={item.href} className={item.current ? "is-current" : undefined}>
-                {item.label}
-              </a>
+              <a key={item.label} href={item.href}>{item.label}</a>
             ))}
           </nav>
-
-          <a href={bookingUrl} className="header-cta" target="_blank" rel="noreferrer">
-            Book Strategy Call
-          </a>
+          <a href={bookingUrl} className="header-cta" target="_blank" rel="noreferrer">Book Audit</a>
         </div>
       </header>
 
-      <main id="main-content" className="editorial-page">
-        <section id="top" className="hero-band">
-          <div className="landing-shell hero-shell">
-            <div className="hero-copy-block">
-              <span className="section-chip hero-micro-line">
-                Most businesses don’t have an AI problem. They have a structure problem.
-              </span>
-              <h1 className="hero-display hero-display-wide">
-                Find where your business actually needs AI, content, and better systems.
-              </h1>
-              <p className="hero-lead hero-lead-wide">
-                I run a founder-led audit of your workflows, marketing, and digital presence to show exactly where AI
-                creates leverage, where it doesn’t, and how to modernise your business properly in 2026.
-              </p>
-
+      <main className="editorial-page" id="top">
+        <section className="hero-band premium-hero">
+          <div className="landing-shell premium-grid">
+            <div>
+              <p className="section-chip">AI Efficiency Audit</p>
+              <h1 className="hero-display hero-display-wide">Find where your business is leaking time, leads, and money.</h1>
+              <p className="hero-lead hero-lead-wide">Before you buy another AI tool, hire more staff, or start a vague automation project, diagnose where work is delayed, repeated, missed, or invisible — and what that is costing you.</p>
               <div className="hero-actions">
-                <a href={bookingUrl} className="primary-button" target="_blank" rel="noreferrer">
-                  <span>Book Your AI Efficiency Audit</span>
-                  <ArrowIcon />
-                </a>
-                <a href="#audit-summary" className="secondary-button">
-                  See what gets audited
-                </a>
+                <a href={bookingUrl} className="primary-button" target="_blank" rel="noreferrer"><span>Book an AI Efficiency Audit</span><ArrowIcon /></a>
+                <a href="#audit-finds" className="secondary-button">See what the audit finds</a>
               </div>
-
-              <p className="hero-trust-line">
-                No hype. No tool selling. Just clear systems, practical improvements, and honest recommendations.
-              </p>
             </div>
+            <WorkflowDiagram />
+          </div>
+        </section>
 
-            <div className="hero-visual-column">
-              <SystemVisual />
+        <section id="pain" className="section-block muted">
+          <div className="landing-shell narrow-shell">
+            <h2 className="section-title">You are probably not losing money because your team is lazy.</h2>
+            <p className="section-intro">You are losing money because your systems are not keeping up. Small operational gaps compound into missed revenue, wasted labour, and slower delivery.</p>
+            <ul className="simple-list">
+              {painPoints.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </div>
+        </section>
+
+        <section id="leakage-map" className="section-block">
+          <div className="landing-shell">
+            <h2 className="section-title">Operational leakage map</h2>
+            <p className="section-intro">This is the core pattern we diagnose in service businesses. We map where opportunities drop, then design the minimum practical fixes worth implementing first.</p>
+            <WorkflowDiagram />
+          </div>
+        </section>
+
+        <section id="audit-finds" className="section-block muted">
+          <div className="landing-shell premium-two-col">
+            <div>
+              <h2 className="section-title">What the audit finds</h2>
+              <p className="section-intro">We review the workflows where most service businesses leak value before they ever notice it.</p>
+              <ul className="simple-list">{auditFinds.map((item) => <li key={item}>{item}</li>)}</ul>
+            </div>
+            <div>
+              <h2 className="section-title">What you get</h2>
+              <ul className="simple-list">{deliverables.map((item) => <li key={item}>{item}</li>)}</ul>
             </div>
           </div>
         </section>
 
-        <section id="audit-summary" className="audit-summary-band">
-          <div className="landing-shell">
-            <div className="audit-summary-head">
-              <span className="section-chip">What this actually is</span>
-              <h2 className="section-title is-medium">What this actually is</h2>
-            </div>
+        <section className="section-block">
+          <div className="landing-shell roi-panel">
+            <h2 className="section-title">The commercial value is usually hiding in plain sight.</h2>
+            <p className="section-intro">Example: 4 missed opportunities/month × $2,500 average job value = $120,000/year in preventable leakage — before accounting for admin time and delivery inefficiency.</p>
+            <p className="equation">Small leaks × every week × every team member = serious annual drag.</p>
+          </div>
+        </section>
 
-            <div className="audit-summary-grid">
-              {auditSummaryCards.map((card) => (
-                <article key={card.title} className="audit-summary-card">
-                  <h3>{card.title}</h3>
-                  <ul>
-                    {card.items.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </article>
+        <section id="field-notes" className="section-block muted">
+          <div className="landing-shell">
+            <h2 className="section-title">Field Notes</h2>
+            <p className="section-intro">Practical observations on AI, automation, workflow design, and operational leverage.</p>
+            <div className="notes-grid">
+              <article><h3>Why most businesses should not start with an AI chatbot</h3><p>Start with bottlenecks, not interfaces. Diagnose where time and follow-up break first.</p></article>
+              <article><h3>The hidden cost of slow lead follow-up</h3><p>Lost opportunities are usually process failures, not demand problems.</p></article>
+              <article><h3>What to automate before hiring another admin person</h3><p>Remove repeated updates, chasing, and handover friction before increasing headcount.</p></article>
+            </div>
+          </div>
+        </section>
+
+        <section id="faq" className="section-block">
+          <div className="landing-shell narrow-shell">
+            <h2 className="section-title">FAQ</h2>
+            <div className="faq-list">
+              {faqs.map((item) => (
+                <article key={item.q}><h3>{item.q}</h3><p>{item.a}</p></article>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="problem" className="problem-band">
-          <div className="landing-shell problem-shell">
-            <div className="problem-copy">
-              <span className="section-chip">The Problem</span>
-              <h2 className="section-heading">
-                Most businesses are not behind because they lack tools.
-              </h2>
-
-              <div className="problem-copy-stack">
-                <p>
-                  They are behind because their digital strategy, content, lead capture, reporting, follow-up, and internal
-                  systems have grown in fragments.
-                </p>
-
-                <div className="truth-callout">
-                  <p>
-                    AI often makes messy systems messier when it is applied without diagnosis. The right question is not
-                    &ldquo;what can we automate?&rdquo; It is &ldquo;where would better judgement, content, systems, or selective AI
-                    create commercial leverage?&rdquo;
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="problem-list-card" aria-label="Common business symptoms">
-              {problemPoints.map((point) => (
-                <div key={point} className="problem-list-item">
-                  <span aria-hidden="true" />
-                  <p>{point}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="audit" className="offer-band">
-          <div className="landing-shell">
-            <div className="section-intro is-centered">
-              <span className="section-chip">What The Audit Reviews</span>
-              <h2 className="section-title">Receive a clear diagnosis of your digital and operational leverage.</h2>
-              <p>
-                The AI Efficiency Audit reviews how the business presents itself, attracts trust, captures demand, follows
-                up, reports, and decides where AI should or should not be used.
-              </p>
-            </div>
-
-            <div className="audit-area-grid">
-              {auditAreas.map((area) => (
-                <article key={area.title} className="audit-area-card">
-                  <span>{area.eyebrow}</span>
-                  <h3>{area.title}</h3>
-                  <p>{area.body}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="use-cases" className="promise-band">
-          <div className="landing-shell">
-            <div className="section-intro on-dark use-case-intro">
-              <span className="section-kicker on-dark">Practical Use Cases</span>
-              <h2 className="section-title">Grounded AI and digital improvements, chosen for the business in front of us.</h2>
-              <p>
-                These are examples, not packages. The audit decides what is worth doing based on your offers, team, data,
-                client expectations, and current systems.
-              </p>
-            </div>
-
-            <div className="use-case-grid">
-              {useCases.map((useCase) => (
-                <article key={useCase.title} className="use-case-card">
-                  <h3>{useCase.title}</h3>
-                  <p>{useCase.body}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="difference" className="comparison-band">
-          <div className="landing-shell">
-            <div className="difference-layout">
-              <div className="difference-copy">
-                <span className="section-chip">Why Temporary Utopia</span>
-                <h2 className="section-title is-medium">Most AI experts sell automation. Temporary Utopia sells clarity first.</h2>
-                <p>
-                  This is not an AI hype agency or a generic marketing agency. It is diagnostic-first advisory for businesses
-                  that need to modernise their digital presence without replacing human judgement.
-                </p>
-                <a href={bookingUrl} className="primary-button difference-cta" target="_blank" rel="noreferrer">
-                  <span>Book a Strategy Call</span>
-                  <ArrowIcon />
-                </a>
-              </div>
-
-              <div className="difference-grid">
-                {differences.map((item) => (
-                  <article key={item.title} className="difference-card">
-                    <h3>{item.title}</h3>
-                    <p>{item.body}</p>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="deliverables" className="verticals-band">
-          <div className="landing-shell">
-            <div className="deliverables-layout">
-              <div>
-                <span className="section-chip">What You Receive</span>
-                <h2 className="section-heading">
-                  A clear roadmap before you spend on implementation.
-                </h2>
-              </div>
-
-              <div className="deliverable-card">
-                <p>
-                  The output is designed for decisions: what to fix first, what to leave alone, what AI can support, and how
-                  your website, funnels, content, reporting, and follow-up should work together.
-                </p>
-                <ul>
-                  {deliverables.map((deliverable) => (
-                    <li key={deliverable}>{deliverable}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="process" className="offer-band process-band">
-          <div className="landing-shell">
-            <div className="section-intro is-centered">
-              <span className="section-chip">The Process</span>
-              <h2 className="section-title">Simple enough to book. Substantial enough to change the next decision.</h2>
-              <p>
-                The strategy call confirms fit, then the audit turns scattered context into an implementation roadmap with
-                quick wins, deeper improvements, and clear no-go areas.
-              </p>
-            </div>
-
-            <ol className="process-grid">
-              {processSteps.map((step, index) => (
-                <li key={step.title} className="process-item">
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <h3>{step.title}</h3>
-                  <p>{step.body}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
-        <section id="founder" className="concerns-band">
-          <div className="landing-shell founder-layout">
-            <div className="founder-copy">
-              <span className="section-chip">Founder Perspective</span>
-              <h2 className="section-title is-medium">
-                Founder-led, practical, and clear about the real state of AI in 2026.
-              </h2>
-              <p>
-                Finlay leads the audit personally. The work is built around a practical belief: content, websites, funnels,
-                reporting, automation, and AI cannot be treated as separate experiments if the business owner needs better
-                commercial outcomes.
-              </p>
-              <p>
-                Temporary Utopia does not pretend AI replaces everything. It helps identify where AI can support experienced
-                humans, where better digital systems matter more, and where trust, taste, compliance, and final judgement
-                should stay with people.
-              </p>
-            </div>
-
-            <aside className="founder-card">
-              <div className="founder-card-photo">
-                <img
-                  src="/finlay-portrait-900.jpg"
-                  alt="Finlay Sturzaker"
-                  loading="eager"
-                  decoding="async"
-                />
-              </div>
-              <div className="founder-card-body">
-                <h3>Finlay Sturzaker</h3>
-                <p>Founder, Temporary Utopia</p>
-                <div className="founder-links">
-                  <a href="https://instagram.com/heyfinlay" target="_blank" rel="noreferrer">
-                    Instagram
-                  </a>
-                  <a href="https://www.linkedin.com/in/finlaysturzaker/" target="_blank" rel="noreferrer">
-                    LinkedIn
-                  </a>
-                </div>
-              </div>
-            </aside>
-          </div>
-        </section>
-
-        <section className="final-band">
-          <div className="final-glow final-glow-right" aria-hidden="true" />
-          <div className="final-glow final-glow-left" aria-hidden="true" />
-
-          <div className="landing-shell narrow-shell final-shell">
-            <span className="section-kicker on-dark">Next Step</span>
-            <h2 className="final-title">
-              Before you automate, diagnose.
-            </h2>
-            <p className="final-copy">
-              Book a strategy call to confirm whether the AI Efficiency Audit is the right fit. If it is, the next step is a
-              founder-led review of the systems, content, funnels, and AI opportunities most likely to improve the business.
-            </p>
-
-            <div className="final-actions">
-              <a href={bookingUrl} className="accent-button is-large" target="_blank" rel="noreferrer">
-                Book a Strategy Call
-              </a>
-
-              <div className="availability-note">
-                <div className="availability-avatar">
-                  <img src="/finlay-avatar-180.jpg" alt="" loading="lazy" decoding="async" />
-                </div>
-                <div>
-                  <strong>Founder-led audit</strong>
-                  <p>Practical recommendations before implementation spend.</p>
-                </div>
-              </div>
-            </div>
+        <section className="section-block final-cta">
+          <div className="landing-shell narrow-shell">
+            <h2 className="section-title">Before you buy another tool, hire another person, or start another AI project — find out where your business is actually leaking value.</h2>
+            <a href={bookingUrl} className="primary-button" target="_blank" rel="noreferrer"><span>Book an AI Efficiency Audit</span><ArrowIcon /></a>
           </div>
         </section>
       </main>
-
-      <footer className="landing-footer">
-        <div className="landing-shell footer-shell">
-          <a href="#top" className="brand-wordmark">
-            Temporary Utopia
-          </a>
-
-          <div className="footer-links">
-            {footerLinks.map((item) => (
-              <a key={item.label} href={item.href}>
-                {item.label}
-              </a>
-            ))}
-          </div>
-
-          <p>© 2026 Temporary Utopia. Diagnostic-first AI advisory.</p>
-        </div>
-      </footer>
     </>
   );
 }
